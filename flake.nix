@@ -21,6 +21,7 @@
       imports = [
         ./machines/flake-module.nix
         ./modules/flake-module.nix
+        ./modules/shells/flake-module.nix
       ];
 
       perSystem = { pkgs, inputs', ... }: {
