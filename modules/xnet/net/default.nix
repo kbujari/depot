@@ -5,6 +5,10 @@ let
   prefix = "10.26.4";
 in
 {
+  imports = [
+    ./sshd.nix
+  ];
+
   options.xnet.net = {
     interface = mkOption {
       type = types.str;
@@ -16,12 +20,6 @@ in
       type = types.ints.between 0 255;
       description = "Final octet for xnet address.";
       example = 4;
-    };
-
-    sshd = mkOption {
-      type = types.bool;
-      default = false;
-      description = "Enable hardened SSH service.";
     };
   };
 
@@ -40,29 +38,6 @@ in
       "${cfg.interface}.4".ipv4.addresses = [{
         address = "${prefix}.${toString cfg.addr}";
         prefixLength = 24;
-      }];
-    };
-
-    services.openssh = {
-      enable = cfg.sshd;
-      startWhenNeeded = true;
-      settings = {
-        X11Forwarding = false;
-        UsePAM = false;
-        PermitRootLogin = "prohibit-password";
-      };
-      extraConfig =
-        let
-          p = [
-            "sk-ssh-ed25519-cert-v01@openssh.com"
-            "ssh-ed25519-cert-v01@openssh.com"
-            "ssh-ed25519"
-          ];
-        in
-        "PubkeyAcceptedKeyTypes ${lib.strings.concatStringsSep "," p}";
-      hostKeys = [{
-        path = "/certs/ssh/ssh_host_ed25519_key";
-        type = "ed25519";
       }];
     };
   };

@@ -4,11 +4,13 @@ let
 in
 {
   imports = [
-    ./disk
+    ./disk.nix
+    ./users.nix
+    ./nginx.nix
     ./net
     ./desktop
+    ./gitserver
     # ./monitoring
-    # ./users
   ];
 
   i18n.defaultLocale = mkDefault "en_US.UTF-8";
@@ -28,5 +30,10 @@ in
   documentation = {
     doc.enable = mkDefault false;
     info.enable = mkDefault false;
+  };
+
+  security.sudo = {
+    execWheelOnly = true;
+    extraConfig = "Defaults lecture = never";
   };
 }

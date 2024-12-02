@@ -12,6 +12,11 @@
 
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
+
+    sshKeys = {
+      url = "https://github.com/kbujari.keys";
+      flake = false;
+    };
   };
 
   outputs = { flake-parts, ... } @ inputs:

@@ -32,18 +32,20 @@ in
       extraPackages = with pkgs; [
         foot
         fuzzel
-        grim
+        imv
         mako
-        pwvucontrol
+        mpv
         playerctl
         pop-icon-theme
         pwvucontrol
-        slurp
         sway-contrib.grimshot
         swayidle
         swaylock
+        tigervnc
         waybar
         wl-clipboard
+        xwayland
+        zathura
       ];
       extraSessionCommands = ''
         export MOZ_ENABLE_WAYLAND=1

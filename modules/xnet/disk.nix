@@ -15,7 +15,6 @@ let
 in
 {
   imports = [
-    ./boot.nix
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
@@ -28,10 +27,8 @@ in
 
     device = mkOption {
       type = types.str;
-      description = "Underlying device that build the root ZFS pool.";
+      description = "Device used for zroot ZFS pool.";
     };
-
-    extraDatasets = mkOption { };
   };
 
   config = mkIf cfg.enable {
@@ -43,15 +40,57 @@ in
       trim.enable = true;
     };
 
+    # With root running in memory, swap should be required unless
+    # otherwise specified
     zramSwap.enable = mkDefault true;
 
     boot = {
       kernelParams = [ "nohibernate" "elevator=none" ];
       supportedFilesystems = [ "vfat" "zfs" ];
       zfs.devNodes = "/dev/disk/by-partuuid";
+      loader = {
+        systemd-boot.enable = true;
+        efi.canTouchEfiVariables = true;
+      };
+      initrd = {
+        systemd.enable = true;
+        availableKernelModules = [
+          "xhci_pci"
+          "ahci"
+          "nvme"
+          "usb_storage"
+          "sd_mod"
+          "sdhci_pci"
+        ];
+      };
+      tmp.cleanOnBoot = mkDefault true;
     };
 
-    disko.devices = (import ./layouts/single.nix cfg.device) // {
+    disko.devices.disk.main = {
+      type = "disk";
+      device = cfg.device;
+      content = {
+        type = "gpt";
+        partitions.ESP = {
+          size = "1G";
+          type = "EF00";
+          content = {
+            type = "filesystem";
+            format = "vfat";
+            mountpoint = "/boot";
+          };
+        };
+        partitions.ZFS = {
+          size = "100%";
+          content = {
+            type = "zfs";
+            pool = "zroot";
+          };
+        };
+      };
+    };
+
+    disko.devices = {
       nodev."/" = {
         fsType = "tmpfs";
         mountOptions = [ "defaults" "size=2G" "mode=755" ];
@@ -67,13 +106,7 @@ in
         datasets = {
           "local" = {
             type = "zfs_fs";
-            options = commonOpts;
-          };
-
-          "local/reserved" = {
-            type = "zfs_fs";
-            options = {
-              refreservation = "10G";
+            options = commonOpts // {
               mountpoint = "none";
             };
           };
@@ -84,30 +117,23 @@ in
             options.mountpoint = "legacy";
           };
 
-          "local/certs" = {
+          "local/reserved" = {
             type = "zfs_fs";
-            mountpoint = "/certs";
-            options.mountpoint = "legacy";
+            options = {
+              refreservation = "10G";
+              mountpoint = "none";
+            };
           };
 
           "persist" = {
             type = "zfs_fs";
             mountpoint = "/persist";
-            options = { mountpoint = "legacy"; } // commonOpts;
+            options = commonOpts // {
+              mountpoint = "legacy";
+            };
           };
-
-          "persist/data" = {
-            type = "zfs_fs";
-            mountpoint = "/persist/data";
-            options.mountpoint = "legacy";
-          };
-        } // cfg.extraDatasets;
+        };
       };
-    };
-
-    users.groups.backup = {
-      members = [ config.services.syncoid.group ];
-      gid = 2001;
     };
   };
 }
