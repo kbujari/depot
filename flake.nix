@@ -28,13 +28,8 @@
         ./modules/flake-module.nix
       ];
 
-      perSystem = { pkgs, inputs', ... }: {
+      perSystem = { pkgs, ... }: {
         formatter = pkgs.nixpkgs-fmt;
-
-        apps.install = {
-          type = "app";
-          program = inputs'.disko.packages.disko-install;
-        };
       };
     };
 }

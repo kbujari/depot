@@ -3,16 +3,10 @@
 
   xnet = {
     desktop.enable = true;
+    users.enable = [ "kle" ];
     disk = {
       enable = true;
-      device = "nvme0n1";
-      extraDatasets = {
-        "persist/usr" = {
-          type = "zfs_fs";
-          mountpoint = "/home/k6";
-          options.mountpoint = "legacy";
-        };
-      };
+      device = "/dev/nvme0n1";
     };
   };
 
