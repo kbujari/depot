@@ -31,6 +31,7 @@ in
       initialPassword = "";
       isSystemUser = true;
       home = cfg.path;
+      homeMode = "755";
       createHome = true;
       shell = "${pkgs.git}/bin/git-shell";
       openssh.authorizedKeys.keys = cfg.keys;

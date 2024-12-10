@@ -1,0 +1,38 @@
+ ________________
+< depot the repo >
+ ----------------
+       \   ,__,
+        \  (oo)____
+           (__)    )\
+              ||--|| *
+
+
+The depot is a monorepo for my tools, infrastructure, and any other
+personal projects. I treat it as a small research lab, working on
+bleeding edge networking and computing projects.
+
+A lot of the software here is used only to sustain other parts of the
+repo, serving as a composable in-tree base for other functionality I can
+experiment with. This repo aims to unify many related subprojects under
+one roof.
+
+Machines
+========
+
+  Iridium:
+    x86_64 mini-computer that runs compute for local network.
+
+  Radon:
+    x86_64 local server for backups and bulk storage.
+
+  T1:
+    High-performance desktop with discrete GPU and fancy CPU.
+
+  T480:
+    Simple laptop with integrated GPU
+
+License
+=======
+
+Unless otherwise stated in a subdirectory, all code is provided under
+the MIT license.

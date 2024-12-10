@@ -21,6 +21,7 @@ in
   config = mkIf cfg.enable {
     xnet.nginx.enable = true;
 
+    users.users.nginx.extraGroups = [ "git" ];
     services.cgit.main = {
       enable = true;
       scanPath = config.xnet.gitServer.path;

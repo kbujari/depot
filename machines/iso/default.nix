@@ -16,7 +16,7 @@
     (writeShellScriptBin "xinstall" ''
       set -euo pipefail
 
-      FLAKE="github:kbujari/depot/scaffolding"
+      FLAKE="github:kbujari/depot/xnet"
 
       TARGET=$(
         nix flake show "$FLAKE" --json 2>/dev/null \
