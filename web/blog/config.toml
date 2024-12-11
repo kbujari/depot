@@ -1,0 +1,8 @@
+base_url = "https://4kb.net"
+build_search_index = false
+compile_sass = false
+generate_feeds = true
+minify_html = true
+
+[markdown]
+highlight_code = false

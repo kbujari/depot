@@ -1,0 +1,681 @@
+Building site...
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 2 pages (0 orphan) and 0 sections
+Done in 18ms.
+
+Listening for changes in /home/kleidi/projects/site/{config.toml,content,static,templates}
+Press Ctrl+C to stop
+
+Web server is available at http://127.0.0.1:1111 (bound to 127.0.0.1:1111)
+
+Building site...
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 2 pages (0 orphan) and 0 sections
+Done in 19ms.
+
+Web server is available at http://127.0.0.1:1111 (bound to 127.0.0.1:1111)
+
+Listening for changes in /home/kleidi/projects/site/{config.toml,content,static,templates}
+Press Ctrl+C to stop
+
+Change detected @ 2024-11-17 17:29:10
+-> Template file(s) changed /home/kleidi/projects/site/templates/base.html
+Reloading only template
+Done in 0ms.
+
+Change detected @ 2024-11-17 17:29:13
+-> Template file(s) changed /home/kleidi/projects/site/templates/base.html
+Reloading only template
+Done in 0ms.
+
+Building site...
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 2 pages (0 orphan) and 0 sections
+Done in 19ms.
+
+Web server is available at http://127.0.0.1:1111 (bound to 127.0.0.1:1111)
+
+Listening for changes in /home/kleidi/projects/site/{config.toml,content,static,templates}
+Press Ctrl+C to stop
+
+Change detected @ 2024-11-17 17:32:34
+-> Template file(s) changed /home/kleidi/projects/site/templates/base.html
+Reloading only template
+Done in 1ms.
+
+Change detected @ 2024-11-17 17:33:04
+-> Static file changed /home/kleidi/projects/site/static/style.css
+Done in 0ms.
+
+Change detected @ 2024-11-17 17:33:25
+-> Static file changed /home/kleidi/projects/site/static/style.css
+Done in 0ms.
+
+Change detected @ 2024-11-17 17:33:56
+-> Template file(s) changed /home/kleidi/projects/site/templates/base.html
+Reloading only template
+Done in 0ms.
+
+Change detected @ 2024-11-17 17:33:58
+-> Template file(s) changed /home/kleidi/projects/site/templates/base.html
+Reloading only template
+Done in 0ms.
+
+Change detected @ 2024-11-17 17:34:09
+-> Static file changed /home/kleidi/projects/site/static/style.css
+Done in 0ms.
+
+Change detected @ 2024-11-17 17:34:24
+-> Template file(s) changed /home/kleidi/projects/site/templates/base.html
+Reloading only template
+Done in 1ms.
+
+Change detected @ 2024-11-17 17:35:11
+-> Template file(s) changed /home/kleidi/projects/site/templates/base.html
+Reloading only template
+Done in 0ms.
+
+Change detected @ 2024-11-17 17:35:47
+-> Static file changed /home/kleidi/projects/site/static/style.css
+Done in 0ms.
+
+Change detected @ 2024-11-17 17:35:57
+-> Static file changed /home/kleidi/projects/site/static/style.css
+Done in 0ms.
+
+Change detected @ 2024-11-17 17:36:12
+-> Static file changed /home/kleidi/projects/site/static/style.css
+Done in 0ms.
+
+Change detected @ 2024-11-17 17:36:36
+-> Static file changed /home/kleidi/projects/site/static/style.css
+Done in 0ms.
+
+Change detected @ 2024-11-17 17:36:41
+-> Static file changed /home/kleidi/projects/site/static/style.css
+Done in 0ms.
+
+Change detected @ 2024-11-17 17:37:03
+-> Static file changed /home/kleidi/projects/site/static/style.css
+Done in 0ms.
+
+Change detected @ 2024-11-17 17:37:08
+-> Static file changed /home/kleidi/projects/site/static/style.css
+Done in 0ms.
+
+Change detected @ 2024-11-17 17:37:27
+-> Static file changed /home/kleidi/projects/site/static/style.css
+Done in 0ms.
+
+Change detected @ 2024-11-17 17:37:39
+-> Static file changed /home/kleidi/projects/site/static/style.css
+Done in 0ms.
+
+Change detected @ 2024-11-17 17:37:47
+-> Static file changed /home/kleidi/projects/site/static/style.css
+Done in 0ms.
+
+Change detected @ 2024-11-17 17:38:10
+-> Static file changed /home/kleidi/projects/site/static/style.css
+Done in 0ms.
+
+Change detected @ 2024-11-17 17:38:16
+-> Static file changed /home/kleidi/projects/site/static/style.css
+Done in 0ms.
+
+Change detected @ 2024-11-17 17:38:23
+-> Static file changed /home/kleidi/projects/site/static/style.css
+Done in 0ms.
+
+Change detected @ 2024-11-17 17:38:30
+-> Static file changed /home/kleidi/projects/site/static/style.css
+Done in 0ms.
+
+Change detected @ 2024-11-17 17:38:34
+-> Static file changed /home/kleidi/projects/site/static/style.css
+Done in 0ms.
+
+Change detected @ 2024-11-17 17:38:44
+-> Static file changed /home/kleidi/projects/site/static/style.css
+Done in 0ms.
+
+Change detected @ 2024-11-17 17:38:50
+-> Static file changed /home/kleidi/projects/site/static/style.css
+Done in 0ms.
+
+Change detected @ 2024-11-17 17:38:54
+-> Static file changed /home/kleidi/projects/site/static/style.css
+Done in 0ms.
+
+Change detected @ 2024-11-17 17:39:11
+-> Static file changed /home/kleidi/projects/site/static/style.css
+Done in 0ms.
+
+Change detected @ 2024-11-17 17:39:14
+-> Static file changed /home/kleidi/projects/site/static/style.css
+Done in 0ms.
+
+Change detected @ 2024-11-17 17:39:31
+-> Template file(s) changed /home/kleidi/projects/site/templates/base.html
+Reloading only template
+Done in 1ms.
+
+Change detected @ 2024-11-17 17:40:05
+-> Content changed /home/kleidi/projects/site/content/log/_index.md
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 2 pages (0 orphan) and 2 sections
+Done in 2ms.
+
+Change detected @ 2024-11-17 17:40:09
+-> Content changed /home/kleidi/projects/site/content/log/_index.md
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 2 pages (0 orphan) and 2 sections
+Done in 2ms.
+
+Change detected @ 2024-11-17 17:40:12
+-> Content changed /home/kleidi/projects/site/content/log/_index.md
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 2 pages (0 orphan) and 2 sections
+Done in 2ms.
+
+Change detected @ 2024-11-17 17:40:26
+-> Template file(s) changed /home/kleidi/projects/site/templates/index.html
+Reloading only template
+Done in 0ms.
+
+Change detected @ 2024-11-17 17:42:37
+-> Content changed /home/kleidi/projects/site/content/log/_index.md
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 2 pages (0 orphan) and 2 sections
+Done in 2ms.
+
+Change detected @ 2024-11-17 17:42:51
+-> Content changed /home/kleidi/projects/site/content/posts/_index.md
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 2 pages (0 orphan) and 2 sections
+Done in 2ms.
+
+Change detected @ 2024-11-17 17:43:37
+-> Template file(s) changed /home/kleidi/projects/site/templates/index.html
+Reloading only template
+Done in 1ms.
+
+Change detected @ 2024-11-17 17:44:06
+-> Content changed /home/kleidi/projects/site/content/log/_index.md
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 2 pages (0 orphan) and 2 sections
+Done in 2ms.
+
+Change detected @ 2024-11-17 17:44:20
+-> Content changed /home/kleidi/projects/site/content/log/_index.md
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 2 pages (0 orphan) and 2 sections
+Done in 2ms.
+
+Change detected @ 2024-11-17 17:44:48
+-> Template file(s) changed /home/kleidi/projects/site/templates/index.html
+Reloading only template
+Done in 1ms.
+
+Change detected @ 2024-11-17 17:44:55
+-> Template file(s) changed /home/kleidi/projects/site/templates/index.html
+Reloading only template
+Done in 1ms.
+
+Change detected @ 2024-11-17 17:44:56
+-> Template file(s) changed /home/kleidi/projects/site/templates/index.html
+Reloading only template
+Done in 1ms.
+
+Change detected @ 2024-11-17 17:45:05
+-> Content changed /home/kleidi/projects/site/content/log/_index.md
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 2 pages (0 orphan) and 2 sections
+Done in 2ms.
+
+Change detected @ 2024-11-17 17:45:20
+-> Content changed /home/kleidi/projects/site/content/posts/_index.md
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 2 pages (0 orphan) and 2 sections
+Done in 2ms.
+
+Change detected @ 2024-11-17 17:45:38
+-> Template file(s) changed /home/kleidi/projects/site/templates/index.html
+Reloading only template
+Done in 1ms.
+
+Change detected @ 2024-11-17 17:46:01
+-> Static file changed /home/kleidi/projects/site/static/style.css
+Done in 0ms.
+
+Change detected @ 2024-11-17 17:46:45
+-> Static file changed /home/kleidi/projects/site/static/style.css
+Done in 0ms.
+
+Change detected @ 2024-11-17 17:48:24
+-> Static file changed /home/kleidi/projects/site/static/style.css
+Done in 0ms.
+
+Change detected @ 2024-11-17 17:48:48
+-> Template file(s) changed /home/kleidi/projects/site/templates/base.html
+Reloading only template
+Done in 1ms.
+
+Change detected @ 2024-11-17 17:48:50
+-> Template file(s) changed /home/kleidi/projects/site/templates/base.html
+Reloading only template
+Done in 1ms.
+
+Change detected @ 2024-11-17 17:48:54
+-> Static file changed /home/kleidi/projects/site/static/style.css
+Done in 0ms.
+
+Change detected @ 2024-11-17 17:48:56
+-> Static file changed /home/kleidi/projects/site/static/style.css
+Done in 0ms.
+
+Change detected @ 2024-11-17 17:49:12
+-> Static file changed /home/kleidi/projects/site/static/style.css
+Done in 0ms.
+
+Change detected @ 2024-11-17 17:49:18
+-> Static file changed /home/kleidi/projects/site/static/style.css
+Done in 0ms.
+
+Change detected @ 2024-11-17 17:49:34
+-> Template file(s) changed /home/kleidi/projects/site/templates/base.html
+Reloading only template
+Done in 1ms.
+
+Change detected @ 2024-11-17 17:49:48
+-> Template file(s) changed /home/kleidi/projects/site/templates/base.html
+Reloading only template
+Done in 1ms.
+
+Change detected @ 2024-11-17 17:50:39
+-> Content changed /home/kleidi/projects/site/content/posts/interaction.md
+Error: Failed to build the site
+Error: Couldn't find front matter in `/home/kleidi/projects/site/content/posts/interaction.md`. Did you forget to add `+++` or `---`?
+Done in 1ms.
+
+Change detected @ 2024-11-17 17:50:54
+-> Content changed /home/kleidi/projects/site/content/posts/interaction.md
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 3 pages (0 orphan) and 2 sections
+Done in 2ms.
+
+Change detected @ 2024-11-17 17:51:03
+-> Content changed /home/kleidi/projects/site/content/posts/interaction.md
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 3 pages (0 orphan) and 2 sections
+Done in 2ms.
+
+Change detected @ 2024-11-17 17:51:29
+-> Content changed /home/kleidi/projects/site/content/posts/interaction.md
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 3 pages (0 orphan) and 2 sections
+Done in 2ms.
+
+Change detected @ 2024-11-17 17:51:53
+-> Content changed /home/kleidi/projects/site/content/posts/interaction.md
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 3 pages (0 orphan) and 2 sections
+Done in 2ms.
+
+Change detected @ 2024-11-17 17:52:32
+-> Template file(s) changed /home/kleidi/projects/site/templates/index.html
+Reloading only template
+Done in 1ms.
+
+Change detected @ 2024-11-17 17:52:41
+-> Template file(s) changed /home/kleidi/projects/site/templates/index.html
+Reloading only template
+Done in 1ms.
+
+Change detected @ 2024-11-17 17:53:13
+-> Template file(s) changed /home/kleidi/projects/site/templates/index.html
+Reloading only template
+Done in 1ms.
+
+Change detected @ 2024-11-17 17:53:18
+-> Template file(s) changed /home/kleidi/projects/site/templates/index.html
+Reloading only template
+Done in 1ms.
+
+Change detected @ 2024-11-17 17:53:42
+-> Template file(s) changed /home/kleidi/projects/site/templates/index.html
+Reloading only template
+Done in 1ms.
+
+Change detected @ 2024-11-17 17:53:48
+-> Template file(s) changed /home/kleidi/projects/site/templates/index.html
+Reloading only template
+Done in 1ms.
+
+Change detected @ 2024-11-17 17:53:50
+-> Template file(s) changed /home/kleidi/projects/site/templates/index.html
+Reloading only template
+Done in 0ms.
+
+Change detected @ 2024-11-17 17:54:02
+-> Template file(s) changed /home/kleidi/projects/site/templates/index.html
+Reloading only template
+Done in 1ms.
+
+Change detected @ 2024-11-17 17:54:11
+-> Template file(s) changed /home/kleidi/projects/site/templates/index.html
+Reloading only template
+Done in 1ms.
+
+Change detected @ 2024-11-17 17:55:06
+-> Content changed /home/kleidi/projects/site/content/log/nohup.md
+Error: Failed to build the site
+Error: Couldn't find front matter in `/home/kleidi/projects/site/content/log/nohup.md`. Did you forget to add `+++` or `---`?
+Done in 1ms.
+
+Change detected @ 2024-11-17 17:55:39
+-> Content changed /home/kleidi/projects/site/content/log/nohup.md
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 4 pages (0 orphan) and 2 sections
+Done in 2ms.
+
+Change detected @ 2024-11-17 17:57:02
+-> Content changed /home/kleidi/projects/site/content/log/nohup.md
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 4 pages (0 orphan) and 2 sections
+Done in 2ms.
+
+Change detected @ 2024-11-17 17:57:07
+-> Content changed /home/kleidi/projects/site/content/log/nohup.md
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 4 pages (0 orphan) and 2 sections
+Done in 2ms.
+
+Change detected @ 2024-11-17 17:57:43
+-> Content changed /home/kleidi/projects/site/content/log/nohup.md
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 4 pages (0 orphan) and 2 sections
+Done in 2ms.
+
+Change detected @ 2024-11-17 17:58:42
+-> Content changed /home/kleidi/projects/site/content/log/nohup.md
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 4 pages (0 orphan) and 2 sections
+Done in 2ms.
+
+Change detected @ 2024-11-17 17:58:45
+-> Content changed /home/kleidi/projects/site/content/log/nohup.md
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 4 pages (0 orphan) and 2 sections
+Done in 2ms.
+
+Change detected @ 2024-11-17 17:58:47
+-> Content changed /home/kleidi/projects/site/content/log/nohup.md
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 4 pages (0 orphan) and 2 sections
+Done in 2ms.
+
+Change detected @ 2024-11-17 17:58:52
+-> Content changed /home/kleidi/projects/site/content/log/nohup.md
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 4 pages (0 orphan) and 2 sections
+Done in 2ms.
+
+Change detected @ 2024-11-17 17:58:54
+-> Content changed /home/kleidi/projects/site/content/log/nohup.md
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 4 pages (0 orphan) and 2 sections
+Done in 2ms.
+
+Change detected @ 2024-11-17 17:58:59
+-> Content changed /home/kleidi/projects/site/content/log/nohup.md
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 4 pages (0 orphan) and 2 sections
+Done in 2ms.
+
+Change detected @ 2024-11-17 17:59:01
+-> Content changed /home/kleidi/projects/site/content/log/nohup.md
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 4 pages (0 orphan) and 2 sections
+Done in 2ms.
+
+Change detected @ 2024-11-17 18:00:04
+-> Content changed /home/kleidi/projects/site/content/log/nohup.md
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 4 pages (0 orphan) and 2 sections
+Done in 2ms.
+
+Change detected @ 2024-11-17 18:00:09
+-> Content changed /home/kleidi/projects/site/content/log/nohup.md
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 4 pages (0 orphan) and 2 sections
+Done in 2ms.
+
+Change detected @ 2024-11-17 18:00:14
+-> Content changed /home/kleidi/projects/site/content/log/nohup.md
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 4 pages (0 orphan) and 2 sections
+Done in 2ms.
+
+Change detected @ 2024-11-17 18:00:30
+-> Content changed /home/kleidi/projects/site/content/log/nohup.md
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 4 pages (0 orphan) and 2 sections
+Done in 2ms.
+
+Change detected @ 2024-11-17 18:00:35
+-> Content changed /home/kleidi/projects/site/content/log/nohup.md
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 4 pages (0 orphan) and 2 sections
+Done in 2ms.
+
+Change detected @ 2024-11-17 18:00:41
+-> Content changed /home/kleidi/projects/site/content/log/nohup.md
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 4 pages (0 orphan) and 2 sections
+Done in 2ms.
+
+Change detected @ 2024-11-17 18:01:12
+-> Content changed /home/kleidi/projects/site/content/log/nohup.md
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 4 pages (0 orphan) and 2 sections
+Done in 2ms.
+
+Change detected @ 2024-11-17 18:01:26
+-> Content changed /home/kleidi/projects/site/content/log/nohup.md
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 4 pages (0 orphan) and 2 sections
+Done in 2ms.
+
+Change detected @ 2024-11-17 18:01:59
+-> Content changed /home/kleidi/projects/site/content/log/nohup.md
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 4 pages (0 orphan) and 2 sections
+Done in 2ms.
+
+Change detected @ 2024-11-17 18:02:16
+-> Content changed /home/kleidi/projects/site/content/log/nohup.md
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 4 pages (0 orphan) and 2 sections
+Done in 2ms.
+
+Change detected @ 2024-11-17 18:02:38
+-> Content changed /home/kleidi/projects/site/content/log/nohup.md
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 4 pages (0 orphan) and 2 sections
+Done in 2ms.
+
+Change detected @ 2024-11-17 18:03:09
+-> Content changed /home/kleidi/projects/site/content/log/nohup.md
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 4 pages (0 orphan) and 2 sections
+Done in 2ms.
+
+Change detected @ 2024-11-17 18:03:17
+-> Content changed /home/kleidi/projects/site/content/log/nohup.md
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 4 pages (0 orphan) and 2 sections
+Done in 2ms.
+
+Change detected @ 2024-11-17 18:03:33
+-> Content changed /home/kleidi/projects/site/content/log/nohup.md
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 4 pages (0 orphan) and 2 sections
+Done in 2ms.
+
+Change detected @ 2024-11-17 18:04:42
+-> Content changed /home/kleidi/projects/site/content/log/nohup.md
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 4 pages (0 orphan) and 2 sections
+Done in 2ms.
+
+Change detected @ 2024-11-17 18:05:08
+-> Content changed /home/kleidi/projects/site/content/log/nohup.md
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 4 pages (0 orphan) and 2 sections
+Done in 2ms.
+
+Change detected @ 2024-11-17 18:05:14
+-> Content changed /home/kleidi/projects/site/content/log/nohup.md
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 4 pages (0 orphan) and 2 sections
+Done in 2ms.
+
+Change detected @ 2024-11-17 18:05:26
+-> Content changed /home/kleidi/projects/site/content/log/nohup.md
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 4 pages (0 orphan) and 2 sections
+Done in 2ms.
+
+Change detected @ 2024-11-17 18:06:58
+-> Content changed /home/kleidi/projects/site/content/log/nohup.md
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 4 pages (0 orphan) and 2 sections
+Done in 2ms.
+
+Change detected @ 2024-11-17 18:07:17
+-> Content changed /home/kleidi/projects/site/content/log/nohup.md
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 4 pages (0 orphan) and 2 sections
+Done in 2ms.
+
+Change detected @ 2024-11-17 18:08:02
+-> Content changed /home/kleidi/projects/site/content/log/nohup.md
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 4 pages (0 orphan) and 2 sections
+Done in 2ms.
+
+Change detected @ 2024-11-17 18:08:32
+-> Content changed /home/kleidi/projects/site/content/log/nohup.md
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 4 pages (0 orphan) and 2 sections
+Done in 2ms.
+
+Change detected @ 2024-11-17 18:08:36
+-> Content changed /home/kleidi/projects/site/content/log/nohup.md
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 4 pages (0 orphan) and 2 sections
+Done in 2ms.
+
+Change detected @ 2024-11-17 18:08:43
+-> Content changed /home/kleidi/projects/site/content/log/nohup.md
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 4 pages (0 orphan) and 2 sections
+Done in 2ms.
+
+Change detected @ 2024-11-17 18:09:04
+-> Content changed /home/kleidi/projects/site/content/log/nohup.md
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 4 pages (0 orphan) and 2 sections
+Done in 2ms.
+
+Change detected @ 2024-11-17 18:09:26
+-> Content changed /home/kleidi/projects/site/content/log/nohup.md
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 4 pages (0 orphan) and 2 sections
+Done in 2ms.
+
+Change detected @ 2024-11-17 18:11:07
+-> Content changed /home/kleidi/projects/site/content/log/nohup.md
+Checking all internal links with anchors.
+> Successfully checked 0 internal link(s) with anchors.
+-> Creating 4 pages (0 orphan) and 2 sections
+Done in 2ms.
+
+Change detected @ 2024-11-17 18:13:59
+-> Static file changed /home/kleidi/projects/site/static/style.css
+Done in 0ms.
+
+Change detected @ 2024-11-17 18:14:17
+-> Static file changed /home/kleidi/projects/site/static/style.css
+Done in 0ms.
+
+Change detected @ 2024-11-17 18:14:24
+-> Static file changed /home/kleidi/projects/site/static/style.css
+Done in 0ms.
+
+Change detected @ 2024-11-17 18:14:34
+-> Static file changed /home/kleidi/projects/site/static/style.css
+Done in 0ms.
+
+Change detected @ 2024-11-17 18:14:43
+-> Static file changed /home/kleidi/projects/site/static/style.css
+Done in 0ms.
+
+Change detected @ 2024-11-17 18:14:45
+-> Static file changed /home/kleidi/projects/site/static/style.css
+Done in 0ms.
+

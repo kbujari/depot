@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title></title>
+    <link rel="self" type="application/atom+xml" href="https://4kb.net/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://4kb.net"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2024-11-28T00:00:00+00:00</updated>
+    <id>https://4kb.net/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Tools as thought</title>
+        <published>2024-11-28T00:00:00+00:00</published>
+        <updated>2024-11-28T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://4kb.net/posts/tools/"/>
+        <id>https://4kb.net/posts/tools/</id>
+        
+        <content type="html" xml:base="https://4kb.net/posts/tools/">&lt;blockquote&gt;
+&lt;p&gt;Ideas are limited by the expressiveness of their underlying language.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Consider this for a moment,
+in the context of programming language.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Spawning background processes</title>
+        <published>2024-11-17T00:00:00+00:00</published>
+        <updated>2024-11-17T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://4kb.net/log/nohup/"/>
+        <id>https://4kb.net/log/nohup/</id>
+        
+        <content type="html" xml:base="https://4kb.net/log/nohup/">&lt;p&gt;Consider the following pattern:
+Terminal environments with an editor,
+and a background process reacting to changing files.
+Before reaching for terminal multiplexers,
+see if you can get away with simple tty job control.
+Spawn a background command,
+still attached to the terminal instance:&lt;&#x2F;p&gt;
+&lt;pre&gt;&lt;code&gt;program args &amp;amp;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Also redirect output to a file,
+for when the process writes to the tty from the background:&lt;&#x2F;p&gt;
+&lt;pre&gt;&lt;code&gt;nohup program args &amp;amp;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Extra reading:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;jvns.ca&#x2F;blog&#x2F;2024&#x2F;07&#x2F;03&#x2F;reasons-to-use-job-control&#x2F;&quot;&gt;https:&#x2F;&#x2F;jvns.ca&#x2F;blog&#x2F;2024&#x2F;07&#x2F;03&#x2F;reasons-to-use-job-control&#x2F;&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Don&#x27;t interact with everything</title>
+        <published>2024-11-17T00:00:00+00:00</published>
+        <updated>2024-11-17T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://4kb.net/posts/interaction/"/>
+        <id>https://4kb.net/posts/interaction/</id>
+        
+        <content type="html" xml:base="https://4kb.net/posts/interaction/">&lt;p&gt;Consider this,
+you seem to love.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Deterministic and unique network hostnames</title>
+        <published>2024-11-10T00:00:00+00:00</published>
+        <updated>2024-11-10T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://4kb.net/posts/deterministic-hostnames/"/>
+        <id>https://4kb.net/posts/deterministic-hostnames/</id>
+        
+        <content type="html" xml:base="https://4kb.net/posts/deterministic-hostnames/">&lt;p&gt;As part of building out a Kubernetes cluster, I wanted to build and distribute a
+single OS image to create stateless worker nodes. Using network booting, and
+some clever tricks to differentiate nodes, we can create a scaleable and
+efficient farm of workers for a cluster that don&#x27;t even need disks.&lt;&#x2F;p&gt;
+&lt;p&gt;The idea came from a plan to build a cluster using the
+&lt;a href=&quot;https:&#x2F;&#x2F;computeblade.com&#x2F;&quot;&gt;compute blade&lt;&#x2F;a&gt;, and a few Raspberry Pi SBCs I
+already own. Running the cluster from an SD card is not recommended due to the
+not-so-great reliability of the flash used by most manufacturers, so I wanted to
+try PXE booting each Pi to save money rather than purchasing an SSD for each
+one. The compute blades do support an NVMe disk, but I plan to use those for a
+storage cluster later, so they need to remain empty.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;base-image&quot;&gt;Base image&lt;&#x2F;h2&gt;
+&lt;p&gt;Alpine Linux has been my preferred server OS for a long time. It provides a very
+lightweight base system, and bundles an excellent bootstrapping system,
+&lt;a href=&quot;https:&#x2F;&#x2F;wiki.alpinelinux.org&#x2F;wiki&#x2F;Alpine_local_backup&quot;&gt;apkovl&lt;&#x2F;a&gt;, that allows the
+user to save a set of customisations to an system as an overlay to a stock
+Alpine live image. In other words, we can create our image once, save the
+changes as an &lt;code&gt;apkovl.tar.gz&lt;&#x2F;code&gt; file, and apply the same changes to a base system
+on boot. This file can even be provided as a
+&lt;a href=&quot;https:&#x2F;&#x2F;wiki.alpinelinux.org&#x2F;wiki&#x2F;PXE_boot#Guide_to_options&quot;&gt;kernel parameter&lt;&#x2F;a&gt;
+and will be fetched from a remote webserver automatically!&lt;&#x2F;p&gt;
+&lt;p&gt;Since the image and configuration will be shipped to the node via the network,
+an added benefit of using Alpine is its tiny space consumption. I&#x27;m not using
+enough nodes for this to really matter, but it&#x27;s a cool optimization regardless.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;differentiating-the-nodes&quot;&gt;Differentiating the nodes&lt;&#x2F;h2&gt;
+&lt;p&gt;One of the main goals of this project is that there should be no persistent
+storage required outside the boot image itself. Since every node will download
+and generate the same root file-system on startup, the first problem that arises
+is how the nodes will identify themselves both on the network and the cluster,
+given that it&#x27;s not possible to name them ahead of time. In other words, any
+given node has to generate a unique hostname that won&#x27;t collide with other
+workers, and that will be the same each time that node boots.&lt;&#x2F;p&gt;
+&lt;p&gt;Since these nodes will not have a predefined name, we have to rely on
+characteristics of the hardware to differentiate each one. The hardware MAC
+address is perfect for this, since it&#x27;s unique to to each node and will not be
+wiped away after the node reboots. On a system like Linux that exposes its
+hardware through a &lt;em&gt;sysfs&lt;&#x2F;em&gt;, we can find a file containing the address at
+&lt;code&gt;&#x2F;sys&#x2F;class&#x2F;net&#x2F;eth0&#x2F;address&lt;&#x2F;code&gt;. I don&#x27;t really like the idea of attaching the
+literal MAC address of the node to its network hostname, since it&#x27;s a security
+risk, and a bit too verbose. Instead, we can transform it into something safer
+using a &lt;code&gt;sha1sum&lt;&#x2F;code&gt;, which is already present on our Alpine base system:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;console&quot; class=&quot;language-console &quot;&gt;&lt;code class=&quot;language-console&quot; data-lang=&quot;console&quot;&gt;sha1sum &amp;#x2F;sys&amp;#x2F;class&amp;#x2F;net&amp;#x2F;eth0&amp;#x2F;address | head -c 6 | awk &amp;#x27;{print &amp;quot;worker-&amp;quot; $0}&amp;#x27;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;applying-the-new-name&quot;&gt;Applying the new name&lt;&#x2F;h3&gt;
+&lt;p&gt;Ideally, the node should apply its generated hostname before reaching out for an
+address over DHCP or joining the cluster. We can make sure it happens before any
+traffic is sent out by adding a &lt;code&gt;pre-up&lt;&#x2F;code&gt; command to the right interface in
+&lt;code&gt;&#x2F;etc&#x2F;network&#x2F;interfaces&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
+&lt;pre&gt;&lt;code&gt;
+...
+
+auto eth0
+iface eth0 inet dhcp
+    pre-up sha1sum &amp;#x2F;sys&amp;#x2F;class&amp;#x2F;net&amp;#x2F;eth0&amp;#x2F;address | head -c 6 | awk &amp;#x27;{print &amp;quot;worker-&amp;quot; $0}&amp;#x27; &amp;gt; &amp;#x2F;etc&amp;#x2F;hostname
+
+...
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;The VM I tested with looks outputs &lt;code&gt;worker-e2fae8&lt;&#x2F;code&gt;. Pretty clean result, and if
+you want to know the physical node that maps to each hostname, you can take note
+of the MAC address beforehand and generate the same hash on another computer to
+match them up.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Invite irrationality</title>
+        <published>2024-11-10T00:00:00+00:00</published>
+        <updated>2024-11-10T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://4kb.net/posts/invite-irrationality/"/>
+        <id>https://4kb.net/posts/invite-irrationality/</id>
+        
+        <content type="html" xml:base="https://4kb.net/posts/invite-irrationality/">&lt;p&gt;Until now (04&#x2F;11&#x2F;2024),
+I have not truly believed that my thoughts influenced my life,
+and I am completely unaware of how it came to be this way.
+In some sense,
+this is me truly understanding the flaws of my current perception of reality.
+This essay &lt;strong&gt;serves as record&lt;&#x2F;strong&gt; to acknowledging this fact,
+by will of its very existence.
+It feels as though I have put into thoughts,
+my blindness to my feelings.
+In short,
+discomfort should be the natural state,
+and it should be aroused whenever it is not active.&lt;&#x2F;p&gt;
+&lt;p&gt;Perhaps it was put quite brutally,
+but it spend every word carrying the underlying meaning,
+and relies on the rest of the paper to describe the application.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+</feed>

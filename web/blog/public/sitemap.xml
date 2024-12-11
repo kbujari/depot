@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://4kb.net/</loc>
+    </url>
+    <url>
+        <loc>https://4kb.net/log/</loc>
+    </url>
+    <url>
+        <loc>https://4kb.net/log/nohup/</loc>
+        <lastmod>2024-11-17</lastmod>
+    </url>
+    <url>
+        <loc>https://4kb.net/posts/</loc>
+    </url>
+    <url>
+        <loc>https://4kb.net/posts/deterministic-hostnames/</loc>
+        <lastmod>2024-11-10</lastmod>
+    </url>
+    <url>
+        <loc>https://4kb.net/posts/interaction/</loc>
+        <lastmod>2024-11-17</lastmod>
+    </url>
+    <url>
+        <loc>https://4kb.net/posts/invite-irrationality/</loc>
+        <lastmod>2024-11-10</lastmod>
+    </url>
+    <url>
+        <loc>https://4kb.net/posts/tools/</loc>
+        <lastmod>2024-11-28</lastmod>
+    </url>
+</urlset>

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<head>
+  <title>4kb.net</title>
+</head>
+
+<h2>{{ section.title }}: {{ section.description }}</h2>
+{% for page in section.pages %}
+  <ul>
+    <li>
+    <span>[{{ page.date }}]</span>
+    <a href="{{ page.permalink | safe }}">{{ page.title }}</a>
+    </li>
+  </ul>
+{% endfor %}
+
+{% endblock content %}
