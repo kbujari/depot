@@ -1,4 +1,11 @@
-{ inputs, lib, ... }: {
+{ inputs, lib, ... }:
+let
+  gitKeys = builtins.fetchurl {
+    url = "https://github.com/kbujari.keys";
+    sha256 = "0fpa679zkrpx77vangzf3gnidwvmky8ifivn8411xx6albrikaqx";
+  };
+in
+{
   system.stateVersion = "24.11";
 
   users.mutableUsers = false;
@@ -18,8 +25,7 @@
     gitServer = {
       enable = true;
       gitweb.enable = true;
-      keys = builtins.filter (x: x != "")
-        (lib.strings.splitString "\n" (builtins.readFile inputs.sshKeys));
+      keys = lib.splitString "\n" (builtins.readFile gitKeys);
     };
   };
 

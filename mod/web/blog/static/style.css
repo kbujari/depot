@@ -1,0 +1,85 @@
+:root {
+  --bg: #181616;
+  --fg: #c5c9c5;
+  --link: #76946a;
+  --linkhover: #98bb6c;
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+body {
+  font-family: serif;
+  padding: 0 0.75em;
+  max-width: 42em;
+  margin: auto;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+p {
+  line-height: 1.3em;
+}
+
+th,
+td {
+  padding: 0.2em 0.4em;
+  border: thin solid;
+}
+
+table {
+  border: thin solid;
+  border-collapse: collapse;
+}
+
+article {
+  padding-top: 1em;
+}
+
+footer {
+  margin: 3em auto;
+  text-align: center;
+}
+
+a,
+a:link {
+  color: var(--link);
+}
+
+a:hover {
+  color: var(--linkhover);
+}
+
+a[href^="http"]:where(:not([href*="4kb.net/"]))::after {
+  content: " \21e2";
+}
+
+article img {
+  display: block;
+  margin: 0 auto;
+  max-width: 80%;
+  height: auto;
+  object-fit: contain;
+}
+
+nav {
+  margin-top: 1em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: monospace;
+  font-weight: bold;
+  gap: 8px;
+}
+
+nav div {
+  display: flex;
+  gap: 10px;
+}
+
+pre {
+  padding: 1em;
+  overflow-x: scroll;
+}

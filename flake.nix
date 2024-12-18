@@ -4,32 +4,82 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
 
-    flake-parts.url = "github:hercules-ci/flake-parts";
-    flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
-
     disko.url = "github:nix-community/disko/v1.6.1";
     disko.inputs.nixpkgs.follows = "nixpkgs";
 
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
-
-    sshKeys = {
-      url = "https://github.com/kbujari.keys";
-      flake = false;
-    };
   };
 
-  outputs = { flake-parts, ... } @ inputs:
-    flake-parts.lib.mkFlake { inherit inputs; } {
-      systems = [ "x86_64-linux" "aarch64-linux" ];
+  outputs = { self, nixpkgs, ... } @ inputs:
+    let
+      inherit (builtins)
+        attrNames
+        filter
+        listToAttrs
+        map
+        readDir
+        ;
 
-      imports = [
-        ./machines/flake-module.nix
-        ./modules/flake-module.nix
-      ];
+      inherit (nixpkgs.lib)
+        nixosSystem
+        ;
 
-      perSystem = { pkgs, ... }: {
-        formatter = pkgs.nixpkgs-fmt;
+      readTree = import ./mod/nix/readTree { };
+
+      # Recursively converts subdirectories under ./mod into an attrset
+      # that can be passed to other parts of the depot.
+      readDepot = depotArgs: readTree {
+        args = depotArgs;
+        path = ./mod;
       };
+
+      # Named arguments to be made available to any nix expression in
+      # the depot module.
+      depot = readTree.fix (self: readDepot {
+        depot = self;
+
+        # x86_64-linux is hardcoded as the package arch only for the
+        # mod directory. This workaround keeps the flake pure,
+        # at the expense of only supporting one system. This can
+        # be circumvented by retrieving the system during evaluation,
+        # but flakes disallow this by design.
+        #
+        # This monorepo currently depends on functionality from flakes,
+        # but this may change in the future, perhaps shifting to an
+        # impure base with certain packages exposed from the flake in a
+        # pure way.
+        #
+        # In practice, this means that any configuration or package
+        # exposed from the depot flake that makes use of internal
+        # derivations is limited to x86_64-linux. For now this is fine,
+        # but ideally any architecture supported by nix should be
+        # allowed to evaluate projects hosted here.
+        pkgs = nixpkgs.legacyPackages."x86_64-linux";
+
+        # Expose lib attribute to modules.
+        lib = nixpkgs.lib;
+      });
+
+      machines = filter (m: m != "iso" && m != "xnet")
+        (attrNames (readDir ./machines));
+    in
+    {
+      inherit depot;
+
+      nixosModules.xnet.imports =
+        [ ./machines/xnet inputs.disko.nixosModules.disko ];
+
+      nixosConfigurations = listToAttrs (
+        map
+          (name: {
+            inherit name;
+            value = nixosSystem {
+              system = "x86_64-linux";
+              specialArgs = { inherit inputs depot; };
+              modules = [ ./machines/${name} self.nixosModules.xnet ];
+            };
+          })
+          machines);
     };
 }

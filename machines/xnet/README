@@ -1,0 +1,18 @@
+xnet
+====
+
+Base configuration for any machines running a standard xnet
+configuration.
+
+Notable features:
+
+  - Root filesystem running in RAM
+  - Automated ZFS partitioning of disk
+  - Hardened SSH and web services
+
+Usage
+=====
+
+The entire module is exposed from the top-level flake as a nixosModule,
+but it changes too often to be considered stable. Options are made
+available when imported under the 'xnet' attribute set.

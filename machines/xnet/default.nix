@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, pkgs, ... }:
 let
   inherit (lib) mkDefault;
 in
@@ -18,7 +18,6 @@ in
 
   nix = {
     settings = {
-      allowUnfree = true;
       auto-optimise-store = true;
       experimental-features = [ "nix-command" "flakes" ];
       warn-dirty = false;

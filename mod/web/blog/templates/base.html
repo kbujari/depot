@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="/style.css" rel="stylesheet" />
+    <link rel="preload" href="style.css" as="style" />
+    <title>{% block title %}4kb.net{% endblock title %}</title>
+  </head>
+  <body>
+    <nav>
+      <span>4kb.net</span>
+      <div>
+        <a href="/">Home</a>
+        <a href="/posts">Posts</a>
+        <a href="/log">Log</a>
+      </div>
+    </nav>
+    <hr />
+    <main>{% block content %} {% endblock %}</main>
+    <footer>
+      <hr />
+      <span>&#x00a9; 2024 Kleidi Bujari</span>
+    </footer>
+  </body>
+</html>
