@@ -3,24 +3,86 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="/style.css" rel="stylesheet" />
-    <link rel="preload" href="style.css" as="style" />
     <title>{% block title %}4kb.net{% endblock title %}</title>
   </head>
+  <style>
+    :root {
+      --bg: #181616;
+      --fg: #c5c9c5;
+      --link: #76946a;
+      --linkhover: #98bb6c;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      color-scheme: dark;
+    }
+
+    body {
+      font-family: serif;
+      padding: 0 0.75em;
+      max-width: 42em;
+      margin: auto;
+      background: var(--bg);
+      color: var(--fg);
+    }
+
+    p {
+      line-height: 1.3em;
+    }
+
+    th,
+    td {
+      padding: 0.2em 0.4em;
+      border: thin solid;
+    }
+
+    table {
+      border: thin solid;
+      border-collapse: collapse;
+    }
+
+    a,
+    a:link {
+      color: var(--link);
+    }
+
+    a:hover {
+      color: var(--linkhover);
+    }
+
+    article img {
+      display: block;
+      margin: 0 auto;
+      max-width: 80%;
+      height: auto;
+      object-fit: contain;
+    }
+
+    pre {
+      padding: 1em;
+      overflow-x: scroll;
+    }
+  </style>
   <body>
-    <nav>
-      <span>4kb.net</span>
-      <div>
-        <a href="/">Home</a>
-        <a href="/posts">Posts</a>
-        <a href="/log">Log</a>
-      </div>
-    </nav>
-    <hr />
+    <header
+      style="
+        margin: 3em 0 3em 0;
+        display: flex;
+        gap: 8px;
+        flex-direction: column;
+        font-family: monospace;
+      "
+    >
+      <span
+        >Kleidi Bujari <<a href="mailto:mail@4kb.net">mail@4kb.net</a>></span
+      >
+      <nav style="display: flex; gap: 8px">
+        <span><a href="/">4kb.net</a> |</span>
+        <a target="_blank" href="https://github.com/kbujari">git</a>
+        <a href="/atom.xml">rss</a>
+      </nav>
+    </header>
     <main>{% block content %} {% endblock %}</main>
-    <footer>
-      <hr />
-      <span>&#x00a9; 2024 Kleidi Bujari</span>
-    </footer>
   </body>
 </html>

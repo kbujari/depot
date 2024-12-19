@@ -1,44 +1,16 @@
 {% extends "base.html" %} {% block content %}
 
-<h2>welcome!</h2>
+<div>
+  {% set section = get_section(path="posts/_index.md") %}
 
-<p>
-  I'm a computer engineering undergrad studying in Toronto. This is my personal
-  site where I sometimes publish long form posts on topics I'm interested in, or
-  short "logs" for information I want to remember.
-</p>
-
-<span>Find me on:</span>
-<ul>
-  <li>email: <a href="mailto:mail@4kb.net">mail@4kb.net</a></li>
-  <li>github: <a href="https://github.com/kbujari">kbujari</a></li>
-</ul>
-
-<!--<h3>Recent Posts</h3>-->
-<!---->
-<!--{% set section = get_section(path="posts/_index.md") %}-->
-<!---->
-<!--<ul>-->
-<!--  {% for page in section.pages | slice(end=4) %}-->
-<!--    <li>-->
-<!--    <span>[{{ page.date }}]</span>-->
-<!--    <a href="{{ page.permalink | safe }}">{{ page.title }}</a>-->
-<!--    </li>-->
-<!--  {% endfor %}-->
-<!--</ul>-->
-
-<h3>Recent Logs</h3>
-
-{% set section = get_section(path="log/_index.md") %}
-
-<ul>
-  {% for page in section.pages | slice(end=4) %}
-    <li>
-    <span>[{{ page.date }}]</span>
-    <a href="{{ page.permalink | safe }}">{{ page.title }}</a>
+  <ul style="list-style: none; padding-left: 0">
+    {% for page in section.pages %}
+    <li style="display: flex; gap: 1em; margin-bottom: 0.3em">
+      <span sty>{{ page.date }}</span>
+      <a href="{{ page.permalink | safe }}">{{ page.title }}</a>
     </li>
-  {% endfor %}
-</ul>
+    {% endfor %}
+  </ul>
 
-
-{% endblock content %}
+  {% endblock content %}
+</div>
