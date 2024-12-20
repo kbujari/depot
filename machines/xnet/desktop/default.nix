@@ -79,6 +79,11 @@ in
       ];
     };
 
+    services = {
+      yubikey-agent.enable = true;
+      pcscd.enable = true;
+    };
+
     programs.firefox = {
       enable = true;
       policies = {

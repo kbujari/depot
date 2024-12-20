@@ -2,6 +2,11 @@
 let
   cfg = config.xnet.users;
   inherit (lib) mkOption mkIf types;
+
+  gitKeys = builtins.fetchurl {
+    url = "https://github.com/kbujari.keys";
+    sha256 = "0fpa679zkrpx77vangzf3gnidwvmky8ifivn8411xx6albrikaqx";
+  };
 in
 {
 
@@ -16,9 +21,14 @@ in
   config = {
     users = {
       mutableUsers = false;
+      users.root = {
+        initialHashedPassword = "$y$j9T$eGwGb5tZwhk/.K0Lezsx4/$dJ4AODPBo0RBkVoCh1MVZTtkkDRn/C6A/XQIKt2YBNA";
+        openssh.authorizedKeys.keys = lib.splitString "\n" (builtins.readFile gitKeys);
+      };
       users.kle = mkIf (builtins.elem "kle" cfg.enable) {
-        hashedPassword = "$6$R4dDhaftX.vapGMd$.An36hlp3DXfkIC7bPZ0MDPo6Zvpk8JRrhy2LES.lZZj6JDa74oJkcMW3DCsIySvLJxOPXSShos0TpgJ/w0fH/";
+        initialHashedPassword = "$6$R4dDhaftX.vapGMd$.An36hlp3DXfkIC7bPZ0MDPo6Zvpk8JRrhy2LES.lZZj6JDa74oJkcMW3DCsIySvLJxOPXSShos0TpgJ/w0fH/";
         isNormalUser = true;
+        home = "/persist/usr/kle";
         createHome = true;
         extraGroups = [ "wheel" "users" "networkmanager" "video" ];
         packages = with pkgs; [
@@ -34,9 +44,7 @@ in
           tree
           zip
         ];
-        openssh.authorizedKeys.keys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP7T2uWJFUu8aFZZgQusGKyEMocb2pKbHLDad2eIJus9"
-        ];
+        openssh.authorizedKeys.keys = lib.splitString "\n" (builtins.readFile gitKeys);
       };
     };
 

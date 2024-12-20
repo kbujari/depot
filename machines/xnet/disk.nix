@@ -132,7 +132,7 @@ in
               mountpoint = "legacy";
             };
           };
-        };
+        } // usrDatasets;
       };
     };
   };

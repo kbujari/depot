@@ -8,11 +8,6 @@ in
 {
   system.stateVersion = "24.11";
 
-  users.mutableUsers = false;
-  users.users.root = {
-    initialPassword = "test";
-  };
-
   xnet = {
     disk = {
       enable = true;
