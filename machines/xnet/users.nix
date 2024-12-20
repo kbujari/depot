@@ -28,6 +28,7 @@ in
       users.kle = mkIf (builtins.elem "kle" cfg.enable) {
         initialHashedPassword = "$6$R4dDhaftX.vapGMd$.An36hlp3DXfkIC7bPZ0MDPo6Zvpk8JRrhy2LES.lZZj6JDa74oJkcMW3DCsIySvLJxOPXSShos0TpgJ/w0fH/";
         isNormalUser = true;
+        shell = pkgs.fish;
         home = "/persist/usr/kle";
         createHome = true;
         extraGroups = [ "wheel" "users" "networkmanager" "video" ];
@@ -39,6 +40,7 @@ in
           lynx
           neovim
           ranger
+          ripgrep
           rsync
           sshfs
           tree
@@ -52,6 +54,8 @@ in
       execWheelOnly = true;
       extraConfig = "Defaults lecture = never";
     };
+
+    programs.fish.enable = true;
 
     programs.ssh = {
       knownHosts = {
