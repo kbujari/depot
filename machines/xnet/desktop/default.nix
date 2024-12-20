@@ -84,13 +84,29 @@ in
       nix-direnv.enable = true;
     };
 
+    # Enable yubikey for SSH and more
     services = {
       yubikey-agent.enable = true;
       pcscd.enable = true;
+      udev.packages = with pkgs; [ yubikey-personalization ];
     };
 
     programs.firefox = {
       enable = true;
+      preferences = {
+        # Enable hardware transcoding
+        "media.ffmpeg.vaapi.enabled" = true;
+
+        # Enable legacy compact mode
+        "browser.compactmode.show" = true;
+        "browser.uidensity" = 1;
+
+        # Disable ctrl+q closing browser
+        "browser.quitShortcut.disabled" = true;
+
+        # Hardcode theme to dark mode
+        "ui.systemUsesDarkTheme" = 1;
+      };
       policies = {
         DisableTelemetry = true;
         DisableFirefoxStudies = true;
