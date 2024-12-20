@@ -25,6 +25,7 @@
     };
   };
 
+  programs.nm-applet.enable = true;
   services.fwupd.enable = true;
 
   systemd.tmpfiles.rules = [
