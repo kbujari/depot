@@ -79,6 +79,11 @@ in
       ];
     };
 
+    programs.direnv = {
+      enable = true;
+      nix-direnv.enable = true;
+    };
+
     services = {
       yubikey-agent.enable = true;
       pcscd.enable = true;

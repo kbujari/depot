@@ -47,7 +47,7 @@ in
     boot = {
       kernelParams = [ "nohibernate" "elevator=none" ];
       supportedFilesystems = [ "vfat" "zfs" ];
-      zfs.devNodes = "/dev/disk/by-partuuid";
+      zfs.devNodes = mkDefault "/dev/disk/by-partuuid";
       loader = {
         systemd-boot.enable = true;
         efi.canTouchEfiVariables = true;
