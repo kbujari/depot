@@ -66,6 +66,7 @@ in
     };
 
     programs.git = {
+      enable = true;
       config = {
         init.defaultBranch = "master";
         fetch.prune = true;
