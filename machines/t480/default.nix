@@ -25,6 +25,8 @@
     };
   };
 
+  services.fwupd.enable = true;
+
   systemd.tmpfiles.rules = [
     "d /persist/data/NetworkManager 0750 - - -"
     "L+ /var/lib/NetworkManager - - - - /persist/data/NetworkManager"
