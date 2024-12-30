@@ -5,7 +5,6 @@ let
   inherit (lib) mkOption mkIf types;
 in
 {
-
   options.xnet.nginx = {
     enable = mkOption {
       type = types.bool;

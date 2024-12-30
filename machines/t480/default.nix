@@ -18,12 +18,12 @@
     networkmanager = {
       enable = true;
       dns = "none";
-      wifi = {
-        powersave = true;
-        backend = "iwd";
-      };
+      wifi.powersave = true;
     };
   };
+
+  programs.nm-applet.enable = true;
+  services.fwupd.enable = true;
 
   systemd.tmpfiles.rules = [
     "d /persist/data/NetworkManager 0750 - - -"

@@ -47,7 +47,7 @@ in
     boot = {
       kernelParams = [ "nohibernate" "elevator=none" ];
       supportedFilesystems = [ "vfat" "zfs" ];
-      zfs.devNodes = "/dev/disk/by-partuuid";
+      zfs.devNodes = mkDefault "/dev/disk/by-partuuid";
       loader = {
         systemd-boot.enable = true;
         efi.canTouchEfiVariables = true;
@@ -133,6 +133,21 @@ in
             };
           };
         };
+      };
+    };
+
+    services.sanoid = {
+      enable = true;
+      templates.default = {
+        autosnap = true;
+        autoprune = true;
+        hourly = 24;
+        daily = 14;
+        monthly = 1;
+      };
+      datasets."zroot/persist" = {
+        useTemplate = [ "default" ];
+        recursive = true;
       };
     };
   };

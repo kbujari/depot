@@ -77,7 +77,20 @@
             value = nixosSystem {
               system = "x86_64-linux";
               specialArgs = { inherit inputs depot; };
-              modules = [ ./machines/${name} self.nixosModules.xnet ];
+              modules = [
+                # Machine's specific configuration
+                ./machines/${name}
+
+                # Implicitly import xnet
+                self.nixosModules.xnet
+
+                # Global module
+                ({ inputs, ... }: {
+
+                  # Set system nixpkgs to flake input
+                  nix.registry.nixpkgs.flake = inputs.nixpkgs;
+                })
+              ];
             };
           })
           machines);

@@ -2,6 +2,7 @@
 let
   cfg = config.xnet.desktop;
   inherit (lib) mkDefault mkOption mkIf types;
+  inherit (builtins) listToAttrs;
 in
 {
   options.xnet.desktop = {
@@ -28,6 +29,7 @@ in
         gtk = true;
         base = true;
       };
+      xwayland.enable = true;
       extraPackages = with pkgs; [
         foot
         fuzzel
@@ -43,7 +45,6 @@ in
         tigervnc
         waybar
         wl-clipboard
-        xwayland
         zathura
       ];
       extraSessionCommands = ''
@@ -54,8 +55,6 @@ in
         export XDG_SESSION_TYPE=wayland
       '';
     };
-
-    programs.light.enable = mkDefault true;
 
     qt = {
       enable = true;
@@ -79,9 +78,60 @@ in
       ];
     };
 
+    programs = {
+      fish.enable = true;
+      light.enable = mkDefault true;
+      direnv = {
+        enable = true;
+        nix-direnv.enable = true;
+      };
+
+      # GTK settings
+      dconf = {
+        enable = true;
+        profiles.user.databases = [{
+          lockAll = true;
+          settings = {
+            "org/gnome/desktop/interface" = {
+              color-scheme = "prefer-dark";
+              gtk-font-name = "System-ui 10";
+              icon-theme = "Pop";
+              theme-name = "Adwaita-dark";
+            };
+          };
+        }];
+      };
+    };
+
+    # Helper for managing dotfiles
+    environment.shellAliases.dots =
+      "git --git-dir=$HOME/.local/cfg/ --work-tree=$HOME";
+
+    # Enable yubikey for SSH and more
+    services = {
+      yubikey-agent.enable = true;
+      pcscd.enable = true;
+      udev.packages = with pkgs; [ yubikey-personalization ];
+    };
+
     programs.firefox = {
       enable = true;
+      preferences = {
+        # Enable hardware transcoding
+        "media.ffmpeg.vaapi.enabled" = true;
+
+        # Enable legacy compact mode
+        "browser.compactmode.show" = true;
+        "browser.uidensity" = 1;
+
+        # Disable ctrl+q closing browser
+        "browser.quitShortcut.disabled" = true;
+
+        # Hardcode theme to dark mode
+        "ui.systemUsesDarkTheme" = 1;
+      };
       policies = {
+        DefaultDownloadDirectory = "/tmp/firefox";
         DisableTelemetry = true;
         DisableFirefoxStudies = true;
         EnableTrackingProtection = {
@@ -90,34 +140,40 @@ in
           Cryptomining = true;
           Fingerprinting = true;
         };
-        DisablePocket = true;
-        DisableFirefoxAccounts = true;
         DisableAccounts = true;
+        DisableFirefoxAccounts = true;
         DisableFirefoxScreenshots = true;
-        OverrideFirstRunPage = "";
-        OverridePostUpdatePage = "";
-        DontCheckDefaultBrowser = true;
+        DisablePocket = true;
         DisplayBookmarksToolbar = "never";
         DisplayMenuBar = "default-off";
-        SearchBar = "unified";
-        ExtensionSettings = {
-          "*".installation_mode = "blocked"; # blocks all addons except the ones specified below
-          # uBlock Origin:
-          "uBlock0@raymondhill.net" = {
-            install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
-            installation_mode = "force_installed";
-          };
-          # Bitwarden:
-          "{446900e4-71c2-419f-a6a7-df9c091e268b}" = {
-            install_url = "https://addons.mozilla.org/firefox/downloads/latest/bitwarden-password-manager/latest.xpi";
-            installation_mode = "force_installed";
-          };
-          # Dark Reader:
-          "addon@darkreader.org" = {
-            install_url = "https://addons.mozilla.org/firefox/downloads/latest/darkreader/latest.xpi";
-            installation_mode = "force_installed";
-          };
+        DontCheckDefaultBrowser = true;
+        Homepage = {
+          URL = "about:blank";
+          StartPage = "homepage";
         };
+        HttpsOnlyMode = "enabled";
+        DNSOverHTTPS = false;
+        NewTabPage = false;
+        OfferToSaveLogins = false;
+        PasswordManagerEnabled = false;
+        SearchBar = "unified";
+        SearchEngines.Default = "DuckDuckGo";
+        SearchSuggestEnabled = false;
+        ExtensionSettings =
+          let
+            extension = shortId: uuid: {
+              name = uuid;
+              value = {
+                install_url = "https://addons.mozilla.org/en-US/firefox/downloads/latest/${shortId}/latest.xpi";
+                installation_mode = "force_installed";
+              };
+            };
+          in
+          listToAttrs [
+            (extension "ublock-origin" "uBlock0@raymondhill.net")
+            (extension "bitwarden-password-manager" "{446900e4-71c2-419f-a6a7-df9c091e268b}")
+            (extension "darkreader" "addon@darkreader.org")
+          ];
       };
     };
   };
