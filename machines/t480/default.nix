@@ -1,4 +1,8 @@
-{ ... }: {
+{ inputs, ... }: {
+  imports = [
+    inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t480
+  ];
+
   system.stateVersion = "24.05";
 
   xnet = {
