@@ -1,0 +1,339 @@
+<!doctype html>
+<head>
+  <meta charset="utf-8" />
+  <title>rs-calc</title>
+  <link rel="stylesheet" href="styles.css" />
+  <meta name="viewport" content="initial-scale=1.0" />
+</head>
+
+<body>
+  <h1>rs-calc</h1>
+
+  <input id="resistor-query" placeholder="e.g. 3.3K" />
+  <label class="resistor-query-label" for="resistor-query">&#8486;</label>
+
+  <div id="resistor-result" style="display: none">
+    <h2>four bands</h2>
+    <div class="resistor-diagram resistor-diagram-4">
+      <div id="resistor-stripe-4-1" class="resistor-stripe"></div>
+      <div id="resistor-stripe-4-2" class="resistor-stripe"></div>
+      <div id="resistor-stripe-4-3" class="resistor-stripe"></div>
+      <div id="resistor-stripe-4-4" class="resistor-stripe">
+        &nbsp;<br />&nbsp;
+      </div>
+      <div
+        class="resistor-stripe-tolerance resistor-stripe"
+        style="color: #000; background-color: #cfb53b"
+      >
+        gold<br />&plusmn;5%
+      </div>
+    </div>
+    <h2>five bands</h2>
+    <div class="resistor-diagram resistor-diagram-5">
+      <div id="resistor-stripe-5-1" class="resistor-stripe"></div>
+      <div id="resistor-stripe-5-2" class="resistor-stripe"></div>
+      <div id="resistor-stripe-5-3" class="resistor-stripe"></div>
+      <div id="resistor-stripe-5-4" class="resistor-stripe"></div>
+      <div
+        class="resistor-stripe-tolerance resistor-stripe"
+        style="color: #fff; background-color: #964b00"
+      >
+        brown<br />&plusmn;1%
+      </div>
+    </div>
+    <h2>surface mount</h2>
+    <div id="resistor-smt-3" class="resistor-smt"></div>
+  </div>
+
+  <footer>
+    <p>
+      forked from
+      <a href="https://github.com/joewalnes/resisto.rs/" target="_blank">this</a
+      >, with removed analytics, cleaned up code.
+      <a href="https://github.com/kleidib" target="_blank">my github</a>
+    </p>
+  </footer>
+</body>
+
+<script>
+  // Resistor calculator.
+  // -Joe Walnes
+  // See resistors-test.html
+
+  var resistors = {};
+
+  // These hex codes came from
+  // http://en.wikipedia.org/wiki/Electronic_color_code
+  resistors.digitsToColors = {
+    "-2": { hex: "#c0c0c0", label: "#000", name: "silver", multiplier: "0.01" },
+    "-1": { hex: "#cfb53b", label: "#000", name: "gold", multiplier: "0.1" },
+    0: { hex: "#000000", label: "#fff", name: "black", figure: "0" },
+    1: {
+      hex: "#964b00",
+      label: "#fff",
+      name: "brown",
+      figure: "1",
+      multiplier: "10",
+    },
+    2: {
+      hex: "#ff0000",
+      label: "#fff",
+      name: "red",
+      figure: "2",
+      multiplier: "100",
+    },
+    3: {
+      hex: "#ffa500",
+      label: "#000",
+      name: "orange",
+      figure: "3",
+      multiplier: "1K",
+    },
+    4: {
+      hex: "#ffff00",
+      label: "#000",
+      name: "yellow",
+      figure: "4",
+      multiplier: "10K",
+    },
+    5: {
+      hex: "#9acd32",
+      label: "#000",
+      name: "green",
+      figure: "5",
+      multiplier: "100K",
+    },
+    6: {
+      hex: "#6495ed",
+      label: "#000",
+      name: "blue",
+      figure: "6",
+      multiplier: "1M",
+    },
+    7: {
+      hex: "#ee82ee",
+      label: "#000",
+      name: "purple",
+      figure: "7",
+      multiplier: "10M",
+    },
+    8: {
+      hex: "#a0a0a0",
+      label: "#000",
+      name: "gray",
+      figure: "8",
+      multiplier: "100M",
+    },
+    9: {
+      hex: "#ffffff",
+      label: "#000",
+      name: "white",
+      figure: "9",
+      multiplier: "1000M",
+    },
+  };
+
+  resistors.query = function (input) {
+    input = input
+      .replace(/ +?/g, "")
+      .replace(/ohm[s]?/, "")
+      .replace(/\u2126/, "")
+      .replace(/\.$/, "");
+
+    var value = this.parseValue(input);
+
+    if (value !== null) {
+      value = this.roundToSignificantPlaces(value, 3);
+
+      if ((value <= 99900000000 && value >= 1) || value === 0) {
+        var colors5 = this.numberTo5ColorDigits(value);
+        var colors4 = this.numberTo4ColorDigits(value);
+        var smt3 = value < 10 ? colors4[0].toString() : colors4.join("");
+        var self = this;
+
+        return {
+          value: value,
+          smt3: smt3,
+          //smt4: smt4,
+          //smtEia96: smtEia96,
+          formatted: this.formatValue(value),
+          colors5: colors5.map(function (d) {
+            return self.digitsToColors[d];
+          }),
+          colors4: colors4.map(function (d) {
+            return self.digitsToColors[d];
+          }),
+        };
+      }
+    }
+
+    return null;
+  };
+
+  /**
+   * Given ohm rating as string (e.g. 3.2m or 3M2), return
+   * integer value (e.g. 3200000).
+   */
+  resistors.parseValue = function (input) {
+    var multiplier = 1;
+    var match;
+
+    if ((match = input.match(/^(\d+)(\.(\d+))?([km])?$/i))) {
+      // e.g. 123, 1.23, 1M, 1.23M
+      var unit = match[4];
+      if (unit) {
+        if (unit == "k" || unit == "K") {
+          multiplier = 1000;
+        }
+        if (unit == "m" || unit == "M") {
+          multiplier = 1000000;
+        }
+      }
+
+      return (match[1] + "." + (match[3] || 0)) * multiplier;
+    } else if ((match = input.match(/^(\d+)([km])(\d+)$/i))) {
+      // e.g. 12K3
+      var unit = match[2];
+      if (unit) {
+        if (unit == "k" || unit == "K") {
+          multiplier = 1000;
+        }
+        if (unit == "m" || unit == "M") {
+          multiplier = 1000000;
+        }
+      }
+      return (match[1] + "." + (match[3] || 0)) * multiplier;
+    } else {
+      return null;
+    }
+  };
+
+  /**
+   * Round a value to significant places.
+   * e.g. (123456789, 3) -> 123000000)
+   *     (0.0045678, 3) -> 0.00457)
+   */
+  resistors.roundToSignificantPlaces = function (value, significant) {
+    if (!value) {
+      return 0;
+    }
+    var nearest = Math.pow(
+      10,
+      Math.floor(Math.log(Math.abs(value)) / Math.log(10)) - (significant - 1),
+    );
+    return Math.round(value / nearest) * nearest;
+  };
+
+  /**
+   * Given ohm rating as integer (e.g. 470000), return
+   * array of color digits (e.g. 4, 7, 0, 3). See digitsTo_Colors.
+   */
+  resistors.numberTo5ColorDigits = function (value) {
+    if (!value) {
+      return [0, 0, 0, 0]; // Special case
+    }
+
+    var precision = 5;
+    var digits = (
+      Math.floor(value * 100 * Math.pow(10, precision)) /
+      Math.pow(10, precision)
+    ).toString();
+    function getDigit(digits, i) {
+      var d = parseInt(digits[i]);
+      return isNaN(d) ? 0 : d;
+    }
+    return [
+      getDigit(digits, 0),
+      getDigit(digits, 1),
+      getDigit(digits, 2),
+      digits.length - 5,
+    ];
+  };
+
+  /**
+   * Given ohm rating as integer (e.g. 470000), return
+   * array of color digits (e.g. 4, 7, 0, 3). See digitsTo_Colors.
+   */
+  resistors.numberTo4ColorDigits = function (value) {
+    if (!value) {
+      return [0, 0, 0]; // Special case
+    }
+
+    var precision = 5;
+    var digits = (
+      Math.floor(value * 100 * Math.pow(10, precision)) /
+      Math.pow(10, precision)
+    ).toString();
+    function getDigit(digits, i) {
+      var d = parseInt(digits[i]);
+      return isNaN(d) ? 0 : d;
+    }
+    return [getDigit(digits, 0), getDigit(digits, 1), digits.length - 4];
+  };
+
+  /**
+   * Given a numeric value, format it like '3.2M' etc.
+   */
+  resistors.formatValue = function (value) {
+    if (value >= 1000000) {
+      return value / 1000000 + "M";
+    } else if (value >= 1000) {
+      return value / 1000 + "K";
+    } else {
+      return value.toString();
+    }
+  };
+</script>
+<script>
+  var queryEl = document.getElementById("resistor-query"),
+    resultEl = document.getElementById("resistor-result");
+
+  function showStripes(colors, prefix) {
+    for (var i = 0; i < colors.length; i++) {
+      var color = colors[i];
+      var stripeEl = document.getElementById(
+        "resistor-stripe-" + prefix + "-" + (i + 1),
+      );
+      stripeEl.style.backgroundColor = color.hex;
+      stripeEl.style.color = color.label;
+      var text = color.name + "<br>";
+
+      if (i == colors.length - 1) {
+        if (color.multiplier !== undefined) {
+          text += "&times;" + color.multiplier;
+        } else {
+          text += "&nbsp;";
+        }
+      } else {
+        text += color.figure;
+      }
+      stripeEl.innerHTML = text;
+    }
+  }
+
+  queryEl.onchange = queryEl.onkeyup = function () {
+    location.hash = encodeURIComponent(queryEl.value);
+    var result = resistors.query(queryEl.value);
+
+    if (result) {
+      resultEl.style.display = "block";
+      showStripes(result.colors4, "4");
+      showStripes(result.colors5, "5");
+      document.getElementById("resistor-smt-3").innerHTML = result.smt3;
+    } else {
+      resultEl.style.display = "none";
+    }
+  };
+
+  if (location.hash) {
+    queryEl.value = decodeURIComponent(location.hash.substring(1));
+    queryEl.onchange();
+  }
+
+  window.onhashchange = function () {
+    queryEl.value = decodeURIComponent(location.hash.substring(1));
+    queryEl.onchange();
+  };
+
+  queryEl.focus();
+</script>
