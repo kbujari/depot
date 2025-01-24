@@ -24,8 +24,8 @@ in
       settings = {
         UsePAM = true;
         X11Forwarding = false;
-        PermitRootLogin = "no";
-        PasswordAuthentication = false;
+        PermitRootLogin = "yes";
+        # PasswordAuthentication = false;
         Ciphers = [ "chacha20-poly1305@openssh.com" ];
         Macs = [ "hmac-sha2-512-etm@openssh.com" ];
         KexAlgorithms = [ "curve25519-sha256@libssh.org" ];

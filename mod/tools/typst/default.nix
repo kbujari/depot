@@ -28,6 +28,6 @@ in
       depotPackages
     ];
 
-    shellHook = "export XDG_DATA_HOME=${depotPackages}/share:$XDG_DATA_HOME";
+    shellHook = "alias typst='export XDG_DATA_HOME=${depotPackages}/share:$XDG_DATA_HOME'";
   };
 }

@@ -47,6 +47,7 @@ in
       '';
       settings = {
         about-filter = "${pkgs.cgit-pink}/lib/cgit/filters/about-formatting.sh";
+        source-filter = "${pkgs.cgit-pink}/lib/cgit/filters/syntax-highlighting.py";
         clone-url = "https://${cfg.hostName}/$CGIT_REPO_URL git@${cfg.hostName}:$CGIT_REPO_URL";
         enable-commit-graph = true;
         enable-http-clone = false;
@@ -60,12 +61,6 @@ in
         snapshots = "tar.gz tar.bz2 zip";
       };
     };
-
-    # required for rendering markdown readme
-    environment.systemPackages = with pkgs; [
-      python312
-      python312Packages.markdown
-    ];
 
     # services.nginx.virtualHosts."${cfg.gitweb.hostName}" = {
     #   useACMEHost = "4kb.net";

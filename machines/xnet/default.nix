@@ -7,10 +7,11 @@ in
     ./disk.nix
     ./users.nix
     ./nginx.nix
+    ./persist.nix
     ./net
     ./desktop
     ./gitserver
-    # ./monitoring
+    ./monitoring
   ];
 
   i18n.defaultLocale = mkDefault "en_US.UTF-8";

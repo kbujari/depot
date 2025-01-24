@@ -11,6 +11,10 @@
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-hardware.url = "github:nixos/nixos-hardware/master";
+
+    # Rust projects
+    naersk.url = "github:nix-community/naersk";
+    naersk.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = { self, nixpkgs, ... } @ inputs:
@@ -40,6 +44,8 @@
       # the depot module.
       depot = readTree.fix (self: readDepot {
         depot = self;
+
+        inherit inputs;
 
         # x86_64-linux is hardcoded as the package arch only for the
         # mod directory. This workaround keeps the flake pure,

@@ -1,12 +1,24 @@
 { pkgs, lib, config, ... }:
 let
+  inherit (builtins)
+    elem
+    ;
+
+  inherit (lib)
+    mkOption
+    mkIf
+    types
+    ;
+
   cfg = config.xnet.users;
-  inherit (lib) mkOption mkIf types;
+
+  userEn = user: elem user cfg.enable;
 
   gitKeys = builtins.fetchurl {
     url = "https://github.com/kbujari.keys";
     sha256 = "0fpa679zkrpx77vangzf3gnidwvmky8ifivn8411xx6albrikaqx";
   };
+
 in
 {
 
@@ -25,7 +37,7 @@ in
         initialHashedPassword = "$y$j9T$eGwGb5tZwhk/.K0Lezsx4/$dJ4AODPBo0RBkVoCh1MVZTtkkDRn/C6A/XQIKt2YBNA";
         openssh.authorizedKeys.keys = lib.splitString "\n" (builtins.readFile gitKeys);
       };
-      users.kle = mkIf (builtins.elem "kle" cfg.enable) {
+      users.kle = mkIf (userEn "kle") {
         initialHashedPassword = "$6$R4dDhaftX.vapGMd$.An36hlp3DXfkIC7bPZ0MDPo6Zvpk8JRrhy2LES.lZZj6JDa74oJkcMW3DCsIySvLJxOPXSShos0TpgJ/w0fH/";
         isNormalUser = true;
         shell = pkgs.fish;
@@ -49,6 +61,8 @@ in
         openssh.authorizedKeys.keys = lib.splitString "\n" (builtins.readFile gitKeys);
       };
     };
+
+    disko.devices.zpool.zroot.datasets = { };
 
     security.sudo = {
       execWheelOnly = true;

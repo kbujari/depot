@@ -1,4 +1,4 @@
-{ lib, inputs, depot, ... }:
+{ lib, inputs, ... }:
 let
   gitKeys = builtins.fetchurl {
     url = "https://github.com/kbujari.keys";
@@ -11,12 +11,24 @@ let
     ;
 in
 {
+  imports = [
+    common-cpu-intel
+    common-gpu-intel
+    ./jellyfin.nix
+    ./pxeboot.nix
+  ];
+
   system.stateVersion = "24.11";
-  networking.hostName = "iridium";
+  networking.hostName = "radon";
 
   users.users.root.initialPassword = "hello";
 
-  imports = [ common-cpu-intel common-gpu-intel ];
+  users.groups.media.gid = 2000;
+
+  boot.zfs.pools.radon.devNodes = "/dev/disk/by-id/";
+  boot.zfs.extraPools = [ "radon" ];
+
+  services.nfs.server.enable = true;
 
   xnet = {
     disk = {
@@ -24,12 +36,11 @@ in
       device = "/dev/nvme0n1";
     };
     net = {
-      sshd.enable = true;
+      join = [ "plaza" ];
       interface = "enp1s0";
-      join = [ "plaza" "kubenet" ];
+      sshd.enable = true;
     };
     nginx.enable = true;
-    monitoring.hostGrafana = true;
     gitServer = {
       enable = true;
       gitweb.enable = true;
