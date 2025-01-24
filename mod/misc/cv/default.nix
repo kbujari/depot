@@ -1,13 +1,6 @@
-{ pkgs, ... }: pkgs.stdenvNoCC.mkDerivation {
-  pname = "cv";
-  version = "1.0";
+{ pkgs, ... }:
 
-  src = ./.;
-
-  nativeBuildInputs = with pkgs; [ typst ];
-  buildPhase = "typst compile cv.typ";
-  installPhase = ''
-    mkdir -p $out/share
-    cp cv.pdf $out/share
-  '';
-}
+pkgs.runCommand "cv" { } ''
+  mkdir -p $out/share
+  ${pkgs.typst}/bin/typst compile ${./cv.typ} $out/share/cv.pdf
+''

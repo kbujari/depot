@@ -1,11 +1,134 @@
-#import "template.typ": *
+#let resume(
+  author: "",
+  email: "",
+  github: "",
+  personal-site: "",
+  accent-color: "#000000",
+  font: "New Computer Modern",
+  body,
+) = {
+  set document(author: author, title: author)
+  set text(
+    // LaTeX style font
+    font: font,
+    size: 10pt,
+    lang: "en",
+    ligatures: false
+  )
+
+  set page(
+    margin: (0.5in),
+    paper: "us-letter",
+  )
+
+  show link: underline
+  show link: set text(
+    fill: rgb(accent-color),
+  )
+
+  show heading.where(level: 2): it => [
+    #pad(top: 0pt, bottom: -10pt, [#smallcaps(it.body)])
+    #line(length: 100%, stroke: 1pt)
+  ]
+
+  // Accent Color Styling
+  show heading: set text(
+    fill: rgb(accent-color),
+  )
+
+  show heading.where(level: 1): it => [
+    #set align(left)
+    #set text(
+      weight: 700,
+      size: 20pt,
+    )
+    #pad(it.body)
+  ]
+
+  [= #(author)]
+
+  let contact-item(value, prefix: "", link-type: "") = {
+    if value != "" {
+      if link-type != "" {
+        link(link-type + value)[#(prefix + value)]
+      } else {
+        value
+      }
+    }
+  }
+
+  // Personal Info
+  pad(
+    top: 0.25em,
+    align(left)[
+      #{
+        let items = (
+          contact-item(email, link-type: "mailto:"),
+          contact-item(github, link-type: "https://"),
+          contact-item(personal-site, link-type: "https://"),
+        )
+        items.filter(x => x != none).join("  |  ")
+      }
+    ],
+  )
+
+  set par(justify: true)
+
+  body
+}
+
+#let generic-two-by-two(
+  top-left: "",
+  top-right: "",
+  bottom-left: "",
+  bottom-right: "",
+) = {
+  [
+    #top-left #h(1fr) #top-right \
+    #bottom-left #h(1fr) #bottom-right
+  ]
+}
+
+#let dates-helper(
+  start-date: "",
+  end-date: "",
+) = {
+  start-date + " " + $dash.em$ + " " + end-date
+}
+
+#let edu(
+  institution: "",
+  dates: "",
+  degree: "",
+  location: "",
+) = {
+  generic-two-by-two(
+    top-left: strong(institution),
+    top-right: location,
+    bottom-left: emph(degree),
+    bottom-right: emph(dates),
+  )
+}
+
+#let work(
+  title: "",
+  dates: "",
+  company: "",
+  location: "",
+) = {
+  generic-two-by-two(
+    top-left: strong(title),
+    top-right: dates,
+    bottom-left: company,
+    bottom-right: emph(location),
+  )
+}
 
 #show: resume.with(
   author: "Kleidi Bujari",
   email: "mail@4kb.net",
   github: "github.com/kbujari",
   personal-site: "4kb.net",
-  paper: "us-letter",
 )
 
 == Education
