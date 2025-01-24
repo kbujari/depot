@@ -1,6 +1,12 @@
-{ inputs, ... }: {
+{ inputs, ... }:
+let
+  inherit (inputs.nixos-hardware.nixosModules)
+    lenovo-thinkpad-t480
+    ;
+in
+{
   imports = [
-    inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t480
+    lenovo-thinkpad-t480
   ];
 
   system.stateVersion = "24.05";
@@ -29,8 +35,5 @@
   programs.nm-applet.enable = true;
   services.fwupd.enable = true;
 
-  systemd.tmpfiles.rules = [
-    "d /persist/data/NetworkManager 0750 - - -"
-    "L+ /var/lib/NetworkManager - - - - /persist/data/NetworkManager"
-  ];
+  xnet.persist = [ "/etc/NetworkManager/system-connections" ];
 }
