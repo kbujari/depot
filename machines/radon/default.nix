@@ -2,7 +2,7 @@
 let
   gitKeys = builtins.fetchurl {
     url = "https://github.com/kbujari.keys";
-    sha256 = "0fpa679zkrpx77vangzf3gnidwvmky8ifivn8411xx6albrikaqx";
+    sha256 = "1kskbiyqvjz1wsmcrgh9v0iryf33y70zk503z0m96wmzdjllmc94";
   };
 
   inherit (inputs.nixos-hardware.nixosModules)

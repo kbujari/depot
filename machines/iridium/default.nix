@@ -1,13 +1,12 @@
 { lib, inputs, depot, ... }:
 let
-  gitKeys = builtins.fetchurl {
-    url = "https://github.com/kbujari.keys";
-    sha256 = "0fpa679zkrpx77vangzf3gnidwvmky8ifivn8411xx6albrikaqx";
-  };
-
   inherit (inputs.nixos-hardware.nixosModules)
     common-cpu-intel
     common-gpu-intel
+    ;
+
+  inherit (depot.users.kle)
+    gitKeys
     ;
 in
 {

@@ -1,10 +1,12 @@
-{ inputs, ... }:
+{ inputs, depot, ... }:
 
 let
   inherit (inputs.nixos-hardware.nixosModules)
     common-cpu-amd
     common-gpu-amd
     ;
+
+  inherit (depot.users) kle;
 in
 {
   imports = [
@@ -14,9 +16,10 @@ in
 
   system.stateVersion = "24.11";
 
+  users.users.kle = kle.nixos;
+
   xnet = {
     desktop.enable = true;
-    users.enable = [ "kle" ];
     net.join = [ "plaza" ];
     disk = {
       enable = true;

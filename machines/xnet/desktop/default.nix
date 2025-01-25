@@ -79,7 +79,13 @@ in
     };
 
     programs = {
-      fish.enable = true;
+      fish = {
+        enable = true;
+        interactiveShellInit = ''
+          # disable greeting
+          set fish_greeting
+        '';
+      };
       light.enable = mkDefault true;
       direnv = {
         enable = true;
