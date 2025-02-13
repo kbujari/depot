@@ -59,6 +59,7 @@ in
 {
   imports = [
     ./sshd.nix
+    ./dns.nix
   ];
 
   options.xnet.net = {
@@ -76,6 +77,9 @@ in
   };
 
   config = mkIf ((length cfg.join) > 0) {
+    # networkd will handle this
+    networking.useDHCP = false;
+
     systemd.network =
       let
         name = config.networking.hostName;

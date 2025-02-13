@@ -1,14 +1,15 @@
-{ lib, inputs, ... }:
+{ inputs, ... }:
 let
-  gitKeys = builtins.fetchurl {
-    url = "https://github.com/kbujari.keys";
-    sha256 = "1kskbiyqvjz1wsmcrgh9v0iryf33y70zk503z0m96wmzdjllmc94";
-  };
 
   inherit (inputs.nixos-hardware.nixosModules)
     common-cpu-intel
     common-gpu-intel
     ;
+
+  interfaces = {
+    bottom = "enp1s0";
+    top = "enp2s0";
+  };
 in
 {
   imports = [
@@ -21,7 +22,22 @@ in
   system.stateVersion = "24.11";
   networking.hostName = "radon";
 
-  users.users.root.initialPassword = "hello";
+  boot.kernel.sysctl = {
+    "net.ipv4.conf.all.forwarding" = true;
+    "net.ipv6.conf.all.forwarding" = true;
+  };
+
+  services.unbound.settings.server = {
+    interface = [ "10.88.88.2" ];
+    access-control = [
+      "10.88.88.0/24 allow"
+    ];
+  };
+
+  networking.firewall.interfaces.plaza = {
+    allowedTCPPorts = [ 53 ];
+    allowedUDPPorts = [ 53 ];
+  };
 
   users.groups.media.gid = 2000;
 
@@ -37,14 +53,13 @@ in
     };
     net = {
       join = [ "plaza" ];
-      interface = "enp1s0";
+      interface = interfaces.bottom;
       sshd.enable = true;
     };
     nginx.enable = true;
     gitServer = {
       enable = true;
       gitweb.enable = true;
-      keys = lib.splitString "\n" (builtins.readFile gitKeys);
     };
   };
 }

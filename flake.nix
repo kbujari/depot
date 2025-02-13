@@ -69,7 +69,7 @@
         lib = nixpkgs.lib;
       });
 
-      machines = filter (m: m != "iso" && m != "xnet")
+      machines = filter (m: m != "xnet")
         (attrNames (readDir ./machines));
     in
     {

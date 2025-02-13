@@ -14,6 +14,12 @@ in
     common-gpu-amd
   ];
 
+  programs.corectrl = {
+    enable = true;
+    gpuOverclock.enable = true;
+  };
+
+
   system.stateVersion = "24.11";
 
   users.users.kle = kle.nixos;

@@ -17,7 +17,6 @@ in
 
   xnet = {
     desktop.enable = true;
-    # users.enable = [ "kle" ];
     disk = {
       enable = true;
       device = "/dev/nvme0n1";

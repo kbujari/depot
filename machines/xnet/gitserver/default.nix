@@ -18,11 +18,6 @@ in
       default = "/persist/repo/git";
       description = "Directory where repos will be stored.";
     };
-
-    keys = mkOption {
-      type = types.listOf types.str;
-      description = "SSH public keys used for git operations.";
-    };
   };
 
   config = mkIf cfg.enable {
@@ -34,7 +29,7 @@ in
       homeMode = "755";
       createHome = true;
       shell = "${pkgs.git}/bin/git-shell";
-      openssh.authorizedKeys.keys = cfg.keys;
+      openssh.authorizedKeys.keys = config.xnet.pubKeys;
     };
 
     users.groups.git = { };

@@ -28,7 +28,7 @@ in
     shell = pkgs.fish;
     home = "/persist/usr/kle";
     createHome = true;
-    extraGroups = [ "wheel" "users" "networkmanager" "video" ];
+    extraGroups = [ "wheel" "users" "networkmanager" "video" "corectrl" ];
     packages = with pkgs; [
       # utilities
       btop

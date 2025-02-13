@@ -22,10 +22,10 @@ in
         type = "ed25519";
       }];
       settings = {
-        UsePAM = true;
+        UsePAM = false;
         X11Forwarding = false;
-        PermitRootLogin = "yes";
-        # PasswordAuthentication = false;
+        PermitRootLogin = "prohibit-password";
+        PasswordAuthentication = false;
         Ciphers = [ "chacha20-poly1305@openssh.com" ];
         Macs = [ "hmac-sha2-512-etm@openssh.com" ];
         KexAlgorithms = [ "curve25519-sha256@libssh.org" ];
