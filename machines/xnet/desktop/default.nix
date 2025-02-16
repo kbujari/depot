@@ -43,6 +43,7 @@ in
         swayidle
         swaylock
         tigervnc
+        udiskie
         waybar
         wl-clipboard
         zathura
@@ -119,6 +120,8 @@ in
       pcscd.enable = true;
       udev.packages = with pkgs; [ yubikey-personalization ];
     };
+
+    services.udisks2.enable = true;
 
     programs.firefox = {
       enable = true;
