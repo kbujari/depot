@@ -31,6 +31,8 @@ in
     hostName = "t1";
   };
 
+  nixpkgs.config.allowNonFree = true;
+
   programs = {
     # override default from xnet
     light.enable = false;
@@ -43,6 +45,7 @@ in
   };
 
   environment.systemPackages = with pkgs; [
+    spotify
     prismlauncher
   ];
 }
