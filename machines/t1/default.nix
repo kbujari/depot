@@ -1,4 +1,4 @@
-{ inputs, depot, ... }:
+{ inputs, depot, pkgs, ... }:
 
 let
   inherit (inputs.nixos-hardware.nixosModules)
@@ -13,12 +13,6 @@ in
     common-cpu-amd
     common-gpu-amd
   ];
-
-  programs.corectrl = {
-    enable = true;
-    gpuOverclock.enable = true;
-  };
-
 
   system.stateVersion = "24.11";
 
@@ -37,6 +31,18 @@ in
     hostName = "t1";
   };
 
-  # override default from xnet
-  programs.light.enable = false;
+  programs = {
+    # override default from xnet
+    light.enable = false;
+
+    steam.enable = true;
+    corectrl = {
+      enable = true;
+      gpuOverclock.enable = true;
+    };
+  };
+
+  environment.systemPackages = with pkgs; [
+    prismlauncher
+  ];
 }

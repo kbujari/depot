@@ -69,6 +69,7 @@ in
       noto-fonts-cjk-sans
       noto-fonts-emoji
       (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
+      terminus
     ];
 
     xdg.portal = {
