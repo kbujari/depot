@@ -28,7 +28,7 @@ in
       depotPackages
     ];
 
-    # shellHook = "export TYPST_PACKAGE_PATH=${depotPackages}/share";
-    shellHook = "alias typst='XDG_DATA_HOME=${depotPackages}/share typst'";
+    shellHook = "export TYPST_PACKAGE_PATH=${depotPackages}/share/typst";
+    # shellHook = "alias typst='XDG_DATA_HOME=${depotPackages}/share typst'";
   };
 }

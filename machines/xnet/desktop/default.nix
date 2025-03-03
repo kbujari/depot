@@ -65,10 +65,11 @@ in
 
     fonts.packages = with pkgs; [
       departure-mono
+      iosevka
       noto-fonts
       noto-fonts-cjk-sans
       noto-fonts-emoji
-      (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
+      nerd-fonts.symbols-only
       terminus_font
     ];
 
@@ -79,6 +80,8 @@ in
         xdg-desktop-portal-gtk
       ];
     };
+
+    environment.systemPackages = [ pkgs.man-pages pkgs.man-pages-posix ];
 
     programs = {
       fish = {
@@ -120,9 +123,8 @@ in
       yubikey-agent.enable = true;
       pcscd.enable = true;
       udev.packages = with pkgs; [ yubikey-personalization ];
+      udisks2.enable = true;
     };
-
-    services.udisks2.enable = true;
 
     programs.firefox = {
       enable = true;
@@ -130,6 +132,8 @@ in
         # Enable hardware transcoding
         "media.ffmpeg.vaapi.enabled" = true;
 
+        # Disable controlling media with keyboard
+        "media.hardwaremediakeys.enabled" = false;
         # Enable legacy compact mode
         "browser.compactmode.show" = true;
         "browser.uidensity" = 1;

@@ -1,39 +1,37 @@
-{ ... }: {
-  services.resolved.enable = false;
+{ lib, ... }:
+let
+  inherit (lib)
+    mkDefault
+    ;
 
-  services.unbound = {
+  quad9 = [
+    "9.9.9.9#dns.quad9.net"
+    "149.112.112.112#dns.quad9.net"
+    "2620:fe::fe#dns.quad9.net"
+    "2620:fe::9#dns.quad9.net"
+  ];
+
+  cloudflare = [
+    "1.1.1.1#one.one.one.one"
+    "1.0.0.1#one.one.one.one"
+    "2606:4700:4700::1111#one.one.one.one"
+    "2606:4700:4700::1001#one.one.one.one"
+  ];
+in
+{
+
+  networking.nameservers = mkDefault [
+    "9.9.9.9#dns.quad9.net"
+    "149.112.112.112#dns.quad9.net"
+    "2620:fe::fe#dns.quad9.net"
+    "2620:fe::9#dns.quad9.net"
+  ];
+
+  services.resolved = {
     enable = true;
-    settings.server = {
-      interface = [ "127.0.0.1" ];
-      access-control = [
-        "0.0.0.0/0 refuse"
-        "127.0.0.0/8 allow"
-      ];
-
-      private-domain = [ ];
-      private-address = [ ];
-
-      harden-glue = true;
-      harden-dnssec-stripped = true;
-      use-caps-for-id = false;
-      prefetch = true;
-      edns-buffer-size = 1232;
-      hide-identity = true;
-      hide-version = true;
-      tls-system-cert = true;
-    };
-
-    settings.forward-zone = [{
-      name = ".";
-      forward-tls-upstream = true;
-      forward-addr = [
-        "9.9.9.9#dns.quad9.net"
-        "149.112.112.112#dns.quad9.net"
-      ];
-    }];
-  };
-
-  networking = {
-    nameservers = [ "::1" ];
+    llmnr = "true";
+    dnssec = "false";
+    dnsovertls = mkDefault "opportunistic";
+    fallbackDns = quad9 ++ cloudflare;
   };
 }

@@ -20,7 +20,11 @@ in
 
   xnet = {
     desktop.enable = true;
-    net.join = [ "plaza" ];
+    net = {
+      interface = "enp5s0";
+      join = [ "plaza" ];
+      sshd.enable = true;
+    };
     disk = {
       enable = true;
       device = "/dev/nvme0n1";
@@ -31,12 +35,7 @@ in
     hostName = "t1";
   };
 
-  nixpkgs.config.allowNonFree = true;
-
   programs = {
-    # override default from xnet
-    light.enable = false;
-
     steam.enable = true;
     corectrl = {
       enable = true;
@@ -44,8 +43,18 @@ in
     };
   };
 
+  fileSystems."/mnt/media" = {
+    device = "radon:/radon/media";
+    fsType = "nfs";
+    options = [ "noauto" "x-systemd.automount" "x-systemd.idle-timeout=600" ];
+  };
+
+  services.udev.packages = [ pkgs.ddcutil ];
+  environment.shellAliases.b = "${pkgs.ddcutil}/bin/ddcutil setvcp 10";
+
   environment.systemPackages = with pkgs; [
-    spotify
+    ddcutil
     prismlauncher
+    spotify
   ];
 }

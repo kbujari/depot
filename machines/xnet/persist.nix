@@ -50,7 +50,7 @@ in
           mode = if isString entry then "-" else entry.mode;
 
           dent = "d /persist${path} ${mode} ${user} ${group} - -";
-          link = "L ${path} - - - - /persist${path}";
+          link = "L+ ${path} - - - - /persist${path}";
           perm = "Z ${mode} ${user} ${group} - -";
         in
         [ dent link perm ];
