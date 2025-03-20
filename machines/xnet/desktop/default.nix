@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 let
   cfg = config.xnet.desktop;
-  inherit (lib) mkDefault mkOption mkIf types;
+  inherit (lib) mkDefault mkOption mkForce mkIf types;
   inherit (builtins) listToAttrs;
 in
 {
@@ -18,8 +18,17 @@ in
     services.pipewire = {
       enable = true;
       pulse.enable = true;
-      alsa = {
-        enable = true;
+      alsa.enable = true;
+    };
+
+    systemd.user.services.waybar = {
+      enable = true;
+      after = [ "graphical-session.target" ];
+      partOf = [ "graphical-session.target" ];
+      wantedBy = [ "graphical-session.target" ];
+      serviceConfig = {
+        ExecStart = "${pkgs.waybar}/bin/waybar";
+        Type = "simple";
       };
     };
 
@@ -36,6 +45,7 @@ in
         imv
         mako
         mpv
+        niri
         playerctl
         pop-icon-theme
         pwvucontrol
@@ -80,6 +90,10 @@ in
         xdg-desktop-portal-gtk
       ];
     };
+
+    environment.etc."xdg/user-dirs.defaults".text = ''
+      DOWNLOAD=/tmp/downloads
+    '';
 
     environment.systemPackages = [ pkgs.man-pages pkgs.man-pages-posix ];
 

@@ -10,6 +10,10 @@
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
 
+    agenix.url = "github:ryantm/agenix/0.15.0";
+    agenix.inputs.nixpkgs.follows = "nixpkgs";
+    agenix.inputs.darwin.follows = "";
+
     nixos-hardware.url = "github:nixos/nixos-hardware/master";
 
     # Rust projects

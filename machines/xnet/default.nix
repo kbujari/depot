@@ -42,6 +42,8 @@ in
     i18n.defaultLocale = mkDefault "en_US.UTF-8";
     time.timeZone = mkDefault "America/Toronto";
 
+    boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
     nix = {
       settings = {
         auto-optimise-store = true;

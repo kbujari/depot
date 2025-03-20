@@ -100,6 +100,9 @@ in
 
             # Network is up when xnet physical interface gets carrier
             linkConfig.RequiredForOnline = "carrier";
+
+            # Allow resolved to resolve mDNS
+            networkConfig.MulticastDNS = true;
           };
 
           networks."${toString networks.${net}.vlan}-${net}" = {
