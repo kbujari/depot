@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, pkgs, config, ... }:
 let
 
   inherit (inputs.nixos-hardware.nixosModules)
@@ -34,6 +34,22 @@ in
 
   services.nfs.server.enable = true;
   networking.firewall.allowedTCPPorts = [ 2049 ];
+
+  services.miniflux = {
+    enable = true;
+    config = {
+      BASE_URL = "http://feeds.4kb.net";
+      LISTEN_ADDR = "localhost:8080";
+    };
+    adminCredentialsFile = pkgs.writeText "miniflux-credentials" ''
+      ADMIN_USERNAME=admin
+      ADMIN_PASSWORD=helloworld
+    '';
+  };
+
+  services.nginx.virtualHosts."feeds.4kb.net" = {
+    locations."/".proxyPass = "http://${config.services.miniflux.config.LISTEN_ADDR}";
+  };
 
   xnet = {
     disk = {

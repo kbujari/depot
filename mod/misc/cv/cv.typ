@@ -1,195 +1,114 @@
-#let resume(
-  author: "",
-  email: "",
-  github: "",
-  personal-site: "",
-  accent-color: "#000000",
-  font: "New Computer Modern",
-  body,
-) = {
-  set document(author: author, title: author)
-  set text(
-    // LaTeX style font
-    font: font,
-    size: 10pt,
-    lang: "en",
-    ligatures: false
-  )
+#set document(author: "Kleidi Bujari", title: "Kleidi's Resume!")
+#set text(size: 10pt, lang: "en", ligatures: false)
+#set page(margin: 0.5in, paper: "us-letter")
 
-  set page(
-    margin: (0.5in),
-    paper: "us-letter",
-  )
+#show link: underline
+#set par(justify: true)
 
-  show link: underline
-  show link: set text(
-    fill: rgb(accent-color),
-  )
+#show heading.where(level: 1): it => [
+  #set text(weight: 700, size: 20pt)
+  #pad(it.body)
+]
 
-  show heading.where(level: 2): it => [
-    #pad(top: 0pt, bottom: -10pt, [#smallcaps(it.body)])
-    #line(length: 100%, stroke: 1pt)
-  ]
-
-  // Accent Color Styling
-  show heading: set text(
-    fill: rgb(accent-color),
-  )
-
-  show heading.where(level: 1): it => [
-    #set align(left)
-    #set text(
-      weight: 700,
-      size: 20pt,
-    )
-    #pad(it.body)
-  ]
-
-  [= #(author)]
-
-  let contact-item(value, prefix: "", link-type: "") = {
-    if value != "" {
-      if link-type != "" {
-        link(link-type + value)[#(prefix + value)]
-      } else {
-        value
-      }
-    }
-  }
-
-  // Personal Info
-  pad(
-    top: 0.25em,
-    align(left)[
-      #{
-        let items = (
-          contact-item(email, link-type: "mailto:"),
-          contact-item(github, link-type: "https://"),
-          contact-item(personal-site, link-type: "https://"),
-        )
-        items.filter(x => x != none).join("  |  ")
-      }
-    ],
-  )
-
-  set par(justify: true)
-
-  body
-}
+#show heading.where(level: 2): it => [
+  #pad(top: 0pt, bottom: -10pt, [#smallcaps(it.body)])
+  #line(length: 100%, stroke: 1pt)
+]
 
 #let generic-two-by-two(
   top-left: "",
   top-right: "",
   bottom-left: "",
   bottom-right: "",
-) = {
-  [
-    #top-left #h(1fr) #top-right \
-    #bottom-left #h(1fr) #bottom-right
-  ]
-}
+) = [
+  #strong(top-left) #h(1fr) #top-right \
+  #bottom-left #h(1fr) #bottom-right
+]
 
-#let dates-helper(
-  start-date: "",
-  end-date: "",
-) = {
-  start-date + " " + $dash.em$ + " " + end-date
-}
+#let dates-helper(from: "", to: "") = from + " " + $dash.em$ + " " + to
 
 #let edu(
   institution: "",
   dates: "",
   degree: "",
   location: "",
-) = {
-  generic-two-by-two(
-    top-left: strong(institution),
-    top-right: location,
-    bottom-left: emph(degree),
-    bottom-right: emph(dates),
-  )
-}
+) = generic-two-by-two(
+  top-left: institution,
+  top-right: dates,
+  bottom-left: degree,
+  bottom-right: location,
+)
 
 #let work(
   title: "",
   dates: "",
   company: "",
   location: "",
-) = {
-  generic-two-by-two(
-    top-left: strong(title),
-    top-right: dates,
-    bottom-left: company,
-    bottom-right: emph(location),
-  )
-}
-
-#show: resume.with(
-  author: "Kleidi Bujari",
-  email: "mail@4kb.net",
-  github: "github.com/kbujari",
-  personal-site: "4kb.net",
+) = generic-two-by-two(
+  top-left: title,
+  top-right: dates,
+  bottom-left: company,
+  bottom-right: location,
 )
 
-== Education
+= Kleidi Bujari
 
-#edu(
-  institution: "Toronto Metropolitan University",
-  dates: dates-helper(start-date: "Sep 2020", end-date: "Apr 2025"),
-  location: "Ontario, Canada",
-  degree: "Bachelor's of Engineering, Computer Engineering",
-)
-
-- *Relevant Coursework*:
-  Data Structures, Embedded Programming, Compilers, Digital Systems, Computer Networks
-- *Extracurriculars*:
-  Member of student robotics design team,
-  teaching assistant for micro-processor courses.
+#(
+  link("mailto:mail@4kb.net"),
+  link("https://github.com/kbujari")[github.com/kbujari],
+  link("http://4kb.net")[4kb.net],
+).join("  |  ")
 
 == Experience
 
 #work(
-  company: "Toronto Metropolitan University",
-  title: "Graduate Research Assistant",
-  dates: dates-helper(start-date: "May 2024", end-date: "Sep 2024"),
-  location: "Toronto, Canada",
+  company: "Meta",
+  title: "Production Engineer",
+  dates: dates-helper(from: "Jul 2024", to: "Present"),
+  location: "Menlo Park",
 )
 
-- Implemented transformations for hundreds of media files,
+- Worked on Linux kernel and Erlang's BEAM virtual machine,
+  shipping performance optimizations directly to upstream projects.
+- Built foundational messaging infrastructure running WhatsApp core systems worldwide,
+  improving reliability and performance.
+
+
+#work(
+  company: "Toronto Metropolitan University",
+  title: "Graduate Research Assistant",
+  dates: dates-helper(from: "May 2024", to: "Sep 2024"),
+  location: "Toronto",
+)
+
+- Automated transformations for hundreds of media files,
   using ffmpeg and unix primitives to parallelize workload.
-- Designed frontend with AstroJS to generate only static HTML,
+- Published frontend with AstroJS to generate only static HTML,
   ensuring compatibility with many hosting providers.
 
 #work(
   company: "Canadian Broadcasting Corporation",
   title: "Network Engineering Intern",
-  dates: dates-helper(start-date: "May 2023", end-date: "Apr 2024"),
-  location: "Toronto, Canada",
+  dates: dates-helper(from: "May 2023", to: "Apr 2024"),
+  location: "Toronto",
 )
 
-- Designed custom PXE-boot implementation for hundreds of devices using NetBox,
+- Designed custom PXE based provisioning for hundreds of devices on existing network,
   eliminating manual configuration.
-- Configured Hyper-Converged Proxmox cluster for 2024 Olympics,
+- Architected hyper-converged Proxmox cluster for 2024 Olympics,
   saving \$250k+ with reused hardware and open software.
-- Deployed vendor-agnostic routing observability from scratch,
-  with Prometheus metrics and Grafana dashboards.
-- Mentored junior application developers in modern C++23 programming,
-  aiding in performance design and memory safety.
 
 #work(
   company: "WSP Canada",
   title: "Student Engineer",
-  dates: dates-helper(start-date: "May", end-date: "Aug") + ", 2021, 2022",
-  location: "Toronto, Canada",
+  dates: dates-helper(from: "May", to: "Aug") + ", 2021, 2022",
+  location: "Toronto",
 )
 
-- Contributed to subway car control systems with modern C++20,
+- Modernized subway control systems with modern C++,
   replacing legacy code with newer STL functions.
-- Extended internal distributed filesystem with support for deduplication and compression,
-  reclaiming 30% of storage.
 - Validated new electrical designs for power consumption,
   cost efficiency, and viability with existing systems.
-- Participated in reviewing and adjusting large scale electrical and structural engineering designs.
 
 == Projects
 
@@ -202,6 +121,13 @@ an in-memory root filesystem,
 ZFS persistent storage with backups,
 and extremely hardened networking.
 
+*Distributed Compute Cluster* ---
+Bare-metal Kubernetes cluster managed with GitOps to be completely reproducible.
+Uses Cilium CNI for fast eBPF networking and BGP load balancing,
+FluxCD for cluster management,
+and CEPH distributed storage for stateful workloads.
+Air-gapped, automated cluster provisioning with custom PXEBOOT images.
+
 *ICER Compressor* ---
 Image compression library written in Rust,
 designed for deep-space communication.
@@ -209,42 +135,45 @@ Hand tuned for speed and portability by using only integer arithmetic,
 no heap allocations, and no standard library by default.
 Achieves practically instant compressions, even on microprocessors.
 
-*Kubernetes Cluster* ---
-Bare-metal compute cluster managed with GitOps to be completely reproducible.
-Uses Cilium CNI for fast eBPF networking and BGP load balancing,
-FluxCD for cluster management,
-and CEPH distributed storage for stateful workloads.
-Running Prometheus, Loki and AlertManager for complete observability.
-
 *Mirrorlist Generator* ---
 Fetches Arch Linux package mirrors,
 filtering them based on user parameters.
 Sorts and outputs formatted data compliant with the pacman package manager.
 Heavily outperforms default Python implementation.
 
-*Toronto Metropolitan Robotics* ---
-Member of university design team working on space focused automated robotics.
-Designed custom STM32 hardware with various interfaces (SPI, I2C, etc.) for controlling motor functions on robot.
-Worked alongside various subteams to deliver a competition ready autonomous system.
+== Education
+
+#edu(
+  institution: "Toronto Metropolitan University",
+  dates: dates-helper(from: "Sep 2020", to: "Apr 2025"),
+  location: "Canada",
+  degree: "Bachelor's of Engineering, Computer Engineering",
+)
+
+- *Relevant Coursework*:
+  Data Structures, FPGA Programming, Compilers & Interpreters, Digital Systems, Computer Networks
+- *Extracurriculars*:
+  Member of student robotics design team,
+  teaching assistant for micro-processor courses.
 
 == Skills
 
 - *Languages*: #(
     "Rust",
-    "C++",
+    "Scheme",
     "Nix",
     "Haskell",
-    "TypeScript",
+    "Erlang",
+    "C++",
     "Lua",
-    "Python",
+    "TypeScript",
   ).join(", ")
 
 - *Technologies*: #(
     "Linux",
+    "Distributed Systems",
     "Compilers",
     "Virtualisation",
-    "Terraform",
-    "Ansible",
-    "Computer Networks",
-    "Frontend (Svelte, Astro)"
+    "Infrastructure Automation",
+    "Build Systems",
   ).join(", ")

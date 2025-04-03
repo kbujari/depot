@@ -100,7 +100,10 @@
                 ({ inputs, ... }: {
 
                   # Set system nixpkgs to flake input
-                  nix.registry.nixpkgs.flake = inputs.nixpkgs;
+                  nix.registry = {
+                    nixpkgs.flake = inputs.nixpkgs;
+                    depot.flake = self;
+                  };
                 })
               ];
             };
