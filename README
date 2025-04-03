@@ -16,21 +16,6 @@ repo, serving as a composable in-tree base for other functionality I can
 experiment with. This repo aims to unify many related subprojects under
 one roof.
 
-Machines
-========
-
-  Iridium:
-    x86_64 mini-computer that runs compute for local network.
-
-  Radon:
-    x86_64 local server for backups and bulk storage.
-
-  T1:
-    High-performance desktop with discrete GPU and fancy CPU.
-
-  T480:
-    Simple laptop with integrated GPU
-
 License
 =======
 
