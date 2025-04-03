@@ -24,7 +24,7 @@ jobs:
         uses: DeterminateSystems/nix-installer-action@main
 
       - name: Build blog
-        run: nix build .#depot.web.blog
+        run: nix build .#blog
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
