@@ -1,18 +1,11 @@
-{ pkgs, depot, ... }:
+{ pkgs, perSystem, ... }:
 let
   inherit (builtins)
-    attrValues
-    ;
+    attrValues;
 
-  inherit (depot.tools)
+  inherit (perSystem.self)
     perf-flamegraph
     ;
-
-
-  gitKeys = builtins.fetchurl {
-    url = "https://github.com/kbujari.keys";
-    sha256 = "1kskbiyqvjz1wsmcrgh9v0iryf33y70zk503z0m96wmzdjllmc94";
-  };
 
   keys = {
     t480 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEOw8YEbHsKy38JHp9W1wcxxZgWCDgnabOXccZUN5ddd";
@@ -20,10 +13,7 @@ let
   };
 in
 {
-  inherit keys;
-  inherit gitKeys;
-
-  nixos = {
+  kle = {
     initialHashedPassword = "$6$R4dDhaftX.vapGMd$.An36hlp3DXfkIC7bPZ0MDPo6Zvpk8JRrhy2LES.lZZj6JDa74oJkcMW3DCsIySvLJxOPXSShos0TpgJ/w0fH/";
     isNormalUser = true;
     shell = pkgs.fish;
@@ -33,9 +23,11 @@ in
     packages = with pkgs; [
       btop
       curl
+      emacs
       fzf
       guvcview
       jq
+      jujutsu
       lynx
       neovim
       perf-flamegraph

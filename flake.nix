@@ -1,18 +1,10 @@
 {
   description = "Personal monorepo";
-
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     disko.url = "github:nix-community/disko/v1.6.1";
     disko.inputs.nixpkgs.follows = "nixpkgs";
-
-    sops-nix.url = "github:Mic92/sops-nix";
-    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
-
-    agenix.url = "github:ryantm/agenix/0.15.0";
-    agenix.inputs.nixpkgs.follows = "nixpkgs";
-    agenix.inputs.darwin.follows = "";
 
     nixos-hardware.url = "github:nixos/nixos-hardware/master";
 
@@ -25,70 +17,71 @@
     let
       inherit (builtins)
         attrNames
-        filter
         listToAttrs
         map
         readDir
         ;
 
+      inherit (nixpkgs) lib;
+
       inherit (nixpkgs.lib)
+        mapAttrs
         nixosSystem
         ;
 
-      readTree = import ./mod/nix/readTree { };
+      systems = [ "x86_64-linux" "aarch64-linux" ];
 
-      # Recursively converts subdirectories under ./mod into an attrset
-      # that can be passed to other parts of the depot.
-      readDepot = depotArgs: readTree {
-        args = depotArgs;
-        path = ./mod;
+      inherit (import ./lib/depot-tools.nix { inherit inputs systems lib; })
+        importDir
+        eachSystem
+        systemArgs
+        ;
+
+      packages = eachSystem (
+        { newScope, ... }:
+        mapAttrs (pname: { path, ... }: newScope { inherit pname; } path { })
+          (importDir ./packages)
+      );
+
+      publisherArgs = {
+        flake = self;
+        inherit inputs;
       };
 
-      # Named arguments to be made available to any nix expression in
-      # the depot module.
-      depot = readTree.fix (self: readDepot {
-        depot = self;
+      expectsPublisherArgs =
+        module:
+        builtins.isFunction module
+        && builtins.all (arg: builtins.elem arg (builtins.attrNames publisherArgs)) (
+          builtins.attrNames (builtins.functionArgs module)
+        );
 
-        inherit inputs;
+      injectPublisherArgs =
+        modulePath:
+        let
+          module = import modulePath;
+        in
+        if expectsPublisherArgs module then
+          lib.setDefaultModuleLocation modulePath (module publisherArgs)
+        else
+          modulePath;
 
-        # x86_64-linux is hardcoded as the package arch only for the
-        # mod directory. This workaround keeps the flake pure,
-        # at the expense of only supporting one system. This can
-        # be circumvented by retrieving the system during evaluation,
-        # but flakes disallow this by design.
-        #
-        # This monorepo currently depends on functionality from flakes,
-        # but this may change in the future, perhaps shifting to an
-        # impure base with certain packages exposed from the flake in a
-        # pure way.
-        #
-        # In practice, this means that any configuration or package
-        # exposed from the depot flake that makes use of internal
-        # derivations is limited to x86_64-linux. For now this is fine,
-        # but ideally any architecture supported by nix should be
-        # allowed to evaluate projects hosted here.
-        pkgs = nixpkgs.legacyPackages."x86_64-linux";
-
-        # Expose lib attribute to modules.
-        lib = nixpkgs.lib;
-      });
-
-      machines = filter (m: m != "xnet")
-        (attrNames (readDir ./machines));
+      nixosModules = mapAttrs (_: moduleDir: injectPublisherArgs moduleDir)
+        (mapAttrs (_: { path, ... }: path) (importDir ./modules));
     in
     {
-      inherit depot;
-
-      nixosModules.xnet.imports =
-        [ ./machines/xnet inputs.disko.nixosModules.disko ];
+      inherit packages nixosModules;
 
       nixosConfigurations = listToAttrs (
         map
           (name: {
             inherit name;
-            value = nixosSystem {
+            value = nixosSystem rec {
               system = "x86_64-linux";
-              specialArgs = { inherit inputs depot; };
+              specialArgs = {
+                inherit inputs;
+                inherit (self) outputs;
+                inherit (systemArgs.${system}) flake perSystem;
+              };
               modules = [
                 # Machine's specific configuration
                 ./machines/${name}
@@ -105,6 +98,7 @@
               ];
             };
           })
-          machines);
+          (attrNames (readDir ./machines))
+      );
     };
 }

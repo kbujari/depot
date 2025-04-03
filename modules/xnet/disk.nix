@@ -1,4 +1,4 @@
-{ config, lib, modulesPath, ... }:
+{ config, lib, modulesPath, inputs, ... }:
 let
   cfg = config.xnet.disk;
   commonOpts = {
@@ -16,6 +16,7 @@ in
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
+    inputs.disko.nixosModules.default
   ];
 
   options.xnet.disk = {

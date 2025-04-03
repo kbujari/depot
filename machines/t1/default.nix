@@ -1,4 +1,4 @@
-{ inputs, depot, pkgs, ... }:
+{ inputs, flake, pkgs, perSystem, ... }:
 
 let
   inherit (inputs.nixos-hardware.nixosModules)
@@ -6,7 +6,7 @@ let
     common-gpu-amd
     ;
 
-  inherit (depot.users) kle;
+  inherit (import flake.outputs.nixosModules.users { inherit perSystem pkgs; }) kle;
 in
 {
   imports = [
@@ -16,7 +16,7 @@ in
 
   system.stateVersion = "24.11";
 
-  users.users.kle = kle.nixos;
+  users.users.kle = kle;
 
   xnet = {
     desktop.enable = true;
