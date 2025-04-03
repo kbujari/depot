@@ -56,11 +56,12 @@
 #(
   link("mailto:mail@4kb.net"),
   link("https://github.com/kbujari")[github.com/kbujari],
-  link("http://4kb.net")[4kb.net],
+  link("http://kleidi.ca")[kleidi.ca],
 ).join("  |  ")
 
 == Experience
 
+/*
 #work(
   company: "Meta",
   title: "Production Engineer",
@@ -72,6 +73,7 @@
   shipping performance optimizations directly to upstream projects.
 - Built foundational messaging infrastructure running WhatsApp core systems worldwide,
   improving reliability and performance.
+*/
 
 
 #work(
@@ -81,6 +83,8 @@
   location: "Toronto",
 )
 
+- Organized webhosting and analytics for a large film release,
+  leading design of web presence for thousands of concurrent visitors.
 - Automated transformations for hundreds of media files,
   using ffmpeg and unix primitives to parallelize workload.
 - Published frontend with AstroJS to generate only static HTML,
@@ -97,6 +101,8 @@
   eliminating manual configuration.
 - Architected hyper-converged Proxmox cluster for 2024 Olympics,
   saving \$250k+ with reused hardware and open software.
+- Mentored junior application developers in modern C++ programming,
+  aiding in memory safety and performance design.
 
 #work(
   company: "WSP Canada",
@@ -106,9 +112,11 @@
 )
 
 - Modernized subway control systems with modern C++,
-  replacing legacy code with newer STL functions.
-- Validated new electrical designs for power consumption,
+  replacing legacy code with newer STL functions and safer standards.
+- Validated large-scale electrical designs for power consumption,
   cost efficiency, and viability with existing systems.
+- Extended internal distributed databases with compression and deduplication,
+  reclaiming terabytes of storage across entire org.
 
 == Projects
 
@@ -168,7 +176,6 @@ Heavily outperforms default Python implementation.
     "Lua",
     "TypeScript",
   ).join(", ")
-
 - *Technologies*: #(
     "Linux",
     "Distributed Systems",
