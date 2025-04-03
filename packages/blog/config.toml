@@ -1,4 +1,4 @@
-base_url = "https://4kb.net"
+base_url = "https://kleidi.ca"
 build_search_index = false
 compile_sass = false
 generate_feeds = true

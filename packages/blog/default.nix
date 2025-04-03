@@ -5,7 +5,7 @@ let
     ;
 in
 pkgs.stdenvNoCC.mkDerivation {
-  name = "4kb.net";
+  name = "megasite";
   src = ./.;
 
   nativeBuildInputs = with pkgs; [
