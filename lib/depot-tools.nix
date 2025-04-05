@@ -21,7 +21,7 @@ let
     ;
 
   importDir =
-    path:
+    path: fn:
     let
       entries = readDir path;
 
@@ -51,8 +51,10 @@ let
               }
           )
           entries) [ "__junk" ];
+
+      combined = dirPaths // nixPaths;
     in
-    dirPaths // nixPaths;
+    fn combined;
 
   # Memoize the args per system
   systemArgs = genAttrs systems (

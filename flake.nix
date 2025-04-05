@@ -3,31 +3,17 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    disko.url = "github:nix-community/disko/v1.6.1";
+    disko.url = "github:nix-community/disko/latest";
     disko.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-hardware.url = "github:nixos/nixos-hardware/master";
-
-    # Rust projects
-    naersk.url = "github:nix-community/naersk";
-    naersk.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = { self, nixpkgs, ... } @ inputs:
     let
-      inherit (builtins)
-        attrNames
-        listToAttrs
-        map
-        readDir
-        ;
+      inherit (builtins) mapAttrs;
 
       inherit (nixpkgs) lib;
-
-      inherit (nixpkgs.lib)
-        mapAttrs
-        nixosSystem
-        ;
 
       systems = [ "x86_64-linux" "aarch64-linux" ];
 
@@ -40,68 +26,39 @@
       packages = eachSystem (
         { newScope, ... }:
         mapAttrs (pname: { path, ... }: newScope { inherit pname; } path { })
-          (importDir ./packages)
+          (importDir ./packages lib.id)
       );
 
-      publisherArgs = {
-        flake = self;
-        inherit inputs;
-      };
+      nixosModules = importDir ./modules
+        (mapAttrs (_: { path, ... }: path));
 
-      expectsPublisherArgs =
-        module:
-        builtins.isFunction module
-        && builtins.all (arg: builtins.elem arg (builtins.attrNames publisherArgs)) (
-          builtins.attrNames (builtins.functionArgs module)
-        );
-
-      injectPublisherArgs =
-        modulePath:
+      nixosConfigurations = importDir ./machines (
+        entries:
         let
-          module = import modulePath;
-        in
-        if expectsPublisherArgs module then
-          lib.setDefaultModuleLocation modulePath (module publisherArgs)
-        else
-          modulePath;
+          flake = self;
 
-      nixosModules = mapAttrs (_: moduleDir: injectPublisherArgs moduleDir)
-        (mapAttrs (_: { path, ... }: path) (importDir ./modules));
-    in
-    {
-      inherit packages nixosModules;
-
-      nixosConfigurations = listToAttrs (
-        map
-          (name: {
-            inherit name;
-            value = nixosSystem rec {
-              system = "x86_64-linux";
-              specialArgs = {
-                inherit inputs;
-                inherit (self) outputs;
-                inherit (systemArgs.${system}) flake perSystem;
+          defaultModule = { config, ... }:
+            let
+              perSystemArg = system: {
+                _module.args.perSystem = systemArgs.${system}.perSystem;
               };
-              modules = [
-                # Machine's specific configuration
-                ./machines/${name}
-
-                # Implicitly import xnet
-                self.nixosModules.xnet
-
-                # Global module
-                ({ inputs, ... }: {
-
-                  # Set system nixpkgs to flake input
-                  nix.registry = {
-                    nixpkgs.flake = inputs.nixpkgs;
-                    depot.flake = self;
-                  };
-                })
-              ];
+            in
+            {
+              imports = [ (perSystemArg config.nixpkgs.hostPlatform.system) ];
             };
-          })
-          (attrNames (readDir ./machines))
+
+          buildNixOS = hostName: entry:
+            lib.nixosSystem {
+              modules = [
+                defaultModule
+                entry.path
+                nixosModules.xnet
+              ];
+              specialArgs = { inherit inputs flake hostName; };
+            };
+        in
+        mapAttrs buildNixOS entries
       );
-    };
+    in
+    { inherit packages nixosModules nixosConfigurations; };
 }

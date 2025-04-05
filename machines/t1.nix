@@ -6,14 +6,17 @@ let
     common-gpu-amd
     ;
 
-  inherit (import flake.outputs.nixosModules.users { inherit perSystem pkgs; }) kle;
+  inherit (import flake.outputs.nixosModules.users { inherit perSystem pkgs; })
+    kle;
 in
 {
   imports = [
     common-cpu-amd
     common-gpu-amd
+    flake.outputs.nixosModules.disk
   ];
 
+  nixpkgs.hostPlatform = "x86_64-linux";
   system.stateVersion = "24.11";
 
   users.users.kle = kle;

@@ -11,6 +11,7 @@ in
     lenovo-thinkpad-t480
   ];
 
+  nixpkgs.hostPlatform.system = "x86_64-linux";
   system.stateVersion = "24.05";
 
   xnet = {

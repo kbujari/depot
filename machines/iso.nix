@@ -4,6 +4,7 @@
     (modulesPath + "/installer/cd-dvd/channel.nix")
   ];
 
+  nixpkgs.hostPlatform.system = "x86_64-linux";
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];
   };

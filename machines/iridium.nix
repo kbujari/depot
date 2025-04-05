@@ -6,6 +6,7 @@ let
     ;
 in
 {
+  nixpkgs.hostPlatform.system = "x86_64-linux";
   system.stateVersion = "25.05";
   networking.hostName = "iridium";
 
