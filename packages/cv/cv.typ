@@ -1,6 +1,6 @@
 #set document(author: "Kleidi Bujari", title: "Kleidi's Resume!")
 #set text(size: 10pt, lang: "en", ligatures: false)
-// #set page(margin: 0.5in, paper: "us-letter")
+#set page(margin: 0.5in, paper: "us-letter")
 
 #show link: underline
 #set par(justify: true)
