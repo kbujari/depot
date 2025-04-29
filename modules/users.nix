@@ -23,13 +23,13 @@ in
     packages = with pkgs; [
       btop
       curl
-      emacs
       fzf
       guvcview
       jq
       jujutsu
       lynx
       neovim
+      helix
       perf-flamegraph
       ranger
       ripgrep
@@ -38,8 +38,10 @@ in
       tree
       zip
 
+      emacs-pgtk
+
       # nix debugging
-      nixd
+      nil
       nixpkgs-fmt
     ];
 
