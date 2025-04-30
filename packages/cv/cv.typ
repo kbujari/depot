@@ -75,7 +75,6 @@
   improving reliability and performance.
 */
 
-
 #work(
   company: "Toronto Metropolitan University",
   title: "Graduate Research Assistant",
@@ -169,18 +168,15 @@ Heavily outperforms default Python implementation.
 - *Languages*: #(
     "Rust",
     "Scheme",
-    "Nix",
-    "Haskell",
-    "Erlang",
     "C++",
-    "Lua",
-    "TypeScript",
+    "Haskell",
+    "Nix",
   ).join(", ")
 - *Technologies*: #(
     "Linux",
     "Distributed Systems",
     "Compilers",
     "Virtualisation",
-    "Infrastructure Automation",
+    "Reproducible Infrastructure",
     "Build Systems",
   ).join(", ")
