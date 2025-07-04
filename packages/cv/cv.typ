@@ -68,6 +68,8 @@
   location: "Menlo Park",
 )
 
+#v(5em)
+
 #work(
   company: "Toronto Metropolitan University",
   title: "Graduate Research Assistant",
