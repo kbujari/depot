@@ -1,4 +1,4 @@
-{ pkgs, lib, config, ... }:
+{ pkgs, lib, config, flake, inputs, ... }:
 let
   inherit (builtins)
     fetchurl
@@ -8,6 +8,7 @@ let
 
   inherit (lib)
     mkDefault
+    mkForce
     mkOption
     types
     splitString
@@ -27,7 +28,7 @@ in
     ./net
     ./desktop
     ./gitserver
-    ./monitoring
+    # ./monitoring
   ];
 
   options.xnet = {
@@ -45,9 +46,10 @@ in
     boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
     nix = {
+      nixPath = mkForce [ "nixpkgs=${inputs.nixpkgs}" ];
       settings = {
         auto-optimise-store = true;
-        experimental-features = [ "nix-command" "flakes" ];
+        experimental-features = [ "nix-command" "flakes" "pipe-operators" ];
         warn-dirty = false;
 
         # timeout fast from binary cache
@@ -56,6 +58,10 @@ in
       gc = {
         automatic = true;
         options = mkDefault "--delete-older-than 30d";
+      };
+      registry = {
+        nixpkgs.flake = inputs.nixpkgs;
+        depot.flake = flake;
       };
     };
 
