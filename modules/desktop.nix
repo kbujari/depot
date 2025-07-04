@@ -5,6 +5,7 @@ let
 in
 {
   environment.systemPackages = with pkgs; [
+    audacious
     foot
     fuzzel
     imv
@@ -21,7 +22,16 @@ in
     xorg.xeyes
     xwayland-satellite
     zathura
+
+    ((emacsPackagesFor emacs-pgtk).emacsWithPackages (
+      epkgs: [ epkgs.mu4e ]
+    ))
   ];
+
+  documentation = {
+    doc.enable = true;
+    info.enable = true;
+  };
 
   security.rtkit.enable = true;
   services.pipewire = {
@@ -29,6 +39,16 @@ in
     pulse.enable = true;
     alsa.enable = true;
   };
+
+  # Build nix derivations on disk rather than in /tmp which is mounted
+  # in RAM, otherwise large closures fail to build due to lack of
+  # space. Since desktops are used as dev machines, this option lives
+  # here rather than on a more general module.
+  systemd.services.nix-daemon.environment.TMPDIR = "/nix/tmp";
+
+  # Make sure the directory for evaluating large closures exists for
+  # the nix daemon.
+  systemd.tmpfiles.rules = [ "d /nix/tmp 755 root root - -" ];
 
   systemd.user.services =
     let
@@ -47,6 +67,7 @@ in
       mako = afterGraphical "${pkgs.mako}/bin/mako";
       waybar = afterGraphical "${pkgs.waybar}/bin/waybar";
       udiskie = afterGraphical "${pkgs.udiskie}/bin/udiskie";
+      xwayland = afterGraphical "${pkgs.xwayland-satellite}/bin/xwayland-satellite";
     };
 
   qt = {
