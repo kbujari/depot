@@ -61,19 +61,12 @@
 
 == Experience
 
-/*
 #work(
   company: "Meta",
   title: "Production Engineer",
-  dates: dates-helper(from: "Jul 2024", to: "Present"),
+  dates: dates-helper(from: "Aug 2024", to: "Present"),
   location: "Menlo Park",
 )
-
-- Worked on Linux kernel and Erlang's BEAM virtual machine,
-  shipping performance optimizations directly to upstream projects.
-- Built foundational messaging infrastructure running WhatsApp core systems worldwide,
-  improving reliability and performance.
-*/
 
 #work(
   company: "Toronto Metropolitan University",
@@ -167,9 +160,9 @@ Heavily outperforms default Python implementation.
 
 - *Languages*: #(
     "Rust",
-    "Scheme",
+    "OCaml",
     "C++",
-    "Haskell",
+    "Scheme",
     "Nix",
   ).join(", ")
 - *Technologies*: #(

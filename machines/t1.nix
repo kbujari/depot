@@ -14,6 +14,7 @@ in
     common-cpu-amd
     common-gpu-amd
     flake.outputs.nixosModules.disk
+    flake.outputs.nixosModules.desktop
   ];
 
   nixpkgs.hostPlatform = "x86_64-linux";
@@ -22,7 +23,6 @@ in
   users.users.kle = kle;
 
   xnet = {
-    desktop.enable = true;
     net = {
       interface = "enp5s0";
       join = [ "plaza" ];
@@ -57,6 +57,15 @@ in
       fsType = "ext4";
       options = [ "users" "nofail" "noatime" ];
     };
+    "/var" = {
+      device = "zroot/local/var";
+      fsType = "zfs";
+    };
+  };
+
+  services = {
+    trezord.enable = true;
+    guix.enable = true;
   };
 
   services.udev.packages = [ pkgs.ddcutil ];
@@ -67,5 +76,6 @@ in
     ddcutil
     prismlauncher
     spotify
+    runelite
   ];
 }
