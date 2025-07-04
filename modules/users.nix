@@ -29,19 +29,25 @@ in
       jujutsu
       lynx
       neovim
-      helix
       perf-flamegraph
-      ranger
       ripgrep
       rsync
       sshfs
       tree
       zip
 
-      emacs-pgtk
+      # passwords
+      pinentry-qt
+      rbw
+
+      # email
+      isync
+      msmtp
+      mu
 
       # nix debugging
       nil
+      nix-search-cli
       nixpkgs-fmt
     ];
 
