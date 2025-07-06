@@ -1,8 +1,19 @@
-{ config, pkgs, lib, modulesPath, inputs, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  modulesPath,
+  inputs,
+  ...
+}:
 let
   cfg = config.depot.disk;
 
-  inherit (lib) mkOption mkDefault mkIf types;
+  inherit (lib)
+    mkIf
+    mkDefault
+    types
+    ;
 in
 {
   imports = [
@@ -11,21 +22,16 @@ in
   ];
 
   options.depot.disk = {
-    enable = mkOption {
-      type = types.bool;
-      default = false;
-      description = "Apply depot-standard ZFS disk layout.";
-    };
-
-    device = mkOption {
+    enable = lib.mkEnableOption "Apply depot-standard ZFS disk layout.";
+    persistHome = lib.mkEnableOption "Persist home directories.";
+    device = lib.mkOption {
       type = types.str;
-      description = "Device used for zroot ZFS pool.";
+      description = "Name of device to install to.";
     };
   };
 
   config = mkIf cfg.enable {
-    networking.hostId = builtins.substring 0 8
-      (builtins.hashString "md5" config.networking.hostName);
+    networking.hostId = builtins.substring 0 8 (builtins.hashString "md5" config.networking.hostName);
 
     services = {
       zfs.autoScrub.enable = true;
@@ -51,8 +57,14 @@ in
     zramSwap.enable = mkDefault true;
 
     boot = {
-      kernelParams = [ "nohibernate" "elevator=none" ];
-      supportedFilesystems = [ "vfat" "zfs" ];
+      kernelParams = [
+        "nohibernate"
+        "elevator=none"
+      ];
+      supportedFilesystems = [
+        "vfat"
+        "zfs"
+      ];
       zfs.devNodes = mkDefault "/dev/disk/by-partuuid";
       loader.efi.canTouchEfiVariables = true;
       loader.systemd-boot = {
@@ -79,13 +91,17 @@ in
 
     disko.devices.nodev."/" = {
       fsType = "tmpfs";
-      mountOptions = [ "defaults" "size=2G" "mode=755" ];
+      mountOptions = [
+        "defaults"
+        "size=2G"
+        "mode=755"
+      ];
     };
 
     disko.devices.disk.main = {
-      type = "disk";
+      imageSize = "32G";
       device = cfg.device;
-      imageSize = "15G";
+      type = "disk";
       content = {
         type = "gpt";
         partitions.ESP = {
@@ -95,6 +111,7 @@ in
             type = "filesystem";
             format = "vfat";
             mountpoint = "/boot";
+            mountOptions = [ "umask=0077" ];
           };
         };
         partitions.ZFS = {
@@ -107,46 +124,69 @@ in
 
     disko.devices.zpool.zroot = {
       type = "zpool";
+
       options = {
         ashift = "12";
         autotrim = "on";
       };
 
       rootFsOptions = {
-        "com.sun:auto-snapshot" = "false";
         acltype = "posixacl";
         atime = "off";
         compression = "on";
+        mountpoint = "none";
         normalization = "formD";
         relatime = "off";
         xattr = "sa";
       };
 
-      datasets.nix = {
-        type = "zfs_fs";
-        mountpoint = "/nix";
-        options.mountpoint = "legacy";
-      };
+      datasets =
+        let
+          inherit (lib)
+            genAttrs
+            ;
 
-      # datasets.reserved = {
-      #   type = "zfs_fs";
-      #   options = {
-      #     refreservation = "10G";
-      #     mountpoint = "none";
-      #   };
-      # };
+          mounts = [
+            # Any machine importing this configuration will require a
+            # nix store, so it needs to survive reboots.
+            "nix"
 
-      datasets.home = {
-        type = "zfs_fs";
-        mountpoint = "/home";
-        options.mountpoint = "legacy";
-      };
+            # Although it goes against the idea of putting root on a
+            # tmpfs, SystemD stores useful state for timers, services,
+            # logs, etc. in var.
+            "var"
 
-      # datasets.persist = {
-      #   type = "zfs_fs";
-      #   mountpoint = "/persist";
-      #   options.mountpoint = "legacy";
-      # };
+            # Most machines using this module do not define additional
+            # users, so /root should persist as the only "home" on the
+            # system.
+            "root"
+
+            # General storage that should outlive a reboot. Paths
+            # mentioned in Nix configs should generally use this
+            # directory rather than /var or other directories that
+            # happen to also be saved.
+            "persist"
+          ] ++ lib.optional cfg.persistHome "home";
+
+          makeDataset = name: {
+            type = "zfs_fs";
+            mountpoint = "/${name}";
+            options.mountpoint = "legacy";
+          };
+        in
+        genAttrs mounts makeDataset
+        // {
+          # ZFS should not use all available space on a device. This
+          # reserves some space at pool creation time that is never mounted
+          # to ensure it never happens.
+          reserved = {
+            type = "zfs_fs";
+            options = {
+              refreservation = "10G";
+              mountpoint = "none";
+            };
+          };
+        };
     };
   };
 }
