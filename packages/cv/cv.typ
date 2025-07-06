@@ -64,7 +64,7 @@
 #work(
   company: "Meta",
   title: "Production Engineer",
-  dates: dates-helper(from: "Aug 2024", to: "Present"),
+  dates: dates-helper(from: "Aug 2025", to: "Present"),
   location: "Menlo Park",
 )
 
@@ -162,10 +162,10 @@ Heavily outperforms default Python implementation.
 
 - *Languages*: #(
     "Rust",
-    "OCaml",
-    "C++",
     "Scheme",
+    "Haskell",
     "Nix",
+    "C++",
   ).join(", ")
 - *Technologies*: #(
     "Linux",
