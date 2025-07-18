@@ -23,9 +23,10 @@ in
     xwayland-satellite
     zathura
 
-    ((emacsPackagesFor emacs-pgtk).emacsWithPackages (
-      epkgs: [ epkgs.mu4e ]
-    ))
+    ((emacsPackagesFor emacs-pgtk).emacsWithPackages (epkgs: [
+      epkgs.mu4e
+      epkgs.treesit-grammars.with-all-grammars
+    ]))
   ];
 
   documentation = {
@@ -68,6 +69,23 @@ in
       waybar = afterGraphical "${pkgs.waybar}/bin/waybar";
       udiskie = afterGraphical "${pkgs.udiskie}/bin/udiskie";
       xwayland = afterGraphical "${pkgs.xwayland-satellite}/bin/xwayland-satellite";
+      swayidle =
+        let
+          swaylock = ''
+            ${pkgs.swaylock}/bin/swaylock \
+              --color 2b3328 \
+              --indicator-caps-lock \
+              --ignore-empty-password \
+              --daemonize'';
+        in
+        afterGraphical (
+          pkgs.writeShellScript "start-swayidle" ''
+            ${pkgs.swayidle}/bin/swayidle -w \
+              timeout 601 '${pkgs.niri}/bin/niri msg action power-off-monitors' \
+              timeout 600 '${swaylock}' \
+              before-sleep '${swaylock}'
+          ''
+        );
     };
 
   qt = {
@@ -112,23 +130,24 @@ in
     # GTK settings
     dconf = {
       enable = true;
-      profiles.user.databases = [{
-        lockAll = true;
-        settings = {
-          "org/gnome/desktop/interface" = {
-            color-scheme = "prefer-dark";
-            gtk-font-name = "System-ui 10";
-            icon-theme = "Pop";
-            theme-name = "Adwaita-dark";
+      profiles.user.databases = [
+        {
+          lockAll = true;
+          settings = {
+            "org/gnome/desktop/interface" = {
+              color-scheme = "prefer-dark";
+              gtk-font-name = "System-ui 10";
+              icon-theme = "Pop";
+              theme-name = "Adwaita-dark";
+            };
           };
-        };
-      }];
+        }
+      ];
     };
   };
 
   # Helper for managing dotfiles
-  environment.shellAliases.dots =
-    "git --git-dir=$HOME/.local/cfg/ --work-tree=$HOME";
+  environment.shellAliases.dots = "git --git-dir=$HOME/.local/cfg/ --work-tree=$HOME";
 
   # Enable yubikey for SSH and more
   services = {
