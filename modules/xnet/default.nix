@@ -93,6 +93,11 @@ in
           User git
           PreferredAuthentications publickey
 
+        Host sourcehut
+          HostName git.sr.ht
+          User git
+          PreferredAuthentications publickey
+
         Host ee
           HostName pascal.ee.ryerson.ca
           User kbujari
