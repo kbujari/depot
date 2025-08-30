@@ -26,7 +26,6 @@ in
     ./nginx.nix
     ./persist.nix
     ./net
-    ./desktop
     ./gitserver
     # ./monitoring
   ];
@@ -41,9 +40,7 @@ in
 
   config = {
     i18n.defaultLocale = mkDefault "en_US.UTF-8";
-    time.timeZone = mkDefault "America/Toronto";
-
-    boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+    time.timeZone = mkDefault "US/Pacific";
 
     nix = {
       nixPath = mkForce [ "nixpkgs=${inputs.nixpkgs}" ];

@@ -9,13 +9,14 @@ in
 {
   imports = [
     lenovo-thinkpad-t480
+    flake.outputs.nixosModules.desktop
   ];
 
   nixpkgs.hostPlatform.system = "x86_64-linux";
   system.stateVersion = "24.05";
 
   xnet = {
-    desktop.enable = true;
+    # desktop.enable = true;
     disk = {
       enable = true;
       device = "/dev/nvme0n1";
