@@ -23,6 +23,15 @@ in
     xwayland-satellite
     zathura
 
+    # Spell checking
+    aspell
+    aspellDicts.en
+    aspellDicts.en-science
+    aspellDicts.en-computers
+
+    hunspell
+    hunspellDicts.en-us
+
     ((emacsPackagesFor emacs-pgtk).emacsWithPackages (epkgs: [
       epkgs.mu4e
       epkgs.treesit-grammars.with-all-grammars
