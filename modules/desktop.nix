@@ -66,7 +66,6 @@ in
     in
     {
       mako = afterGraphical "${pkgs.mako}/bin/mako";
-      waybar = afterGraphical "${pkgs.waybar}/bin/waybar";
       udiskie = afterGraphical "${pkgs.udiskie}/bin/udiskie";
       xwayland = afterGraphical "${pkgs.xwayland-satellite}/bin/xwayland-satellite";
       swayidle =
@@ -86,6 +85,23 @@ in
               before-sleep '${swaylock}'
           ''
         );
+
+      waybar = {
+        partOf = [ "graphical-session.target" ];
+        wantedBy = [ "graphical-session.target" ];
+        after = [ "graphical-session.target" ];
+
+        path = with pkgs; [
+          pwvucontrol
+        ];
+
+        serviceConfig = {
+          Type = "exec";
+          ExecStart = "${pkgs.waybar}/bin/waybar";
+          ExecReload = "kill -SIGUSR2 $MAINPID";
+          Restart = "on-failure";
+        };
+      };
     };
 
   qt = {
