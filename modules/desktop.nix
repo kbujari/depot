@@ -149,6 +149,7 @@ in
     MOZ_ENABLE_WAYLAND = 1;
     MOZ_USE_XINPUT2 = 1;
     MOZ_WEBRENDER = 1;
+    QT_QPA_PLATFORM = "wayland;xcb";
   };
 
   programs = {
