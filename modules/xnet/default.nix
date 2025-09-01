@@ -65,6 +65,7 @@ in
     documentation = {
       doc.enable = mkDefault false;
       info.enable = mkDefault false;
+      man.enable = mkDefault false;
     };
 
     users.mutableUsers = false;
