@@ -70,19 +70,20 @@ in
       xwayland = afterGraphical "${pkgs.xwayland-satellite}/bin/xwayland-satellite";
       swayidle =
         let
-          swaylock = ''
-            ${pkgs.swaylock}/bin/swaylock \
-              --color 2b3328 \
-              --indicator-caps-lock \
-              --ignore-empty-password \
-              --daemonize'';
+          swaylock = lib.concatStringsSep " " [
+            "${pkgs.swaylock}/bin/swaylock"
+            "--color 2b3328"
+            "--indicator-caps-lock"
+            "--ignore-empty-password"
+            "--daemonize"
+          ];
         in
         afterGraphical (
           pkgs.writeShellScript "start-swayidle" ''
             ${pkgs.swayidle}/bin/swayidle -w \
-              timeout 601 '${pkgs.niri}/bin/niri msg action power-off-monitors' \
-              timeout 600 '${swaylock}' \
-              before-sleep '${swaylock}'
+            timeout 601 '${pkgs.niri}/bin/niri msg action power-off-monitors' \
+            timeout 600 '${swaylock}' \
+            before-sleep '${swaylock}'
           ''
         );
 
