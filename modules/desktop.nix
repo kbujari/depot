@@ -111,14 +111,24 @@ in
     platformTheme = "gnome";
   };
 
-  fonts.packages = with pkgs; [
-    departure-mono
-    iosevka
-    noto-fonts
-    noto-fonts-cjk-sans
-    noto-fonts-emoji
-    nerd-fonts.symbols-only
-  ];
+  fonts = {
+    # Expose system fonts in case something non-standard needs them
+    fontDir.enable = true;
+    packages = with pkgs; [
+      departure-mono
+      iosevka
+      noto-fonts
+      noto-fonts-cjk-sans
+      noto-fonts-emoji
+      nerd-fonts.symbols-only
+    ];
+
+    fontconfig.defaultFonts = {
+      serif = [ "Liberation Serif" ];
+      sansSerif = [ "Liberation Sans" ];
+      monospace = [ "Iosevka" ];
+    };
+  };
 
   environment.etc."xdg/user-dirs.defaults".text = ''
     DOWNLOAD=/tmp/downloads
