@@ -191,7 +191,10 @@ in
     yubikey-agent.enable = true;
     pcscd.enable = true;
     udev.packages = with pkgs; [ yubikey-personalization ];
-    udisks2.enable = true;
+    udisks2 = {
+      enable = true;
+      mountOnMedia = true;
+    };
   };
 
   programs.firefox = {
