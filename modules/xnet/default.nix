@@ -105,6 +105,9 @@ in
       '';
     };
 
+    # Doesn't work since channels are disabled
+    programs.command-not-found.enable = false;
+
     programs.git = {
       enable = true;
       config = {
