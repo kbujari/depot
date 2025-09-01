@@ -138,8 +138,6 @@ in
     MOZ_ENABLE_WAYLAND = 1;
     MOZ_USE_XINPUT2 = 1;
     MOZ_WEBRENDER = 1;
-    # XDG_CURRENT_DESKTOP = "niri";
-    # XDG_SESSION_TYPE = "wayland";
   };
 
   programs = {
