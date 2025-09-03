@@ -78,7 +78,6 @@ in
     {
       mako = afterGraphical "${pkgs.mako}/bin/mako";
       udiskie = afterGraphical "${pkgs.udiskie}/bin/udiskie";
-      xwayland = afterGraphical "${pkgs.xwayland-satellite}/bin/xwayland-satellite";
       swayidle =
         let
           swaylock = lib.concatStringsSep " " [
