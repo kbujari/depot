@@ -125,18 +125,15 @@ in
     # Expose system fonts in case something non-standard needs them
     fontDir.enable = true;
     packages = with pkgs; [
-      departure-mono
+      ibm-plex
       iosevka
-      noto-fonts
-      noto-fonts-cjk-sans
-      noto-fonts-emoji
       nerd-fonts.symbols-only
     ];
 
     fontconfig.defaultFonts = {
-      serif = [ "Liberation Serif" ];
-      sansSerif = [ "Liberation Sans" ];
-      monospace = [ "Iosevka" ];
+      serif = [ "IBM Plex Serif" ];
+      sansSerif = [ "IBM Plex Sans" ];
+      monospace = [ "IBM Plex Mono" ];
     };
   };
 
