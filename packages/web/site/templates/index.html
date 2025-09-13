@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% for name in ["posts", "paper-reviews"] %}
+{% set section = get_section(path=name ~ "/_index.md") %}
+{%- if section.pages | length > 0 %}
+<div style="margin-bottom: 3em">
+  <h1>{{ section.title }}</h1>
+  <ul style="list-style: none; padding-left: 0">
+    {% for page in section.pages | slice(end=3) %}
+    <li style="margin-bottom: 1em">
+      <a href="{{ page.path }}">{{ page.title }}</a>
+      <br />
+      <time datetime="{{ page.date }}">
+        {{ page.date | date(format="%B %d, %Y") }}
+      </time>
+    </li>
+    {% endfor %}
+  </ul>
+
+  {%- if section.pages | length > 2 %}
+  <a href="{{ section.path }}">see more ↗</a>
+  {% endif %}
+</div>
+{% endif %}
+{% endfor %}
+
+{% endblock content %}

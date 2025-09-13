@@ -80,7 +80,5 @@ let
     in
     makeScope callPackageWith (_: { inherit inputs perSystem flake pkgs system; })
   );
-
-  eachSystem = f: genAttrs systems (system: f systemArgs.${system});
 in
-{ inherit importDir systemArgs eachSystem; }
+{ inherit importDir systemArgs; }

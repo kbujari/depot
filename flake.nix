@@ -9,35 +9,48 @@
     nixos-hardware.url = "github:nixos/nixos-hardware/master";
   };
 
-  outputs = { self, nixpkgs, ... } @ inputs:
+  outputs =
+    { self, nixpkgs, ... }@inputs:
     let
-      inherit (builtins) mapAttrs;
-
       inherit (nixpkgs) lib;
 
-      systems = [ "x86_64-linux" "aarch64-linux" ];
+      systems = lib.intersectLists lib.systems.flakeExposed lib.platforms.linux;
+
+      forAllSystems = lib.genAttrs systems;
+      nixpkgsFor = forAllSystems (
+        system:
+        import inputs.nixpkgs {
+          inherit system;
+          overlays = [ overlays.default ];
+        }
+      );
 
       inherit (import ./lib/depot-tools.nix { inherit inputs systems lib; })
         importDir
-        eachSystem
         systemArgs
         ;
 
-      packages = eachSystem (
-        { newScope, ... }:
-        mapAttrs (pname: { path, ... }: newScope { inherit pname; } path { })
-          (importDir ./packages lib.id)
-      );
+      overlays.default =
+        final: _:
+        let
+          depot = lib.filesystem.packagesFromDirectoryRecursive {
+            callPackage = lib.callPackageWith (final // { inherit depot; });
+            directory = ./packages;
+          };
+        in
+        {
+          inherit depot;
+        };
 
-      nixosModules = importDir ./modules
-        (mapAttrs (_: { path, ... }: path));
+      nixosModules = importDir ./modules (builtins.mapAttrs (_: { path, ... }: path));
 
       nixosConfigurations = importDir ./machines (
         entries:
         let
           flake = self;
 
-          defaultModule = { config, ... }:
+          defaultModule =
+            { config, ... }:
             let
               perSystemArg = system: {
                 _module.args.perSystem = systemArgs.${system}.perSystem;
@@ -47,7 +60,8 @@
               imports = [ (perSystemArg config.nixpkgs.hostPlatform.system) ];
             };
 
-          buildNixOS = hostName: entry:
+          buildNixOS =
+            hostName: entry:
             lib.nixosSystem {
               modules = [
                 defaultModule
@@ -57,8 +71,22 @@
               specialArgs = { inherit inputs flake hostName; };
             };
         in
-        mapAttrs buildNixOS entries
+        builtins.mapAttrs buildNixOS entries
       );
     in
-    { inherit packages nixosModules nixosConfigurations; };
+    {
+      inherit nixosModules nixosConfigurations;
+
+      formatter = forAllSystems (system: nixpkgsFor.${system}.nixfmt-rfc-style);
+      packages = forAllSystems (
+        system:
+        let
+          inherit (nixpkgsFor.${system}) depot;
+        in
+        {
+          inherit (depot.misc) cv;
+          inherit (depot.web) site;
+        }
+      );
+    };
 }

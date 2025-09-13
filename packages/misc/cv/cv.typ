@@ -15,15 +15,11 @@
   #line(length: 100%, stroke: 1pt)
 ]
 
-#let generic-two-by-two(
-  top-left: "",
-  top-right: "",
-  bottom-left: "",
-  bottom-right: "",
-) = [
-  #strong(top-left) #h(1fr) #top-right \
-  #bottom-left #h(1fr) #bottom-right
-]
+#let generic-headline(
+    left: "",
+    right: "",
+    description: "",
+) = [#strong(left) #h(1fr) #description `::` #right]
 
 #let dates-helper(from: "", to: "") = from + " " + $dash.em$ + " " + to
 
@@ -31,24 +27,20 @@
   institution: "",
   dates: "",
   degree: "",
-  location: "",
-) = generic-two-by-two(
-  top-left: institution,
-  top-right: dates,
-  bottom-left: degree,
-  bottom-right: location,
+) = generic-headline(
+    left: institution,
+    description: degree,
+    right: dates,
 )
 
 #let work(
-  title: "",
-  dates: "",
-  company: "",
-  location: "",
-) = generic-two-by-two(
-  top-left: title,
-  top-right: dates,
-  bottom-left: company,
-  bottom-right: location,
+    title: "",
+    dates: "",
+    company: "",
+) = generic-headline(
+    left: company,
+    description: title,
+    right: dates,
 )
 
 = Kleidi Bujari
@@ -65,16 +57,14 @@
   company: "Meta",
   title: "Production Engineer",
   dates: dates-helper(from: "Aug 2025", to: "Present"),
-  location: "Menlo Park",
 )
 
-#v(5em)
+- Probably working on really cool things.
 
 #work(
   company: "Toronto Metropolitan University",
   title: "Graduate Research Assistant",
   dates: dates-helper(from: "May 2024", to: "Sep 2024"),
-  location: "Toronto",
 )
 
 - Organized webhosting and analytics for a large film release,
@@ -88,7 +78,6 @@
   company: "Canadian Broadcasting Corporation",
   title: "Network Engineering Intern",
   dates: dates-helper(from: "May 2023", to: "Apr 2024"),
-  location: "Toronto",
 )
 
 - Designed custom PXE based provisioning for hundreds of devices on existing network,
@@ -102,11 +91,8 @@
   company: "WSP Canada",
   title: "Student Engineer",
   dates: dates-helper(from: "May", to: "Aug") + ", 2021, 2022",
-  location: "Toronto",
 )
 
-- Modernized subway control systems with modern C++,
-  replacing legacy code with newer STL functions and safer standards.
 - Validated large-scale electrical designs for power consumption,
   cost efficiency, and viability with existing systems.
 - Extended internal distributed databases with compression and deduplication,
@@ -148,7 +134,6 @@ Heavily outperforms default Python implementation.
 #edu(
   institution: "Toronto Metropolitan University",
   dates: dates-helper(from: "Sep 2020", to: "Apr 2025"),
-  location: "Canada",
   degree: "Bachelor's of Engineering, Computer Engineering",
 )
 

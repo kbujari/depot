@@ -1,0 +1,8 @@
+base_url = "https://kleidi.ca"
+build_search_index = false
+generate_feeds = true
+minify_html = true
+author = "Kleidi Bujari"
+
+[markdown]
+highlight_code = false

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ section.title | lower }} :: {{ super() }} {% endblock title %}
+{% block content %}
+
+{% block head %}
+<link
+  rel="alternate"
+  type="application/atom+xml"
+  title="ATOM"
+  href="{{ section.permalink }}atom.xml">
+{% endblock head%}
+
+<h1>{{ section.title }}</h1>
+<p>{{ section.content | safe }}</p>
+
+<hr style="margin-bottom: 1em" />
+<ul style="list-style: none; padding-left: 0">
+  {% for page in section.pages %}
+  <li style="margin-bottom: 1em">
+    <a href="{{ page.path }}">{{ page.title }}</a>
+    <br />
+    <span>{{ page.date | date(format="%B %d, %Y") }}</span>
+  </li>
+  {% endfor %}
+</ul>
+{% endblock content %}
