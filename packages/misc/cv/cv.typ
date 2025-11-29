@@ -54,7 +54,7 @@
 == Experience
 
 #work(
-  company: "Meta",
+  company: "Meta (WhatsApp)",
   title: "Production Engineer",
   dates: dates-helper(from: "Aug 2025", to: "Present"),
 )
