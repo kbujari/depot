@@ -86,6 +86,10 @@
         {
           inherit (depot.misc) cv;
           inherit (depot.web) site;
+          inherit (depot)
+            randpass
+            run-image
+          ;
         }
       );
     };
