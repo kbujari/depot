@@ -77,5 +77,6 @@ in
     prismlauncher
     spotify
     runelite
+    bolt-launcher
   ];
 }
