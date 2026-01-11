@@ -66,11 +66,14 @@ in
   services = {
     trezord.enable = true;
     guix.enable = true;
+    lact.enable = true;
   };
 
   services.udev.packages = [ pkgs.ddcutil ];
   environment.shellAliases.b = "${pkgs.ddcutil}/bin/ddcutil setvcp 10";
   boot.kernelModules = [ "i2c-dev" ];
+
+  hardware.amdgpu.overdrive.enable = true;
 
   environment.systemPackages = with pkgs; [
     ddcutil
