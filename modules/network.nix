@@ -62,6 +62,10 @@ in
 
     services.resolved = {
       enable = true;
+
+      # Only use these addresses as fallback. Machines using this configuration
+      # are on a trusted local network anyway, so they should accept DNS servers
+      # from the network.
       settings.Resolve.FallBackDNS = quad9 ++ cloudflare;
     };
   };
