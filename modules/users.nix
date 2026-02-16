@@ -1,11 +1,7 @@
-{ pkgs, perSystem, ... }:
+{ pkgs, ... }:
 let
   inherit (builtins)
     attrValues;
-
-  inherit (perSystem.self)
-    perf-flamegraph
-    ;
 
   keys = {
     t480 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEOw8YEbHsKy38JHp9W1wcxxZgWCDgnabOXccZUN5ddd";
@@ -29,7 +25,6 @@ in
       jujutsu
       lynx
       neovim
-      perf-flamegraph
       ripgrep
       rsync
       sshfs
@@ -39,6 +34,8 @@ in
       # passwords
       pinentry-qt
       rbw
+
+      depot.perf-flamegraph
 
       # email
       isync
