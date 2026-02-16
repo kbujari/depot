@@ -1,6 +1,5 @@
-{ inputs, pkgs, config, ... }:
+{ inputs, flake, pkgs, config, ... }:
 let
-
   inherit (inputs.nixos-hardware.nixosModules)
     common-cpu-intel
     common-gpu-intel
@@ -17,16 +16,13 @@ in
     common-gpu-intel
     # ./jellyfin.nix
     ./pxeboot.nix
+    flake.outputs.nixosModules.disk
+    flake.outputs.nixosModules.network
   ];
 
   nixpkgs.hostPlatform.system = "x86_64-linux";
   system.stateVersion = "24.11";
   networking.hostName = "radon";
-
-  boot.kernel.sysctl = {
-    "net.ipv4.conf.all.forwarding" = true;
-    "net.ipv6.conf.all.forwarding" = true;
-  };
 
   users.groups.media.gid = 2000;
 
@@ -36,33 +32,23 @@ in
   services.nfs.server.enable = true;
   networking.firewall.allowedTCPPorts = [ 2049 ];
 
-  services.miniflux = {
-    enable = true;
-    config = {
-      BASE_URL = "http://feeds.4kb.net";
-      LISTEN_ADDR = "localhost:8080";
-    };
-    adminCredentialsFile = pkgs.writeText "miniflux-credentials" ''
-      ADMIN_USERNAME=admin
-      ADMIN_PASSWORD=helloworld
-    '';
-  };
+  # depot.disk = {
+  #   enable = true;
+  #   device = "/dev/nvme0n1";
+  # };
 
-  services.nginx.virtualHosts."feeds.4kb.net" = {
-    locations."/".proxyPass = "http://${config.services.miniflux.config.LISTEN_ADDR}";
+  depot.net = {
+    v6Token = "::cafe";
+    sshd.enable = true;
+    sshd.publish = true;
   };
 
   xnet = {
+    nginx.enable = true;
     disk = {
       enable = true;
       device = "/dev/nvme0n1";
     };
-    net = {
-      join = [ "plaza" ];
-      interface = interfaces.bottom;
-      sshd.enable = true;
-    };
-    nginx.enable = true;
     gitServer = {
       enable = true;
       gitweb.enable = true;
