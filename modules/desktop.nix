@@ -182,9 +182,7 @@ in
   # Helper for managing dotfiles
   environment.shellAliases.dots = "git --git-dir=$HOME/.local/cfg/ --work-tree=$HOME";
 
-  # Enable yubikey for SSH and more
   services = {
-    yubikey-agent.enable = true;
     pcscd.enable = true;
     udev.packages = with pkgs; [ yubikey-personalization ];
     udisks2 = {
