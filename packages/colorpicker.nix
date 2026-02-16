@@ -1,15 +1,19 @@
 {
-  writeShellScriptBin,
+  writeShellApplication,
   grim,
   slurp,
   imagemagick,
   ...
 }:
 
-writeShellScriptBin "colorpicker" {
-  packages = [
+writeShellApplication {
+  name = "colorpicker";
+  runtimeInputs = [
     grim
     slurp
     imagemagick
   ];
-} ''grim -g "$(slurp -p)" -t ppm - | convert - -format '%[pixel:p{0,0}]' txt:-''
+  text = ''
+    grim -g "$(slurp -p)" -t ppm - | magick - -format '%[pixel:p{0,0}]' txt:-
+  '';
+}
