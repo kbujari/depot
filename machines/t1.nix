@@ -15,41 +15,46 @@ in
     common-gpu-amd
     flake.outputs.nixosModules.disk
     flake.outputs.nixosModules.desktop
+    flake.outputs.nixosModules.network
   ];
 
   nixpkgs.hostPlatform = "x86_64-linux";
-  system.stateVersion = "24.11";
 
   users.users.kle = kle;
 
   xnet = {
-    net = {
-      interface = "enp5s0";
-      join = [ "plaza" ];
-      sshd.enable = true;
-    };
     disk = {
       enable = true;
       device = "/dev/nvme0n1";
     };
   };
 
+  depot.net = {
+    v6Token = "::beef";
+    sshd.enable = true;
+    sshd.publish = true;
+  };
+
+  # depot.disk = {
+  #   enable = true;
+  #   device = "/dev/nvme0n1";
+  #   persistHome = true;
+  # };
+
+  services.avahi.enable = false;
+
   networking.hostName = "t1";
 
   programs = {
     steam.enable = true;
     steam.extraCompatPackages = [ pkgs.proton-ge-bin ];
-    corectrl = {
-      enable = true;
-      gpuOverclock.enable = true;
-    };
   };
 
   fileSystems = {
-    "/mnt/media" = {
-      device = "radon:/radon/media";
+    "/radon" = {
+      device = "radon.local:/radon";
       fsType = "nfs";
-      options = [ "noauto" "x-systemd.automount" "x-systemd.idle-timeout=600" ];
+      options = [ "noauto" "x-systemd.automount" "x-systemd.idle-timeout=600" "nofail" ];
     };
 
     "/mnt/gammix" = {
