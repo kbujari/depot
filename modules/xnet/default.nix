@@ -16,9 +16,8 @@ let
 
   gitKeys = fetchurl {
     url = "https://github.com/kbujari.keys";
-    sha256 = "1kskbiyqvjz1wsmcrgh9v0iryf33y70zk503z0m96wmzdjllmc94";
+    sha256 = "1ngnml1rg3g40n06cd155vr9ks5v5p12i8996xy021mkn9gx12b3";
   };
-
 in
 {
   imports = [
@@ -33,8 +32,7 @@ in
   options.xnet = {
     pubKeys = mkOption {
       type = types.listOf types.str;
-      default = filter (s: s != "")
-        (splitString "\n" (readFile gitKeys));
+      default = readFile gitKeys |> splitString "\n" |> filter (s: s != "");
     };
   };
 
