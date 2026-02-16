@@ -27,7 +27,6 @@
 
       inherit (import ./lib/depot-tools.nix { inherit inputs systems lib; })
         importDir
-        systemArgs
         ;
 
       overlays.default =
@@ -51,13 +50,9 @@
 
           defaultModule =
             { config, ... }:
-            let
-              perSystemArg = system: {
-                _module.args.perSystem = systemArgs.${system}.perSystem;
-              };
-            in
             {
-              imports = [ (perSystemArg config.nixpkgs.hostPlatform.system) ];
+              nixpkgs.overlays = lib.singleton overlays.default;
+              system.stateVersion = config.system.nixos.release;
             };
 
           buildNixOS =
@@ -75,7 +70,7 @@
       );
     in
     {
-      inherit nixosModules nixosConfigurations;
+      inherit nixosModules nixosConfigurations overlays;
 
       formatter = forAllSystems (system: nixpkgsFor.${system}.nixfmt-rfc-style);
       packages = forAllSystems (
