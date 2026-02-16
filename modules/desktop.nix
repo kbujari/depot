@@ -31,11 +31,6 @@ in
 
     hunspell
     hunspellDicts.en-us
-
-    ((emacsPackagesFor emacs-pgtk).emacsWithPackages (epkgs: [
-      epkgs.mu4e
-      epkgs.treesit-grammars.with-all-grammars
-    ]))
   ];
 
   documentation = {
@@ -50,6 +45,13 @@ in
     enable = true;
     pulse.enable = true;
     alsa.enable = true;
+  };
+
+  services.emacs = {
+    enable = true;
+    defaultEditor = true;
+    package = with pkgs; (emacsPackagesFor emacs).emacsWithPackages
+      (epkgs: [ epkgs.mu4e epkgs.treesit-grammars.with-all-grammars ]);
   };
 
   # Build nix derivations on disk rather than in /tmp which is mounted
