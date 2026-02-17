@@ -72,7 +72,7 @@
     {
       inherit nixosModules nixosConfigurations overlays;
 
-      formatter = forAllSystems (system: nixpkgsFor.${system}.nixfmt-rfc-style);
+      formatter = forAllSystems (system: nixpkgsFor.${system}.nixfmt);
       packages = forAllSystems (
         system:
         let

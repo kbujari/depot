@@ -45,7 +45,7 @@ in
       # nix debugging
       nil
       nix-search-cli
-      nixpkgs-fmt
+      nixfmt
     ];
 
     openssh.authorizedKeys.keys = attrValues keys;
