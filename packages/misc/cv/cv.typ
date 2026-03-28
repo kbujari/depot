@@ -1,6 +1,6 @@
 #set document(author: "Kleidi Bujari", title: "Kleidi's Resume!")
 #set text(size: 10pt, lang: "en", ligatures: false)
-#set page(margin: 0.5in, paper: "us-letter")
+#set page(margin: 1.25in, paper: "us-letter")
 
 #show link: underline
 #set par(justify: true)
@@ -11,15 +11,15 @@
 ]
 
 #show heading.where(level: 2): it => [
-  #pad(top: 0pt, bottom: -10pt, [#smallcaps(it.body)])
-  #line(length: 100%, stroke: 1pt)
+  #pad(top: 5pt, bottom: -10pt, [#smallcaps(it.body)])
+  #line(length: 100%, stroke: 0.5pt)
 ]
 
 #let generic-headline(
-    left: "",
-    right: "",
-    description: "",
-) = [#strong(left) #h(1fr) #description `::` #right]
+  left: "",
+  right: "",
+  description: "",
+) = [#strong(left), #description #h(1fr) #right]
 
 #let dates-helper(from: "", to: "") = from + " " + $dash.em$ + " " + to
 
@@ -28,19 +28,19 @@
   dates: "",
   degree: "",
 ) = generic-headline(
-    left: institution,
-    description: degree,
-    right: dates,
+  left: institution,
+  description: degree,
+  right: dates,
 )
 
 #let work(
-    title: "",
-    dates: "",
-    company: "",
+  title: "",
+  dates: "",
+  company: "",
 ) = generic-headline(
-    left: company,
-    description: title,
-    right: dates,
+  left: company,
+  description: title,
+  right: dates,
 )
 
 = Kleidi Bujari
@@ -54,12 +54,15 @@
 == Experience
 
 #work(
-  company: "Meta (WhatsApp)",
+  company: "Meta",
   title: "Production Engineer",
   dates: dates-helper(from: "Aug 2025", to: "Present"),
 )
 
-- Probably working on really cool things.
+- Built out Erlang/OTP runtime integration with Linux schedulers, for tracing scheduling with Perfetto.
+- Observeability and runtime validation for trillions of packets flowing through WhatsApp daily.
+- Designed proxying solution for users fighting censorship and adverse network conditions.
+- Bootstrapped Nix at Meta for easier systemd/Linux integration with production distributed systems.
 
 #work(
   company: "Toronto Metropolitan University",
@@ -67,25 +70,21 @@
   dates: dates-helper(from: "May 2024", to: "Sep 2024"),
 )
 
-- Organized webhosting and analytics for a large film release,
-  leading design of web presence for thousands of concurrent visitors.
-- Automated transformations for hundreds of media files,
-  using ffmpeg and unix primitives to parallelize workload.
-- Published frontend with AstroJS to generate only static HTML,
-  ensuring compatibility with many hosting providers.
+- Organized webhosting and analytics for a film release,
+  with thousands of concurrent visitors.
+- Built transformation pipeline for hundreds of media files,
+  using unix primitives to parallelize workload.
 
 #work(
   company: "Canadian Broadcasting Corporation",
-  title: "Network Engineering Intern",
+  title: "Systems Engineering Intern",
   dates: dates-helper(from: "May 2023", to: "Apr 2024"),
 )
 
-- Designed custom PXE based provisioning for hundreds of devices on existing network,
+- Custom PXE-based provisioning for hundreds of devices on network,
   eliminating manual configuration.
-- Architected hyper-converged Proxmox cluster for 2024 Olympics,
-  saving \$250k+ with reused hardware and open software.
-- Mentored junior application developers in modern C++ programming,
-  aiding in memory safety and performance design.
+- Architected Proxmox cluster for 2024 Olympics,
+  saving \$250k+ with reused hardware.
 
 #work(
   company: "WSP Canada",
@@ -93,12 +92,11 @@
   dates: dates-helper(from: "May", to: "Aug") + ", 2021, 2022",
 )
 
-- Validated large-scale electrical designs for power consumption,
-  cost efficiency, and viability with existing systems.
-- Extended internal distributed databases with compression and deduplication,
-  reclaiming terabytes of storage across entire org.
+- Validated large scale electrical distribution for power consumption and cost efficiency.
+- Extended internal databases with compression and deduplication,
+  reclaiming terabytes of storage.
 
-== Projects
+== Selected Projects
 
 *Custom Linux Distribution* ---
 Designed entire Linux distribution used for hosting production servers,
@@ -123,24 +121,18 @@ Hand tuned for speed and portability by using only integer arithmetic,
 no heap allocations, and no standard library by default.
 Achieves practically instant compressions, even on microprocessors.
 
-*Mirrorlist Generator* ---
-Fetches Arch Linux package mirrors,
-filtering them based on user parameters.
-Sorts and outputs formatted data compliant with the pacman package manager.
-Heavily outperforms default Python implementation.
-
 == Education
 
 #edu(
   institution: "Toronto Metropolitan University",
   dates: dates-helper(from: "Sep 2020", to: "Apr 2025"),
-  degree: "Bachelor's of Engineering, Computer Engineering",
+  degree: "B. Eng, Computer Engineering",
 )
 
 - *Relevant Coursework*:
-  Data Structures, FPGA Programming, Compilers & Interpreters, Digital Systems, Computer Networks
+  Data Structures, FPGA Programming, Compilers, Computer Networks
 - *Extracurriculars*:
-  Member of student robotics design team,
+  Student-led robotics design team,
   teaching assistant for micro-processor courses.
 
 == Skills
@@ -148,15 +140,14 @@ Heavily outperforms default Python implementation.
 - *Languages*: #(
     "Rust",
     "Scheme",
+    "Erlang/OTP",
     "Haskell",
     "Nix",
     "C++",
   ).join(", ")
 - *Technologies*: #(
-    "Linux",
     "Distributed Systems",
     "Compilers",
-    "Virtualisation",
-    "Reproducible Infrastructure",
-    "Build Systems",
+    "Virtualization",
+    "Reproducible Builds",
   ).join(", ")
