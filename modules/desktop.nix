@@ -64,6 +64,7 @@ in
   # the nix daemon.
   systemd.tmpfiles.rules = [ "d /nix/tmp 755 root root - -" ];
 
+  systemd.packages = with pkgs; [ mako ];
   systemd.user.services =
     let
       afterGraphical = ExecStart: {
@@ -78,7 +79,6 @@ in
       };
     in
     {
-      mako = afterGraphical "${pkgs.mako}/bin/mako";
       udiskie = afterGraphical "${pkgs.udiskie}/bin/udiskie";
       swayidle =
         let
@@ -171,9 +171,9 @@ in
           settings = {
             "org/gnome/desktop/interface" = {
               color-scheme = "prefer-dark";
-              gtk-font-name = "System-ui 10";
+              gtk-font-name = "Sans Serif 10";
               icon-theme = "Pop";
-              theme-name = "Adwaita-dark";
+              theme-name = "Adwaita";
             };
           };
         }
@@ -184,7 +184,14 @@ in
   # Helper for managing dotfiles
   environment.shellAliases.dots = "git --git-dir=$HOME/.local/cfg/ --work-tree=$HOME";
 
+  # Enable modifying keyboard firmware
+  hardware.keyboard.qmk.enable = true;
+
+  security.polkit.enable = true;
+
   services = {
+    gnome.gnome-keyring.enable = true;
+    upower.enable = true;
     pcscd.enable = true;
     udev.packages = with pkgs; [ yubikey-personalization ];
     udisks2 = {
