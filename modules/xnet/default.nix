@@ -1,4 +1,11 @@
-{ pkgs, lib, config, flake, inputs, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  flake,
+  inputs,
+  ...
+}:
 let
   inherit (builtins)
     fetchurl
@@ -24,7 +31,7 @@ in
     ./disk.nix
     ./nginx.nix
     ./persist.nix
-    ./net
+    # ./net
     ./gitserver
     # ./monitoring
   ];
@@ -44,7 +51,11 @@ in
       nixPath = mkForce [ "nixpkgs=${inputs.nixpkgs}" ];
       settings = {
         auto-optimise-store = true;
-        experimental-features = [ "nix-command" "flakes" "pipe-operators" ];
+        experimental-features = [
+          "nix-command"
+          "flakes"
+          "pipe-operators"
+        ];
         warn-dirty = false;
 
         # timeout fast from binary cache
@@ -69,7 +80,7 @@ in
     users.mutableUsers = false;
     users.users.root = {
       openssh.authorizedKeys.keys = config.xnet.pubKeys;
-      initialPassword = "hello";
+      initialPassword = mkDefault "";
     };
 
     security.sudo = {
@@ -79,12 +90,18 @@ in
 
     nixpkgs.config.allowUnfree = true;
 
+    services.gnome.gcr-ssh-agent.enable = false;
     programs.ssh = {
+      startAgent = true;
       knownHosts = {
-        "github.com".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl";
-        "gitlab.com".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAfuCHKVTjquxvt6CM6tdG4SLp1Btn/nOeHHE5UOzRdf";
-        "git.sr.ht".publicKey = " ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMZvRd4EtM7R+IHVMWmDkVU3VLQTSwQDSAvW0t2Tkj60";
-        "pascal.ee.ryerson.ca".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFmWInQNT6EoU1NtUYzTs5jtpfbO/m6yvCckOiEGjvDc";
+        "github.com".publicKey =
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl";
+        "gitlab.com".publicKey =
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAfuCHKVTjquxvt6CM6tdG4SLp1Btn/nOeHHE5UOzRdf";
+        "git.sr.ht".publicKey =
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMZvRd4EtM7R+IHVMWmDkVU3VLQTSwQDSAvW0t2Tkj60";
+        "pascal.ee.ryerson.ca".publicKey =
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFmWInQNT6EoU1NtUYzTs5jtpfbO/m6yvCckOiEGjvDc";
       };
       extraConfig = ''
         Host github
