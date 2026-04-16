@@ -3,7 +3,7 @@
 
 {
   writeShellScriptBin,
-  linuxPackages,
+  perf,
   flamegraph,
   ...
 }:
@@ -11,8 +11,8 @@
 writeShellScriptBin "perf-flamegraph" ''
   set -euo pipefail
 
-  ${linuxPackages.perf}/bin/perf record -g --call-graph dwarf -F max "$@"
-  ${linuxPackages.perf}/bin/perf script \
+  ${perf}/bin/perf record -g --call-graph dwarf -F max "$@"
+  ${perf}/bin/perf script \
     | ${flamegraph}/bin/stackcollapse-perf.pl \
     | ${flamegraph}/bin/flamegraph.pl
 ''
