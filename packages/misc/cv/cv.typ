@@ -55,14 +55,14 @@
 
 #work(
   company: "Meta",
-  title: "Production Engineer",
+  title: "Production Software Engineer",
   dates: dates-helper(from: "Aug 2025", to: "Present"),
 )
 
-- Built out Erlang/OTP runtime integration with Linux schedulers, for tracing scheduling with Perfetto.
-- Observeability and runtime validation for trillions of packets flowing through WhatsApp daily.
+- Analyzed reliability and optimizations for massive scale, highly-available distributed systems.
+- Improved type-checking and observeability for trillions of packets flowing through WhatsApp daily.
 - Designed proxying solution for users fighting censorship and adverse network conditions.
-- Bootstrapped Nix at Meta for easier systemd/Linux integration with production distributed systems.
+- Led performance analysis of various Linux kernel schedulers for low-latency Erlang/BEAM workloads.
 
 #work(
   company: "Toronto Metropolitan University",
@@ -81,7 +81,7 @@
   dates: dates-helper(from: "May 2023", to: "Apr 2024"),
 )
 
-- Custom PXE-based provisioning for hundreds of devices on network,
+- Built PXE-based provisioning for hundreds of devices on network,
   eliminating manual configuration.
 - Architected Proxmox cluster for 2024 Olympics,
   saving \$250k+ with reused hardware.
