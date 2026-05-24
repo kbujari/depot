@@ -82,6 +82,7 @@
           inherit (depot.misc) cv;
           inherit (depot.web) site;
           inherit (depot)
+            colorpicker
             randpass
             run-image
           ;
