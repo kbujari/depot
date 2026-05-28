@@ -84,8 +84,7 @@
           inherit (depot)
             colorpicker
             randpass
-            run-image
-          ;
+            ;
         }
       );
     };
