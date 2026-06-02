@@ -1,22 +1,35 @@
-{ inputs, flake, pkgs, perSystem, ... }:
+{
+  flake,
+  pkgs,
+  perSystem,
+  ...
+}:
 
 let
-  inherit (inputs.nixos-hardware.nixosModules)
-    common-cpu-amd
-    common-gpu-amd
-    ;
-
   inherit (import flake.outputs.nixosModules.users { inherit perSystem pkgs; })
-    kle;
+    kle
+    ;
 in
 {
   imports = [
-    common-cpu-amd
-    common-gpu-amd
     flake.outputs.nixosModules.disk
     flake.outputs.nixosModules.desktop
     flake.outputs.nixosModules.network
   ];
+
+  hardware = {
+    cpu.amd.updateMicrocode = true;
+    enableRedistributableFirmware = true;
+    amdgpu = {
+      initrd.enable = true;
+      overdrive.enable = true;
+    };
+
+    graphics = {
+      enable = true;
+      enable32Bit = true;
+    };
+  };
 
   nixpkgs.hostPlatform = "x86_64-linux";
 
@@ -51,17 +64,6 @@ in
   };
 
   fileSystems = {
-    "/radon" = {
-      device = "radon.local:/radon";
-      fsType = "nfs";
-      options = [ "noauto" "x-systemd.automount" "x-systemd.idle-timeout=600" "nofail" ];
-    };
-
-    "/mnt/gammix" = {
-      device = "/dev/disk/by-uuid/bbbb4579-fac9-412e-a831-3034f7d27e04";
-      fsType = "ext4";
-      options = [ "users" "nofail" "noatime" ];
-    };
     "/var" = {
       device = "zroot/local/var";
       fsType = "zfs";
@@ -78,7 +80,6 @@ in
   environment.shellAliases.b = "${pkgs.ddcutil}/bin/ddcutil setvcp 10";
   boot.kernelModules = [ "i2c-dev" ];
 
-  hardware.amdgpu.overdrive.enable = true;
 
   environment.systemPackages = with pkgs; [
     ddcutil
