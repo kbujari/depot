@@ -1,6 +1,6 @@
 #set document(author: "Kleidi Bujari", title: "Kleidi's Resume!")
 #set text(size: 10pt, lang: "en", ligatures: false)
-#set page(margin: 1.25in, paper: "us-letter")
+#set page(margin: 1in, paper: "us-letter")
 
 #show link: underline
 #set par(justify: true)
@@ -59,10 +59,13 @@
   dates: dates-helper(from: "Aug 2025", to: "Present"),
 )
 
-- Analyzed reliability and optimizations for massive scale, highly-available distributed systems.
-- Improved type-checking and observeability for trillions of packets flowing through WhatsApp daily.
-- Designed proxying solution for users fighting censorship and adverse network conditions.
-- Led performance analysis of various Linux kernel schedulers for low-latency Erlang/BEAM workloads.
+- Analyzed Linux schedulers for Erlang/BEAM workloads,
+  building kernel scheduler observability used across Meta.
+- Led team designing scalable AWS/EKS infrastructure fighting internet censorship and poor network conditions.
+- Built runtime type-checking for trillions of WhatsApp packets,
+  solving entire class of account ID problems.
+- Primary oncall for WhatsApp distributed system,
+  improving reliability and mentoring engineers in debugging.
 
 #work(
   company: "Toronto Metropolitan University",
@@ -70,7 +73,7 @@
   dates: dates-helper(from: "May 2024", to: "Sep 2024"),
 )
 
-- Organized webhosting and analytics for a film release,
+- Organized webhosting and data analytics for a film release,
   with thousands of concurrent visitors.
 - Built transformation pipeline for hundreds of media files,
   using unix primitives to parallelize workload.
@@ -81,9 +84,9 @@
   dates: dates-helper(from: "May 2023", to: "Apr 2024"),
 )
 
-- Built PXE-based provisioning for hundreds of devices on network,
+- Built custom PXE-based provisioning for hundreds of devices on network,
   eliminating manual configuration.
-- Architected Proxmox cluster for 2024 Olympics,
+- Architected VM cluster for 2024 Olympics handling all Canadian broadcasts,
   saving \$250k+ with reused hardware.
 
 #work(
@@ -139,11 +142,11 @@ Achieves practically instant compressions, even on microprocessors.
 
 - *Languages*: #(
     "Rust",
-    "Scheme",
-    "Erlang/OTP",
     "Haskell",
-    "Nix",
     "C++",
+    "Erlang",
+    "Nix",
+    "Scheme",
   ).join(", ")
 - *Technologies*: #(
     "Distributed Systems",
