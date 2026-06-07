@@ -15,7 +15,10 @@ let
     ;
 in
 {
-  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
+  imports = [
+    (modulesPath + "/installer/scan/not-detected.nix")
+    (modulesPath + "/image/file-options.nix")
+  ];
 
   options.depot.disk = {
     enable = lib.mkEnableOption "Apply depot-standard ZFS disk layout.";
@@ -112,10 +115,17 @@ in
       };
     };
 
-    system.build.image = pkgs.depot.make-zfs-image.override {
-      inherit pkgs lib config;
-      format = "qcow2";
-    };
+    image.modules.depot =
+      { config, modulesPath, ... }:
+      {
+        imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
+
+        image.extension = "qcow2";
+        system.build.image = pkgs.depot.make-zfs-image.override {
+          inherit pkgs lib config;
+          inherit (config.image) fileName extension;
+        };
+      };
 
     #   datasets =
     #     let

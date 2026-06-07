@@ -18,27 +18,16 @@
   # Shell code executed after the VM has finished.
   postVM ? "",
 
-  name ? "nixos-disk-image",
+  fileName ? "nixos-disk-image",
 
   # Disk image format, one of qcow2, qcow2-compressed, vdi, vpc, raw.
-  format ? "raw",
+  extension ? "raw",
+
+  # Whether to provision ZFS dataset for /home, since /home is generally omitted
+  # for server installations. By default, checks whether my user is defined.
+  makeHome ? builtins.hasAttr "kle" config.users.users,
 }:
 let
-  formatOpt = if format == "qcow2-compressed" then "qcow2" else format;
-
-  compress = lib.optionalString (format == "qcow2-compressed") "-c";
-
-  filenameSuffix =
-    "."
-    + {
-      qcow2 = "qcow2";
-      vdi = "vdi";
-      vpc = "vhd";
-      raw = "img";
-    }
-    .${formatOpt} or formatOpt;
-  rootFilename = "nixos.root${filenameSuffix}";
-
   closureInfo = pkgs.closureInfo {
     rootPaths = [ config.system.build.toplevel ];
   };
@@ -74,7 +63,7 @@ let
   );
 
   image = vmTools.runInLinuxVM (
-    pkgs.runCommand name
+    pkgs.runCommand fileName
       {
         inherit memSize;
         QEMU_OPTS = "-drive file=$rootDiskImage,if=virtio,cache=unsafe,werror=report";
@@ -88,16 +77,16 @@ let
         postVM = ''
           # truncate --size ${toString (bootSize + rootSize)} $rootDiskImage
           ${
-            if formatOpt == "raw" then
+            if extension == "raw" then
               ''
-                mv $rootDiskImage $out/${rootFilename}
+                mv $rootDiskImage $out/${fileName}
               ''
             else
               ''
-                ${pkgs.qemu-utils}/bin/qemu-img convert -f raw -O ${formatOpt} ${compress} $rootDiskImage $out/${rootFilename}
+                ${pkgs.qemu-utils}/bin/qemu-img convert -f raw -O ${extension} $rootDiskImage $out/${fileName}
               ''
           }
-          rootDiskImage=$out/${rootFilename}
+          rootDiskImage=$out/${fileName}
           set -x
           ${postVM}
         '';
@@ -122,6 +111,8 @@ let
           zroot /dev/vda2
 
         zfs create zroot/local
+        ${lib.optionalString makeHome "zfs create zroot/local/home -o mountpoint=/home -u"}
+        zfs create zroot/local/root -o mountpoint=/root -u
         zfs create zroot/local/var -o mountpoint=/var -u
         zfs create zroot/local/nix -o mountpoint=legacy
 
@@ -150,16 +141,25 @@ let
         zpool export zroot
       ''
   );
-  script = pkgs.writeShellScriptBin "runvm" ''
-    cp ${image}/nixos.root.qcow2 nixos.root.qcow2
-    ${pkgs.qemu-utils}/bin/qemu-img resize nixos.root.qcow2 +10G
+  script = pkgs.writeShellScriptBin "run-${config.networking.hostName}-vm" ''
+    cp -f ${image}/${fileName} .
+    chmod +rwx ${fileName}
+    ${pkgs.qemu-utils}/bin/qemu-img resize ${fileName} +10G
+    ${pkgs.qemu}/bin/qemu-img check ${fileName}
     ${pkgs.qemu}/bin/qemu-system-x86_64 \
       -enable-kvm \
       -m 4G \
       -cpu host \
       -bios ${pkgs.OVMF.fd}/FV/OVMF.fd \
-      -drive file=nixos.root.qcow2,format=qcow2,if=virtio \
+      -drive file=${fileName},format=qcow2,if=virtio \
       -boot order=c
   '';
 in
-script
+pkgs.symlinkJoin {
+  name = "${config.networking.hostName}-image-outputs";
+  paths = [
+    image
+    script
+  ];
+  meta.mainProgram = script.name;
+}
