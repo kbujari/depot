@@ -25,7 +25,7 @@ in
     services.cgit.main = {
       enable = true;
       scanPath = config.xnet.gitServer.path;
-      package = pkgs.cgit-pink;
+      gitHttpBackend.checkExportOkFiles = false;
       nginx = {
         virtualHost = cfg.hostName;
         location = "/";
@@ -46,8 +46,8 @@ in
         readme=:README.txt
       '';
       settings = {
-        about-filter = "${pkgs.cgit-pink}/lib/cgit/filters/about-formatting.sh";
-        source-filter = "${pkgs.cgit-pink}/lib/cgit/filters/syntax-highlighting.py";
+        # about-filter = "${pkgs.cgit-pink}/lib/cgit/filters/about-formatting.sh";
+        # source-filter = "${pkgs.cgit-pink}/lib/cgit/filters/syntax-highlighting.py";
         clone-url = "https://${cfg.hostName}/$CGIT_REPO_URL git@${cfg.hostName}:$CGIT_REPO_URL";
         enable-commit-graph = true;
         enable-http-clone = false;
