@@ -5,8 +5,6 @@
 
     disko.url = "github:nix-community/disko/latest";
     disko.inputs.nixpkgs.follows = "nixpkgs";
-
-    nixos-hardware.url = "github:nixos/nixos-hardware/master";
   };
 
   outputs =

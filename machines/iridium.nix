@@ -1,18 +1,16 @@
-{ inputs, flake, ... }:
-let
-  inherit (inputs.nixos-hardware.nixosModules)
-    common-cpu-intel
-    common-gpu-intel
-    ;
-in
+{
+  flake,
+  pkgs,
+  config,
+  ...
+}:
 {
   nixpkgs.hostPlatform.system = "x86_64-linux";
   system.stateVersion = "25.05";
   networking.hostName = "iridium";
 
   imports = [
-    common-cpu-intel
-    common-gpu-intel
+    flake.outputs.nixosModules.intel
     flake.outputs.nixosModules.network
   ];
 

@@ -1,10 +1,5 @@
 { inputs, flake, pkgs, config, ... }:
 let
-  inherit (inputs.nixos-hardware.nixosModules)
-    common-cpu-intel
-    common-gpu-intel
-    ;
-
   interfaces = {
     bottom = "enp1s0";
     top = "enp2s0";
@@ -12,11 +7,10 @@ let
 in
 {
   imports = [
-    common-cpu-intel
-    common-gpu-intel
     # ./jellyfin.nix
     ./pxeboot.nix
     flake.outputs.nixosModules.disk
+    flake.outputs.nixosModules.intel
     flake.outputs.nixosModules.network
   ];
 

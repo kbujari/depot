@@ -1,14 +1,15 @@
-{ inputs, flake, perSystem, pkgs, ... }:
+{
+  flake,
+  perSystem,
+  pkgs,
+  ...
+}:
 let
-  inherit (inputs.nixos-hardware.nixosModules)
-    lenovo-thinkpad-t480
-    ;
-
   inherit (import flake.outputs.nixosModules.users { inherit perSystem pkgs; }) kle;
 in
 {
   imports = [
-    lenovo-thinkpad-t480
+    flake.outputs.nixosModules.intel
     flake.outputs.nixosModules.desktop
   ];
 
@@ -37,7 +38,10 @@ in
   };
 
   programs.nm-applet.enable = true;
-  services.fwupd.enable = true;
+  services = {
+    fwupd.enable = true;
+    throttled.enable = true;
+  };
 
   xnet.persist = [ "/etc/NetworkManager/system-connections" ];
 }
