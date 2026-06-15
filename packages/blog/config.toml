@@ -1,8 +1,0 @@
-base_url = "https://kleidi.ca"
-build_search_index = false
-compile_sass = false
-generate_feeds = true
-minify_html = true
-
-[markdown]
-highlight_code = false
