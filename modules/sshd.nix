@@ -61,6 +61,13 @@ in
       #   "PubkeyAcceptedKeyTypes ${pubkeyTypes}";
     };
 
+    users.users.root.openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP7T2uWJFUu8aFZZgQusGKyEMocb2pKbHLDad2eIJus9"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEOw8YEbHsKy38JHp9W1wcxxZgWCDgnabOXccZUN5ddd"
+      "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIIC366AFgJcPfqzPMZ8RRX29fkDoIpqWJdHFbEYt0r6pAAAAC3NzaDpnZW5lcmFs"
+      "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIC4ntO9M5TO+SEWtrIT4XCdqP6UN1Hq2PKvhRIXHgaSDAAAAC3NzaDpnZW5lcmFs"
+    ];
+
     environment.etc."systemd/dnssd/ssh.dnssd".text = mkIf cfg.publish ''
       [Service]
       Name=%H

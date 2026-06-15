@@ -79,7 +79,6 @@ in
 
     users.mutableUsers = false;
     users.users.root = {
-      openssh.authorizedKeys.keys = config.xnet.pubKeys;
       initialPassword = mkDefault "";
     };
 
