@@ -15,7 +15,7 @@ in
     shell = pkgs.fish;
     home = "/persist/usr/kle";
     createHome = true;
-    extraGroups = [ "wheel" "users" "networkmanager" "video" "kvm" ];
+    extraGroups = [ "wheel" "users" "networkmanager" "video" "kvm" "i2c" ];
     packages = with pkgs; [
       btop
       curl
