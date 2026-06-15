@@ -31,7 +31,6 @@ in
     ./disk.nix
     ./nginx.nix
     ./persist.nix
-    # ./net
     ./gitserver
     # ./monitoring
   ];
