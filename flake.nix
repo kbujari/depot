@@ -52,7 +52,7 @@
             { config, ... }:
             {
               nixpkgs.overlays = lib.singleton overlays.default;
-              system.stateVersion = config.system.nixos.release;
+              system.stateVersion = lib.mkDefault config.system.nixos.release;
             };
 
           buildNixOS =
