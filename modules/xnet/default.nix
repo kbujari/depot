@@ -97,6 +97,8 @@ in
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl";
         "gitlab.com".publicKey =
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAfuCHKVTjquxvt6CM6tdG4SLp1Btn/nOeHHE5UOzRdf";
+        "codeberg.org".publicKey =
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIVIC02vnjFyL+I4RHfvIGNtOgJMe769VTF1VR4EB3ZB";
         "git.sr.ht".publicKey =
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMZvRd4EtM7R+IHVMWmDkVU3VLQTSwQDSAvW0t2Tkj60";
         "pascal.ee.ryerson.ca".publicKey =
@@ -105,6 +107,11 @@ in
       extraConfig = ''
         Host github
           HostName github.com
+          User git
+          PreferredAuthentications publickey
+
+        Host codeberg
+          HostName codeberg.org
           User git
           PreferredAuthentications publickey
 
