@@ -16,10 +16,11 @@ in
     pop-icon-theme
     pwvucontrol
     swayidle
+    swaybg
     swaylock
     tigervnc
     wl-clipboard
-    xorg.xeyes
+    xeyes
     xwayland-satellite
     zathura
 
@@ -152,7 +153,6 @@ in
 
   programs = {
     niri.enable = true;
-    light.enable = mkDefault true;
     direnv.enable = true;
     fish = {
       enable = true;
