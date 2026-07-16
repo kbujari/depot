@@ -15,21 +15,17 @@ in
   ];
 
   nixpkgs.hostPlatform.system = "x86_64-linux";
-  system.stateVersion = "24.11";
   networking.hostName = "radon";
 
   users.groups.media.gid = 2000;
 
-  boot.zfs.pools.radon.devNodes = "/dev/disk/by-id/";
-  boot.zfs.extraPools = [ "radon" ];
+  # boot.zfs.pools.radon.devNodes = "/dev/disk/by-id/";
+  # boot.zfs.extraPools = [ "radon" ];
 
   services.nfs.server.enable = true;
   networking.firewall.allowedTCPPorts = [ 2049 ];
 
-  # depot.disk = {
-  #   enable = true;
-  #   device = "/dev/nvme0n1";
-  # };
+  depot.disk.enable = true;
 
   depot.net = {
     v6Token = "::cafe";
@@ -39,10 +35,10 @@ in
 
   xnet = {
     nginx.enable = true;
-    disk = {
-      enable = true;
-      device = "/dev/nvme0n1";
-    };
+    # disk = {
+    #   enable = true;
+    #   device = "/dev/nvme0n1";
+    # };
     gitServer = {
       enable = true;
       gitweb.enable = true;

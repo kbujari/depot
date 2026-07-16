@@ -13,7 +13,7 @@
   memSize ? 2048,
 
   # The size of the root partition, in MiB (1024x1024 bytes).
-  rootSize ? 4096,
+  rootSize ? 8192,
 
   # Shell code executed after the VM has finished.
   postVM ? "",
