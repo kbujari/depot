@@ -46,7 +46,7 @@
 = Kleidi Bujari
 
 #(
-  link("mailto:mail@4kb.net"),
+  link("mailto:kleidi@4kb.net"),
   link("https://github.com/kbujari")[github.com/kbujari],
   link("http://kleidi.ca")[kleidi.ca],
 ).join("  |  ")
