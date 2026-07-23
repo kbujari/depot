@@ -181,6 +181,21 @@ in
     };
   };
 
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+    settings = {
+      General = {
+        Experimental = true;
+      };
+      Policy = {
+        AutoEnable = true;
+      };
+    };
+  };
+
+  services.blueman.enable = true;
+
   # Helper for managing dotfiles
   environment.shellAliases.dots = "git --git-dir=$HOME/.local/cfg/ --work-tree=$HOME";
 
