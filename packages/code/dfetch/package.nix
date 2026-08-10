@@ -1,0 +1,5 @@
+{ haskellPackages, ... }:
+
+haskellPackages.developPackage {
+  root = ./.;
+}
