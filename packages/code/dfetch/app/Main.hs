@@ -1,11 +1,11 @@
 module Main (main) where
 
-import Dfetch.Battery (allBatteries)
+import Dfetch.Battery (renderBat, allBatteries)
 import Dfetch.Brightness (allBs)
 
 main :: IO ()
 main = do
-  bats <- allBatteries
+  bats <- renderBat <$> allBatteries
   backlights <- allBs
-  print bats
+  putStrLn bats
   print backlights

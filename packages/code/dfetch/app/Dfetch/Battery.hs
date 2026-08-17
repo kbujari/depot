@@ -1,9 +1,11 @@
 module Dfetch.Battery
   ( Battery(..)
   , allBatteries
+  , renderBat
   ) where
 
 import           Data.List        (isPrefixOf)
+import           GHC.Float        (double2Int)
 import           System.Directory (listDirectory)
 import           System.FilePath  ((</>))
 
@@ -32,3 +34,21 @@ findBatteries = filter ("BAT" `isPrefixOf`) <$> listDirectory basePath
 -- | Fetch all batteries from the running system
 allBatteries :: IO [Battery]
 allBatteries = findBatteries >>= mapM getCapacity
+
+renderBat :: [Battery] -> String
+renderBat bs = unlines $
+  [ "Battery" , "======="] <> map render bs
+  where
+    totalEnergy = sum . map (energyFull) $ bs
+    calcEnergy =
+      show . double2Int . (* 100) . (/ totalEnergy) . energyFull
+
+    render b = mconcat $
+      [ "\t"
+      , name b
+      , ": "
+      , show (capacity b)
+      , "%,\t"
+      , calcEnergy b
+      , "% of total energy"
+      ]
