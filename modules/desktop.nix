@@ -6,6 +6,7 @@ in
 {
   environment.systemPackages = with pkgs; [
     audacious
+    brightnessctl
     foot
     fuzzel
     imv
@@ -15,8 +16,8 @@ in
     playerctl
     pop-icon-theme
     pwvucontrol
-    swayidle
     swaybg
+    swayidle
     swaylock
     tigervnc
     wl-clipboard
