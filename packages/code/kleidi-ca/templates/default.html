@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My Hakyll Blog - $title$</title>
+    <link rel="stylesheet" href="/css/default.css" />
+  </head>
+  <body>
+    <header
+      style="
+             margin: 3em 0 3em 0;
+             display: flex;
+             gap: 8px;
+             flex-direction: column;
+             font-family: monospace;
+             "
+      >
+      <span>
+        Kleidi Bujari &lt;<a href="mailto:mail@4kb.net">mail@4kb.net</a>&gt;
+      </span>
+      <nav style="display: flex; gap: 8px">
+        <span><a href="/">kleidi.ca</a> |</span>
+        <a href="/about.html">about</a>
+        <a href="/posts/">posts</a>
+        <a target="_blank" href="https://github.com/kbujari">github</a>
+      </nav>
+    </header>
+
+    <main role="main">
+      <h1>$title$</h1>
+      $body$
+    </main>
+  </body>
+</html>

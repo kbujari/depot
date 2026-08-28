@@ -1,0 +1,6 @@
+---
+title: about me
+---
+
+I am a programmer working on Linux stuff, distributed systems, and
+compilers/runtimes.
