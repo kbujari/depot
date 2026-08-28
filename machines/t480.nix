@@ -41,7 +41,13 @@ in
   services = {
     fwupd.enable = true;
     throttled.enable = true;
+    guix.enable = true;
   };
+
+  environment.systemPackages = with pkgs; [
+    spotify
+    depot.code.dfetch
+  ];
 
   xnet.persist = [ "/etc/NetworkManager/system-connections" ];
 }
