@@ -61,6 +61,7 @@ in
       kernelParams = [
         "nohibernate"
         "elevator=none"
+        "rd.systemd.unit=rescue.target"
       ];
       supportedFilesystems = [
         "vfat"
@@ -114,6 +115,44 @@ in
         options = [ "umask=0077" ];
       };
     };
+
+    boot.initrd.systemd.services."growroot" = {
+      description = "Grow main partition into any unused disk space.";
+      serviceConfig.Type = "oneshot";
+
+      # If dry-run fails, there is nothing to grow
+      serviceConfig.ExecCondition = "${pkgs.cloud-utils}/bin/growpart /dev/vda 2 --dry-run";
+
+      wantedBy = [ "zfs.target" ];
+      before = [ "zfs-import-zroot.service" ];
+
+      script = "growpart /dev/vda 2 --verbose";
+    };
+
+    boot.initrd.systemd.services."expand-zroot" = {
+      description = "Expand zroot to take up entire partition.";
+      serviceConfig.Type = "oneshot";
+
+      wantedBy = ["zfs.target"];
+      after = ["zfs-import-zroot.service"];
+
+      script = ''
+        # pull partuuid from zpool
+        GUID=$(zpool list -v --json | jq --raw-output '.pools.zroot.vdevs.[].name')
+
+        # re-mark pool as online with '-e' to expand
+        zpool online -e zroot $GUID
+      '';
+    };
+
+    boot.initrd.systemd.emergencyAccess = true;
+    boot.initrd.systemd.initrdBin = [
+      pkgs.cloud-utils
+      pkgs.util-linux
+      pkgs.busybox
+      pkgs.jq
+      pkgs.zfs
+    ];
 
     image.modules.depot =
       { config, modulesPath, ... }:
