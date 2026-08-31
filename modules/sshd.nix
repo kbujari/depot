@@ -68,12 +68,14 @@ in
       "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIC4ntO9M5TO+SEWtrIT4XCdqP6UN1Hq2PKvhRIXHgaSDAAAAC3NzaDpnZW5lcmFs"
     ];
 
-    environment.etc."systemd/dnssd/ssh.dnssd".text = mkIf cfg.publish ''
-      [Service]
-      Name=%H
-      Type=_ssh._tcp
-      Port=22
-      TxtText=hello world
-    '';
+    environment.etc = mkIf cfg.publish {
+      "systemd/dnssd/ssh.dnssd".text = ''
+        [Service]
+        Name=%H
+        Type=_ssh._tcp
+        Port=22
+        TxtText=hello world
+      '';
+    };
   };
 }
