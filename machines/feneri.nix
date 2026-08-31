@@ -3,6 +3,7 @@
 {
   imports = [
     flake.outputs.nixosModules.disk
+    flake.outputs.nixosModules.network
     (modulesPath + "/profiles/qemu-guest.nix")
   ];
 
@@ -11,6 +12,10 @@
   depot.disk = {
     enable = true;
     # device = "/dev/vda";
+  };
+
+  depot.net = {
+    sshd.enable = true;
   };
 
   services.getty.autologinUser = "root";
