@@ -133,8 +133,8 @@ in
       description = "Expand zroot to take up entire partition.";
       serviceConfig.Type = "oneshot";
 
-      wantedBy = ["zfs.target"];
-      after = ["zfs-import-zroot.service"];
+      wantedBy = [ "zfs.target" ];
+      after = [ "zfs-import-zroot.service" ];
 
       script = ''
         # pull partuuid from zpool
@@ -154,16 +154,24 @@ in
       pkgs.zfs
     ];
 
-    image.modules.depot =
-      { config, modulesPath, ... }:
-      {
-        imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
+    image.modules =
+      let
+        baseImage =
+          extension:
+          { config, modulesPath, ... }:
+          {
+            imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
 
-        image.extension = "qcow2";
-        system.build.image = pkgs.depot.make-zfs-image.override {
-          inherit pkgs lib config;
-          inherit (config.image) fileName extension;
-        };
+            image.extension = extension;
+            system.build.image = pkgs.depot.make-zfs-image.override {
+              inherit pkgs lib config;
+              inherit (config.image) fileName extension;
+            };
+          };
+      in
+      {
+        depot = baseImage "qcow2";
+        depotRaw = baseImage "raw";
       };
 
     #   datasets =
