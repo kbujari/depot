@@ -3,7 +3,6 @@
   lib,
   config,
   flake,
-  inputs,
   ...
 }:
 let
@@ -47,7 +46,7 @@ in
     time.timeZone = mkDefault "US/Pacific";
 
     nix = {
-      nixPath = mkForce [ "nixpkgs=${inputs.nixpkgs}" ];
+      nixPath = mkForce [ "nixpkgs=${pkgs.path}" ];
       settings = {
         auto-optimise-store = true;
         experimental-features = [
@@ -65,7 +64,7 @@ in
         options = mkDefault "--delete-older-than 30d";
       };
       registry = {
-        nixpkgs.flake = inputs.nixpkgs;
+        nixpkgs.flake = pkgs.path;
         depot.flake = flake;
       };
     };
