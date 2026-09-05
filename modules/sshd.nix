@@ -33,7 +33,7 @@ in
       startWhenNeeded = true;
       openFirewall = true;
       hostKeys = lib.singleton {
-        path = "/persist/certs/ssh/ssh_host_ed25519_key";
+        path = "/var/lib/sshd/ssh_host_ed25519_key";
         type = "ed25519";
       };
       settings = {
@@ -41,6 +41,7 @@ in
         X11Forwarding = false;
         PermitRootLogin = "prohibit-password";
         PasswordAuthentication = mkDefault false;
+        KbdInteractiveAuthentication = false;
         # Ciphers = [ "chacha20-poly1305@openssh.com" ];
         # Macs = [ "hmac-sha2-512-etm@openssh.com" ];
         # KexAlgorithms = [ "curve25519-sha256@libssh.org" ];
@@ -50,15 +51,14 @@ in
         "-f AUTHPRIV"
         "-l INFO"
       ];
-      # extraConfig =
-      #   let
-      #     pubkeyTypes = lib.strings.concatStringsSep "," [
-      #       "sk-ssh-ed25519-cert-v01@openssh.com"
-      #       "ssh-ed25519-cert-v01@openssh.com"
-      #       "ssh-ed25519"
-      #     ];
-      #   in
-      #   "PubkeyAcceptedKeyTypes ${pubkeyTypes}";
+      extraConfig =
+        let
+          pubkeyTypes = lib.strings.concatStringsSep "," [
+            "sk-ssh-ed25519@openssh.com"
+            "ssh-ed25519"
+          ];
+        in
+        "PubkeyAcceptedKeyTypes ${pubkeyTypes}";
     };
 
     users.users.root.openssh.authorizedKeys.keys = [
