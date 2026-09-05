@@ -121,6 +121,11 @@ in
         Host ee
           HostName pascal.ee.ryerson.ca
           User kbujari
+
+        Host src
+          HostName src.web.4kb.net
+          User git
+          PreferredAuthentications publickey
       '';
     };
 
