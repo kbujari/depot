@@ -46,8 +46,8 @@ in
         readme=:README.txt
       '';
       settings = {
-        # about-filter = "${pkgs.cgit-pink}/lib/cgit/filters/about-formatting.sh";
-        # source-filter = "${pkgs.cgit-pink}/lib/cgit/filters/syntax-highlighting.py";
+        about-filter = "${pkgs.cgit}/lib/cgit/filters/about-formatting.sh";
+        source-filter = "${pkgs.cgit}/lib/cgit/filters/syntax-highlighting.py";
         clone-url = "https://${cfg.hostName}/$CGIT_REPO_URL git@${cfg.hostName}:$CGIT_REPO_URL";
         enable-commit-graph = true;
         enable-http-clone = false;
