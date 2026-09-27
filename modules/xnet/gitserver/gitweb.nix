@@ -38,12 +38,7 @@ in
         mimetype.pdf=application/pdf
         mimetype.png=image/png
         mimetype.svg=image/svg+xml
-        readme=:readme
-        readme=:readme.md
-        readme=:readme.txt
-        readme=:README
-        readme=:README.md
-        readme=:README.txt
+        readme=master:README
       '';
       settings = {
         about-filter = "${pkgs.cgit}/lib/cgit/filters/about-formatting.sh";
@@ -62,9 +57,11 @@ in
       };
     };
 
-    # services.nginx.virtualHosts."${cfg.gitweb.hostName}" = {
-    #   useACMEHost = "4kb.net";
-    #   addSSL = true;
-    # };
+    services.nginx.virtualHosts."${cfg.hostName}" = {
+      useACMEHost = "4kb.net";
+      forceSSL = true;
+
+      locations."/robots.txt".return = "200 \"User-agent: *\nDisallow: /\n\"";
+    };
   };
 }
