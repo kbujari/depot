@@ -34,6 +34,8 @@ let
 
   vmTools = pkgs.vmTools.override {
     rootModules = [
+      "9p"
+      "9pnet_virtio"
       "virtio_blk"
       "virtio_pci"
       "virtiofs"
