@@ -74,6 +74,7 @@ let
 
 in
 {
+  pkgs = newPkgs;
   inherit (newPkgs) depotPackages;
   inherit machines;
 }
